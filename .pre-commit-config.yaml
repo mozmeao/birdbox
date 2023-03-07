@@ -1,0 +1,59 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Global excludes, override per repo below if different excludes required.
+# exclude: >
+#   (?x)^(
+#     DIRNAME_OR_FILENAME_HERE
+#     | DIRNAME_OR_FILENAME_HERE
+#     | DIRNAME_OR_FILENAME_HERE
+#   )
+repos:
+  # Note: hooks that add content must run before ones which check formatting, lint, etc
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.3.1
+    hooks:
+      - id: insert-license
+        language: python
+        files: \.py$
+        args:
+          - --license-filepath
+          - license_header/mpl2_header.txt
+          - --comment-style
+          - "|#|"
+      - id: insert-license
+        exclude: media\/.*\/libs\/.*$
+        files: \.js$
+        args:
+          - --license-filepath
+          - license_header/mpl2_header.txt
+          - --comment-style
+          - /*|*|*/
+      - id: insert-license
+        files: \.sh$
+        args:
+          - --license-filepath
+          - license_header/mpl2_header.txt
+      - id: insert-license
+        files: \.yaml$
+        args:
+          - --license-filepath
+          - license_header/mpl2_header.txt
+          - --comment-style
+          - "|#|"
+  - repo: https://github.com/psf/black
+    rev: 22.12.0
+    hooks:
+      - id: black
+        language_version: python3
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+  - repo: https://github.com/pycqa/flake8
+    rev: 5.0.4
+    hooks:
+      - id: flake8
+  #        TODO Add this and fix issues found
+  #        additional_dependencies: [flake8-bugbear]

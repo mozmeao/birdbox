@@ -1,0 +1,12 @@
+__pycache__/*
+*.pyc
+.cache
+.coverage
+.docker-build*
+.DS_Store
+.env
+.eslintcache
+.idea
+.vscode/
+*~
+venv
