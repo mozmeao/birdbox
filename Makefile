@@ -5,11 +5,24 @@
 
 all: help
 
+
+clean-local-deps:
+	pip freeze | xargs pip uninstall -y
+
 compile-requirements:
 	./bin/compile-requirements.sh
+
+install-local-python-deps:
+	pip install -r requirements/production.txt
+
+preflight:
+	$ npm install
+	${MAKE} install-local-python-deps
+
+
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  compile-requirements   - update Python requirements files"
 
-.PHONY: all compile-requirements help
+.PHONY: all clean-local-deps compile-requirements help install-local-python-deps preflight
