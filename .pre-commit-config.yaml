@@ -36,6 +36,11 @@ repos:
           - --license-filepath
           - license_header/mpl2_header.txt
       - id: insert-license
+        files: \.toml$
+        args:
+          - --license-filepath
+          - license_header/mpl2_header.txt
+      - id: insert-license
         files: \.yaml$
         args:
           - --license-filepath

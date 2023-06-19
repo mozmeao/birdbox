@@ -19,10 +19,12 @@ preflight:
 	$ npm install
 	${MAKE} install-local-python-deps
 
+djserve:
+	python birdbox/manage.py runserver
 
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  compile-requirements   - update Python requirements files"
 
-.PHONY: all clean-local-deps compile-requirements help install-local-python-deps preflight
+.PHONY: all clean-local-deps compile-requirements djserve djmanage help install-local-python-deps preflight
