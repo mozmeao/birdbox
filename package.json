@@ -1,0 +1,50 @@
+{
+  "name": "birdbox",
+  "version": "1.0.0",
+  "description": "A system to create a quick-deploy, easily customisable, CMS-backed microsite service",
+  "private": true,
+  "scripts": {
+    "start": "concurrently --kill-others \"python birdbox/manage.py runserver 0.0.0.0:8080\" \"npm run watch\"",
+    "static": "webpack --config webpack.static.config.js --mode=production --bail",
+    "prewatch": "npm run static",
+    "watch": "webpack serve --mode=development",
+    "prebuild": "npm run static",
+    "build": "webpack --mode=production --bail"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mozmeao/birdbox.git"
+  },
+  "author": "Mozilla",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/mozmeao/birdbox/issues"
+  },
+  "homepage": "https://github.com/mozmeao/birdbox#readme",
+  "dependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@mozilla-protocol/core": "^17.0.1",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "css-minimizer-webpack-plugin": "^5.0.1",
+    "mini-css-extract-plugin": "^2.7.6",
+    "sass": "^1.63.5",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "terser-webpack-plugin": "^5.3.9",
+    "webpack": "^5.87.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-remove-empty-scripts": "^1.0.3"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "browserslist": [
+    "defaults",
+    "IE 10"
+  ]
+}
