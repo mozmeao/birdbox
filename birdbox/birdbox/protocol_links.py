@@ -15,6 +15,6 @@ links = {
 
 def get_docs_link(link_name):
     try:
-        return mark_safe(f"<a href='{links[link_name.lower()]}'>Docs</a>.")
+        return mark_safe(f"<a href='{links[link_name.lower()]}'>See Protocol docs</a>.")
     except KeyError:
         return None

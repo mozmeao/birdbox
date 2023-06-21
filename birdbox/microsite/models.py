@@ -4,6 +4,7 @@
 
 
 from django.db.models import CharField, TextChoices
+from django.utils.safestring import mark_safe
 
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.blocks import RichTextBlock
@@ -35,7 +36,7 @@ class BaseProtocolPage(Page):
         choices=ProtocolLayout.choices,
         blank=True,
         max_length=64,
-        help_text=f'Optional layout wrapper for the entire page. {get_docs_link("layout")}',
+        help_text=mark_safe(f'Optional layout wrapper for the entire page. {get_docs_link("layout")}'),
     )
     settings_panels = Page.settings_panels + [
         FieldPanel("page_layout"),
