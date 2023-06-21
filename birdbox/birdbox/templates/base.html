@@ -1,7 +1,7 @@
 {% load static wagtailcore_tags wagtailuserbar %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en">
     <head>
         <meta charset="utf-8" />
         <title>
@@ -23,8 +23,10 @@
         <base target="_blank">
         {% endif %}
 
+        <script type="text/javascript" src="{% static 'js/protocol-base.js' %}"></script>
+
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/birdbox.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/protocol-mozilla-theme.css' %}">
 
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
@@ -37,7 +39,7 @@
         {% block content %}{% endblock %}
 
         {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/birdbox.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/protocol-global.js' %}"></script>
 
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}

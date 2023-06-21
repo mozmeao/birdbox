@@ -3,14 +3,15 @@
 
 {% block body_class %}template-homepage{% endblock %}
 
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/birdbox.css' %}">
-{% endblock extra_css %}
+{% block extra_css %}{% endblock extra_css %}
 
 {% block content %}
-
-{% for block in page.body %}
-  {{ block }}
-{% endfor %}
-
+<div class="mzp-l-content mzp-t-content-lg">
+  <h1>Mozilla Protocol Theme</h1>
+  {% for block in page.body %}
+    {{ block }}
+  {% endfor %}
+  <button class="mzp-c-button" type="button">Test button</button>
+  <button class="mzp-c-button mzp-t-product" type="button">Test button</button>
+</div>
 {% endblock content %}
