@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/birdbox.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+
+{% for block in page.body %}
+  {{ block }}
+{% endfor %}
+
+{% endblock content %}
