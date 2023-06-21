@@ -1,0 +1,37 @@
+{# https://protocol.mozilla.org/components/detail/card--overview.html #}
+
+{% load wagtailimages_tags %}
+
+<section class="mzp-c-card {{block.size}} {{block.image_aspect_ratio}}">
+    {% if block.link.url %}
+    <a class="mzp-c-card-block-link" href="{{block.link.url}}">
+    {% endif %}
+        {% if block.image %}
+        <div class="mzp-c-card-media-wrapper">
+            {% comment %}
+            Note that we render the image at its original, uploaded size, rather than resample
+            {% endcomment %}
+            <img class="mzp-c-card-image" src="{% block.image original %}" alt="{{block.image.alt_text}}" />
+        </div>
+        {% endif %}
+        <div class="mzp-c-card-content">
+            {% for tag in block.tags %}
+            <div class="mzp-c-card-tag">{{tag}}</div>
+            {% endfor %}
+            <h2 class="mzp-c-card-title">{{block.title}}</h2>
+            <p class="mzp-c-card-desc">
+                {{block.description}}
+            </p>
+            {% if block.cta %}
+            <p class="mzp-c-card-cta">
+                <span class="mzp-c-card-cta-text">{{block.cta}}</span>
+            </p>
+            {% endif %}
+            {% if block.meta_info %}
+            <p class="mzp-c-card-meta">{{block.meta_info}}</p>
+            {% endif %}
+        </div>
+    {% if block.link.url %}
+    </a>
+    {% endif %}
+</section>
