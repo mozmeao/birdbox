@@ -9,7 +9,8 @@ from django.db.models import TextChoices
 from django.templatetags.static import static
 
 from wagtail import blocks as wagtail_blocks
-from wagtail.images import blocks as wagtailimages_blocks
+
+from common.blocks import AccessibleImageBlock
 
 
 class AspectRatios(TextChoices):
@@ -92,9 +93,7 @@ class CardBlock(wagtail_blocks.StructBlock):
         choices=AspectRatios.choices,
         default=AspectRatios.ASPECT_3_2,
     )
-    image = wagtailimages_blocks.ImageChooserBlock(
-        required=False,
-    )
+    card_image = AccessibleImageBlock(required=False)
     tag = wagtail_blocks.CharBlock(
         max_length=48,
         required=False,

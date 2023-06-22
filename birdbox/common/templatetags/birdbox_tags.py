@@ -37,3 +37,20 @@ def frontend_media_for_page(page_obj) -> Dict[str, List[str]]:
             },
         ),
     }
+
+
+@register.simple_tag
+def get_alt_text_for_accessible_image_block(block_data):
+    """Complements common.blocks.AccessibleImageBlock, which
+    should be the block_data passed in.
+
+    If the block is for a non-decorative image, we try to use custom
+    alt-text, else fall back to the image's title, which is what
+    Wagtail also uses by default"""
+
+    retval = ""
+    if not block_data.get("decorative_only"):
+        retval = block_data.get("alt_text")
+        if not retval:
+            retval = block_data.get("image").title
+    return retval
