@@ -27,7 +27,7 @@ extend-exclude = ["__pycache__", "docs", "assets", "static", "bedrock/externalfi
 "birdbox/microsite/migrations/*.py" = ["E501"]
 
 [tool.ruff.isort]
-# known-first-party = ["example1", "example2"]
+known-first-party = ["birdbox", "common", "microsite"]
 section-order = ["future", "standard-library", "django", "third-party", "first-party", "local-folder"]
 combine-as-imports = true
 
