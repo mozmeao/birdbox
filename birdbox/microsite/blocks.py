@@ -4,7 +4,9 @@
 
 """Custom Wagtail blocks that map to Protocol components, intended for use in a StreamField"""
 
+from django import forms
 from django.db.models import TextChoices
+from django.templatetags.static import static
 
 from wagtail import blocks as wagtail_blocks
 from wagtail.images import blocks as wagtailimages_blocks
@@ -24,6 +26,13 @@ class CardSizes(TextChoices):
     EXTRA_LARGE = "mzp-c-card-extra-large", "Extra Large"
 
 
+class CardLayoutOptions(TextChoices):
+    CARD_LAYOUT_5_HERO = "mzp-l-card-hero", "5-Card Hero layout"
+    CARD_LAYOUT_4 = "mzp-l-card-quarter", "4-Card Layout"
+    CARD_LAYOUT_3 = "mzp-l-card-third", "3-Card Layout"
+    CARD_LAYOUT_2 = "mzp-l-card-half", "2-Card Layout"
+
+
 class LinkStructValue(wagtail_blocks.StructValue):
     def url(self):
         external_url = self.get("external_url")
@@ -36,8 +45,8 @@ class LinkStructValue(wagtail_blocks.StructValue):
 
 class LinkBlock(wagtail_blocks.StructBlock):
     "Block that allows linking to ether a Wagtail Page or an external URL"
-    page = wagtail_blocks.PageChooserBlock(label="page", required=False)
-    external_url = wagtail_blocks.URLBlock(label="external URL", required=False)
+    page = wagtail_blocks.PageChooserBlock(label="Page", required=False)
+    external_url = wagtail_blocks.URLBlock(label="External URL", required=False)
 
     class Meta:
         icon = "site"
@@ -45,11 +54,18 @@ class LinkBlock(wagtail_blocks.StructBlock):
 
 
 class CardBlock(wagtail_blocks.StructBlock):
-    template = "microsite/blocks.card.html"
+    class Meta:
+        template = "microsite/blocks/card.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(css={"all": [static("css/protocol-card.css")]})
 
     size = wagtail_blocks.ChoiceBlock(
         choices=CardSizes.choices,
         default=CardSizes.SMALL,
+        required=False,  # so that we can set SMALL, which is actually an empty string
     )
     title = wagtail_blocks.CharBlock(
         required=True,
@@ -79,8 +95,9 @@ class CardBlock(wagtail_blocks.StructBlock):
     image = wagtailimages_blocks.ImageChooserBlock(
         required=False,
     )
-    tags = wagtail_blocks.ListBlock(
-        wagtail_blocks.CharBlock(label="tag"),
+    tag = wagtail_blocks.CharBlock(
+        max_length=48,
+        required=False,
     )
 
     @property
@@ -89,5 +106,18 @@ class CardBlock(wagtail_blocks.StructBlock):
         return False
 
 
-class CardLayout(wagtail_blocks.StructBlock):
-    assert False, "WRITE ME"
+class CardLayoutBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/card_layout.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(css={"all": [static("css/protocol-card.css")]})
+
+    layout = wagtail_blocks.ChoiceBlock(
+        choices=CardLayoutOptions.choices,
+        default=CardLayoutOptions.CARD_LAYOUT_3,
+    )
+
+    cards = wagtail_blocks.ListBlock(CardBlock())

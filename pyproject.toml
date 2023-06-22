@@ -24,6 +24,7 @@ extend-exclude = ["__pycache__", "docs", "assets", "static", "bedrock/externalfi
 [tool.ruff.per-file-ignores]
 "birdbox/birdbox/settings/dev.py" = ["F403", "F405"]
 "birdbox/birdbox/settings/production.py" = ["F403", "F405"]
+"birdbox/microsite/migrations/*.py" = ["E501"]
 
 [tool.ruff.isort]
 # known-first-party = ["example1", "example2"]

@@ -1,0 +1,7 @@
+{% load wagtailcore_tags %}
+
+<div class="mzp-l-content {{ block.value.layout }}">
+  {% for block in block.value.cards %}
+    {% include_block block %}
+  {% endfor %}
+</div>
