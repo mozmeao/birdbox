@@ -55,7 +55,14 @@ class ProtocolTestPage(BaseProtocolPage):
             ("paragraph", RichTextBlock(required=False)),
             ("image", ImageChooserBlock(required=False)),
             # MORE TO COME: custom blocks for all the configured protocol components
-            ("cards", CardLayoutBlock(label="Card group", required=False)),
+            (
+                "cards",
+                CardLayoutBlock(
+                    label="Card group",
+                    required=False,
+                    help_text=mark_safe(f'Layout wrapper for Cards. {get_docs_link("card-layout")}'),
+                ),
+            ),
         ],
         use_json_field=True,
     )

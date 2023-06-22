@@ -10,6 +10,7 @@ from django.templatetags.static import static
 
 from wagtail import blocks as wagtail_blocks
 
+from birdbox.protocol_links import get_docs_link
 from common.blocks import AccessibleImageBlock
 
 
@@ -119,4 +120,7 @@ class CardLayoutBlock(wagtail_blocks.StructBlock):
         default=CardLayoutOptions.CARD_LAYOUT_3,
     )
 
-    cards = wagtail_blocks.ListBlock(CardBlock())
+    cards = wagtail_blocks.ListBlock(
+        CardBlock(),
+        help_text=get_docs_link("card-layout"),
+    )
