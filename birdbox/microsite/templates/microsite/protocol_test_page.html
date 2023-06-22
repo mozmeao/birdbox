@@ -1,17 +1,19 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static wagtailcore_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
 {% block extra_css %}{% endblock extra_css %}
 
 {% block content %}
-<div class="mzp-l-content mzp-t-content-lg">
+{% comment %} <div class="mzp-l-content mzp-t-content-lg"> {% endcomment %}
   <h1>Mozilla Protocol Theme</h1>
   {% for block in page.body %}
-    {{ block }}
+    {% include_block block %}
   {% endfor %}
+  {% comment %}
   <button class="mzp-c-button" type="button">Test button</button>
   <button class="mzp-c-button mzp-t-product" type="button">Test button</button>
-</div>
+  {% endcomment %}
+{% comment %} </div> {% endcomment %}
 {% endblock content %}
