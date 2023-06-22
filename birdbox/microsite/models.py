@@ -6,13 +6,15 @@
 from django.db.models import CharField, TextChoices
 from django.utils.safestring import mark_safe
 
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.blocks import RichTextBlock
 from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.models import Page
 
 from birdbox.protocol_links import get_docs_link
+
+from .blocks import CardLayoutBlock
 
 
 class ProtocolLayout(TextChoices):
@@ -52,7 +54,8 @@ class ProtocolTestPage(BaseProtocolPage):
         [
             ("paragraph", RichTextBlock(required=False)),
             ("image", ImageChooserBlock(required=False)),
-            # TO COME: custom blocks for all the protocol components
+            # MORE TO COME: custom blocks for all the configured protocol components
+            ("cards", CardLayoutBlock(label="Card group", required=False)),
         ],
         use_json_field=True,
     )
