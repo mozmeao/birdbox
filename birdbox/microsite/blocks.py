@@ -38,6 +38,7 @@ class CardLayoutOptions(TextChoices):
 class SplitBlockVariants(TextChoices):
     SPLIT_BLOCK_STANDARD = "", "Standard"
     SPLIT_BLOCK_REVERSED = "mzp-l-split-reversed", "Reversed"
+    SPLIT_BLOCK_DARK_BACKGORUND = "mzp-t-dark mzp-t-background-secondary", "Dark Background"
 
 
 class SplitBlockSizes(TextChoices):
