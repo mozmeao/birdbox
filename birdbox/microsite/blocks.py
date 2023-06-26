@@ -10,6 +10,7 @@ from django.templatetags.static import static
 
 from wagtail import blocks as wagtail_blocks
 
+from birdbox.protocol_links import get_docs_link
 from common.blocks import AccessibleImageBlock
 
 
@@ -34,6 +35,18 @@ class CardLayoutOptions(TextChoices):
     CARD_LAYOUT_2 = "mzp-l-card-half", "2-Card Layout"
 
 
+class SplitBlockVariants(TextChoices):
+    SPLIT_BLOCK_STANDARD = "", "Standard"
+    SPLIT_BLOCK_REVERSED = "mzp-l-split-reversed", "Reversed"
+    SPLIT_BLOCK_DARK_BACKGORUND = "mzp-t-dark mzp-t-background-secondary", "Dark Background"
+
+
+class SplitBlockSizes(TextChoices):
+    SPLIT_BLOCK_SIZE_MEDIUM = "mzp-t-content-md", "Medium"
+    SPLIT_BLOCK_SIZE_LARGE = "mzp-t-content-lg", "Large"
+    SPLIT_BLOCK_SIZE_EXTRA_LARGE = "mzp-t-content-xl", "Extra-large"
+
+
 class LinkStructValue(wagtail_blocks.StructValue):
     def url(self):
         external_url = self.get("external_url")
@@ -52,6 +65,12 @@ class LinkBlock(wagtail_blocks.StructBlock):
     class Meta:
         icon = "site"
         value_class = LinkStructValue
+
+
+class CTAButtonBlock(LinkBlock):
+    button_text = wagtail_blocks.CharBlock(
+        max_length=50,
+    )
 
 
 class CardBlock(wagtail_blocks.StructBlock):
@@ -119,4 +138,37 @@ class CardLayoutBlock(wagtail_blocks.StructBlock):
         default=CardLayoutOptions.CARD_LAYOUT_3,
     )
 
-    cards = wagtail_blocks.ListBlock(CardBlock())
+    cards = wagtail_blocks.ListBlock(
+        CardBlock(),
+        help_text=get_docs_link("card-layout"),
+    )
+
+
+class SplitBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/split.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(css={"all": [static("css/protocol-split.css")]})
+
+    layout_variant = wagtail_blocks.ChoiceBlock(
+        choices=SplitBlockVariants.choices,
+        default=SplitBlockVariants.SPLIT_BLOCK_STANDARD,
+        required=False,  # so that we can set SPLIT_BLOCK_STANDARD, which is actually an empty string
+    )
+    content_size = wagtail_blocks.ChoiceBlock(
+        choices=SplitBlockSizes.choices,
+        blank=True,
+    )
+    title = wagtail_blocks.CharBlock(
+        max_length=120,
+        required=True,
+    )
+    text = wagtail_blocks.TextBlock(
+        max_length=500,
+        required=True,
+    )
+    cta_button = CTAButtonBlock(required=False)
+    image = AccessibleImageBlock(required=True)

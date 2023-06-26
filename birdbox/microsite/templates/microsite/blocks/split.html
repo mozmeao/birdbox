@@ -1,0 +1,27 @@
+{# https://protocol.mozilla.org/components/detail/split--default.html #}
+{# NB: Does not behave inside an mzp-l-content wrapper - that's against planned use #}
+
+{% load birdbox_tags %}
+
+
+<section class="mzp-c-split {{block.value.layout_variant}} {{block.value.content_size}}">
+    <div class="mzp-c-split-container">
+        <div class="mzp-c-split-body">
+            <h1 class="mzp-u-title-md">{{block.value.title}}</h1>
+            <p>{{block.value.text}}</p>
+            {% if block.value.cta_button %}
+            <p>
+              <a class="mzp-c-button {% seek_dark_theme_class block.value.layout_variant %}" href="{{block.value.cta_button.url}}">
+                {{block.value.cta_button.button_text}}
+              </a>
+            </p>
+            {% endif %}
+        </div>
+        <div class="mzp-c-split-media ">
+          {% with block.value.image as image_block %}
+            {% include "common/partials/accessible_image.html" with image_block=image_block %}
+          {% endwith %}
+          </div>
+    </div>
+</section>
+

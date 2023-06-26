@@ -1,0 +1,12 @@
+{% load birdbox_tags wagtailimages_tags %}
+{% comment %}
+  Expects an AccessibleImageBlock instance to be passed in as image_block
+
+  e.g.
+    {% include "common/partials/accessible_image.html" image_block=image_block %}
+
+{% endcomment %}
+
+{% get_alt_text_for_accessible_image_block image_block as image_alt_text %}
+{# Note that we render the image at its original, uploaded size, rather than resample #}
+{% image image_block.image original class="mzp-c-card-image" alt=image_alt_text %}

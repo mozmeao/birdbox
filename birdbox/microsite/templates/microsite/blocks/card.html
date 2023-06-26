@@ -1,16 +1,17 @@
 {# https://protocol.mozilla.org/components/detail/card--overview.html #}
+{# NB: Does not behave inside an mzp-l-content wrapper - that's against planned use #}
+
 {% load birdbox_tags wagtailimages_tags %}
+
 <section class="mzp-c-card {{block.size}} {{block.image_aspect_ratio}}">
     {% if block.link.url %}
     <a class="mzp-c-card-block-link" href="{{block.link.url}}">
     {% endif %}
         {% if block.card_image.image %}
         <div class="mzp-c-card-media-wrapper">
-            {% comment %}
-            Note that we render the image at its original, uploaded size, rather than resample
-            {% endcomment %}
-            {% get_alt_text_for_accessible_image_block block.card_image as image_alt_text %}
-            {% image block.card_image.image original class="mzp-c-card-image" alt=image_alt_text %}
+          {% with block.card_image as image_block %}
+            {% include "common/partials/accessible_image.html" with image_block=image_block %}
+          {% endwith %}
         </div>
         {% endif %}
         <div class="mzp-c-card-content">

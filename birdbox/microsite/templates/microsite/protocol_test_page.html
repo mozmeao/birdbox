@@ -6,14 +6,14 @@
 {% block extra_css %}{% endblock extra_css %}
 
 {% block content %}
-{% comment %} <div class="mzp-l-content mzp-t-content-lg"> {% endcomment %}
-  <h1>Mozilla Protocol Theme</h1>
-  {% for block in page.body %}
+<div class="mzp-l-content mzp-t-content-lg">
+  <h1>{{page.title}}</h1>
+</div>
+{% for block in page.body %}
     {% include_block block %}
   {% endfor %}
   {% comment %}
   <button class="mzp-c-button" type="button">Test button</button>
   <button class="mzp-c-button mzp-t-product" type="button">Test button</button>
   {% endcomment %}
-{% comment %} </div> {% endcomment %}
 {% endblock content %}

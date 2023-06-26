@@ -14,7 +14,7 @@ from wagtail.models import Page
 
 from birdbox.protocol_links import get_docs_link
 
-from .blocks import CardLayoutBlock
+from .blocks import CardLayoutBlock, SplitBlock
 
 
 class ProtocolLayout(TextChoices):
@@ -55,7 +55,22 @@ class ProtocolTestPage(BaseProtocolPage):
             ("paragraph", RichTextBlock(required=False)),
             ("image", ImageChooserBlock(required=False)),
             # MORE TO COME: custom blocks for all the configured protocol components
-            ("cards", CardLayoutBlock(label="Card group", required=False)),
+            (
+                "cards",
+                CardLayoutBlock(
+                    label="Card group",
+                    required=False,
+                    help_text=mark_safe(f'Layout wrapper for Cards. {get_docs_link("card-layout")}'),
+                ),
+            ),
+            (
+                "split",
+                SplitBlock(
+                    label="Split content",
+                    required=False,
+                    help_text=mark_safe(f'Split block. {get_docs_link("split")}  Not all options supported'),
+                ),
+            ),
         ],
         use_json_field=True,
     )
