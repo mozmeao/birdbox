@@ -25,6 +25,7 @@ module.exports = {
         "protocol-footer-js": "./src/js/protocol/components/footer.js",
         "protocol-split": "./src/css/protocol/components/split.scss",
         "protocol-card": "./src/css/protocol/components/card.scss",
+        "protocol-picto": "./src/css/protocol/components/picto.scss",
     },
     output: {
         filename: "js/[name].js",
