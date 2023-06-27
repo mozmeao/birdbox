@@ -1,0 +1,115 @@
+{% load wagtailcore_tags %}
+
+<footer class="mzp-c-footer">
+  <div class="mzp-l-content">
+
+    <nav class="mzp-c-footer-primary">
+        <div class="mzp-c-footer-primary-logo">
+            <a href="https://www.mozilla.org/">Mozilla</a>
+        </div>
+        <div class="mzp-c-footer-sections">
+            {% for column in footer.columns %}
+            <section class="mzp-c-footer-section">
+                {% if column.value.title %}
+                <h5 class="mzp-c-footer-heading">
+                    {{column.value.title}}
+                </h5>
+                {% endif %}
+                <ul class="mzp-c-footer-list">
+                    {% for link in column.value.links %}
+                    <li>
+                        <a href="{{link.url}}">{{link.label}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endfor %}
+        </div>
+    </nav>
+
+    <nav class="mzp-c-footer-secondary">
+      {% comment "Lang switcher disabled until we get L10N hooked up" %}
+      <div class="mzp-c-footer-language">
+          <form class="mzp-c-language-switcher" method="get" action="#">
+
+              <label for="mzp-c-language-switcher-select">Language</label>
+              <select name="language" id="mzp-c-language-switcher-select" class="mzp-js-language-switcher-select">
+                  <option value="de">Deutsch</option>
+                  <option value="en">English</option>
+                  <option value="es">Español</option>
+                  <option value="fr">Français</option>
+                  <option value="hi-IN">हिन्दी (भारत)</option>
+                  <option value="ja">日本語</option>
+              </select>
+
+              <!-- form submit button is shown when JavaScript is not enabled -->
+              <button type="submit">Go</button>
+          </form>
+
+          <script src="../../protocol/js/lang-switcher.js"></script>
+
+          <script>
+              (function() {
+                  'use strict';
+                  // a custom callback can be passed to the lang switcher for analytics purposes.
+                  MzpLangSwitcher.init(function(previousLanguage, newLanguage) {
+                      console.log('Previous language:', previousLanguage);
+                      console.log('New language:', newLanguage);
+                  });
+              })();
+          </script>
+
+      </div>
+      {% endcomment %}
+
+      {% if footer.social_links %}
+      <ul class="mzp-c-footer-links-social">
+          {% comment %}
+            Double nesting because in a new footer we'll have multiple blocks of social links
+          {% endcomment %}
+          {% for social_link_group in footer.social_links %}
+          {% comment %} {{social_link_group.title}} is available here, for future use {% endcomment %}
+          {% for social_link in social_link_group.value.links %}
+          <li>
+              <a class="{{social_link.icon}}" href="{{social_link.url}}">
+                <span>{{social_link.data_label}}</span>
+              </a>
+          </li>
+          {% endfor %}
+          {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% comment %} footer.aftermatter is a Streamfield with zero or one blocks only in it {% endcomment %}
+      {% with footer.aftermatter.0 as aftermatter %}
+      {% if aftermatter.value %}
+      <div class="mzp-c-footer-legal">
+        {% if aftermatter.value.legal_text %}
+        <div class="mzp-c-footer-license">
+            {{ aftermatter.value.legal_text|richtext }}
+        </div>
+        {% endif %}
+        {% if aftermatter.value.links %}
+        <ul class="mzp-c-footer-terms">
+            {% for link in aftermatter.value.links %}
+            <li><a href="{{link.url}}">{{link.label}}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% endwith %}
+    </nav>
+
+  </div>
+</footer>
+
+{% comment %}
+<!-- Use these scripts with footer sections to get expandable titles on mobile screens -->
+<script src="../../protocol/js/details.js"></script>
+<script src="../../protocol/js/footer.js"></script>
+<script>
+  window.MzpFooter.init();
+</script>
+{% endcomment %}
+

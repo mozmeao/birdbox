@@ -25,6 +25,9 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 
+# We're sticking to LTS releases of Wagtail, so we don't want to be told there's a new version if that's not LTS
+WAGTAIL_ENABLE_UPDATE_CHECK = False
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -33,6 +36,7 @@ INSTALLED_APPS = [
     "search",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
+    "wagtail.contrib.settings",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.users",
@@ -79,6 +83,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "wagtail.contrib.settings.context_processors.settings",
             ],
         },
     },
@@ -97,6 +102,7 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"  # No need for BigIntAutoField
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
