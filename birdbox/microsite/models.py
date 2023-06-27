@@ -20,6 +20,7 @@ from .blocks import (
     FooterAfterMatterLinksBlock,
     FooterColumnBlock,
     FooterSocialLinksGroupBlock,
+    PictoBlock,
     SplitBlock,
 )
 
@@ -76,6 +77,14 @@ class ProtocolTestPage(BaseProtocolPage):
                     label="Split content",
                     required=False,
                     help_text=mark_safe(f'Split block. {get_docs_link("split")}  Not all options supported'),
+                ),
+            ),
+            (
+                "picto",
+                PictoBlock(
+                    label="Picto block",
+                    required=False,
+                    help_text=mark_safe(f'Picto. {get_docs_link("picto")} May work better in a column layout'),
                 ),
             ),
         ],

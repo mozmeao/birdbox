@@ -47,6 +47,12 @@ class SplitBlockSizes(TextChoices):
     SPLIT_BLOCK_SIZE_EXTRA_LARGE = "mzp-t-content-xl", "Extra-large"
 
 
+class PictoLayoutOptions(TextChoices):
+    PICTO_LAYOUT_STANDARD = "", "Standard"
+    PICTO_LAYOUT_CENTERED = "mzp-t-picto-center", "Centered"
+    PICTO_LAYOUT_SIDE = "mzp-t-picto-side", "Side"
+
+
 class SocialIconChoices(TextChoices):
     # The two values for each choice are the static URL path and the display name
     SOCIAL_FIREFOX = "firefox", "Firefox"
@@ -265,4 +271,37 @@ class FooterAfterMatterLinksBlock(wagtail_blocks.StructBlock):
     )
     legal_text = wagtail_blocks.RichTextBlock(
         features=["link"],
+    )
+
+
+class PictoBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/picto.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={"all": [static("css/protocol-picto.css")]},
+        )
+
+    layout = wagtail_blocks.ChoiceBlock(
+        choices=PictoLayoutOptions.choices,
+        default=PictoLayoutOptions.PICTO_LAYOUT_STANDARD,
+        required=False,  # so that we can set PICTO_LAYOUT_STANDARD, which is actually an empty string
+    )
+    image = AccessibleImageBlock(
+        required=True,
+        help_text=(
+            "Picto block images should usually be a small icon, but larger images or (eventually) even videos can be accommodated in some layouts"
+        ),
+    )
+    heading = wagtail_blocks.CharBlock(
+        max_length=100,
+        required=False,
+    )
+    body = wagtail_blocks.TextBlock(
+        max_length=150,
+        required=False,
+        help_text="Don’t use this component for long-form content; it’s only for blurbs.",
     )

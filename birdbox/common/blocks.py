@@ -21,3 +21,13 @@ class AccessibleImageBlock(wagtail_blocks.StructBlock):
         default=False,
         required=False,
     )
+    width = wagtail_blocks.IntegerBlock(
+        label="Specific image width in px (optional)",
+        min_value=0,
+        required=False,
+    )
+    height = wagtail_blocks.IntegerBlock(
+        label="Specific image height in px (optional)",
+        min_value=0,
+        required=False,
+    )
