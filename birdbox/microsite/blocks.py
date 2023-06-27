@@ -47,6 +47,20 @@ class SplitBlockSizes(TextChoices):
     SPLIT_BLOCK_SIZE_EXTRA_LARGE = "mzp-t-content-xl", "Extra-large"
 
 
+class SocialIconChoices(TextChoices):
+    # The two values for each choice are the static URL path and the display name
+    SOCIAL_FIREFOX = "firefox", "Firefox"
+    SOCIAL_GITHUB = "github", "Github"
+    SOCIAL_INSTAGRAM = "instagram", "Instagram"
+    SOCIAL_LINKEDIN = "linkedin", "LinkedIn"
+    SOCIAL_MASTODON = "mastodon", "Mastodon"
+    SOCIAL_POCKET = "pocket", "Pocket"
+    SOCIAL_SPOTIFY = "spotify", "Spotify"
+    SOCIAL_TIKTOK = "tiktok", "TikTok"
+    SOCIAL_TWITTER = "twitter", "Twitter"
+    SOCIAL_YOUTUBE = "youtube", "YouTube"
+
+
 class LinkStructValue(wagtail_blocks.StructValue):
     def url(self):
         external_url = self.get("external_url")
@@ -65,6 +79,12 @@ class LinkBlock(wagtail_blocks.StructBlock):
     class Meta:
         icon = "site"
         value_class = LinkStructValue
+
+
+class LabelledLinkBlock(LinkBlock):
+    label = wagtail_blocks.CharBlock(
+        max_length=100,
+    )
 
 
 class CTAButtonBlock(LinkBlock):
@@ -172,3 +192,77 @@ class SplitBlock(wagtail_blocks.StructBlock):
     )
     cta_button = CTAButtonBlock(required=False)
     image = AccessibleImageBlock(required=True)
+
+
+class FooterColumnBlock(wagtail_blocks.StructBlock):
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={"all": [static("css/protocol-footer-css.css")]},
+            js=[static("js/protocol-footer-js.js")],
+        )
+
+    # For use in the models.Footer.content Streamfield,
+    # so has no template of its own
+    title = wagtail_blocks.CharBlock(
+        label="Column title - e.g. 'Company' or 'Support'",
+        max_length=50,
+        required=False,
+    )
+    links = wagtail_blocks.ListBlock(LabelledLinkBlock())
+
+
+class FooterSocialLinkBlock(wagtail_blocks.StructBlock):
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={"all": [static("css/protocol-footer-css.css")]},
+            js=[static("js/protocol-footer-js.js")],
+        )
+
+    icon = wagtail_blocks.ChoiceBlock(
+        choices=SocialIconChoices.choices,
+    )
+    url = wagtail_blocks.URLBlock(
+        required=True,
+    )
+    data_label = wagtail_blocks.CharBlock(
+        max_length=50,
+        required=True,
+        help_text='Service name and handle - e.g. "Twitter (@mozilla)"',
+    )
+
+
+class FooterSocialLinksGroupBlock(wagtail_blocks.StructBlock):
+    # For use in the models.Footer.content Streamfield,
+    # so has no template of its own
+    title = wagtail_blocks.CharBlock(
+        label="Social links section title - e.g. 'Follow @mozilla'",
+        max_length=50,
+        required=False,
+    )
+    links = wagtail_blocks.ListBlock(
+        FooterSocialLinkBlock(),
+        label="Social links",
+        max_num=6,
+    )
+
+
+class FooterAfterMatterLinksBlock(wagtail_blocks.StructBlock):
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={"all": [static("css/protocol-footer-css.css")]},
+            js=[static("js/protocol-footer-js.js")],
+        )
+
+    links = wagtail_blocks.ListBlock(
+        LabelledLinkBlock(),
+        max_num=10,
+    )
+    legal_text = wagtail_blocks.RichTextBlock(
+        features=["link"],
+    )

@@ -3,18 +3,25 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 
-from django.db.models import CharField, TextChoices
+from django.db.models import BooleanField, CharField, TextChoices
 from django.utils.safestring import mark_safe
 
 from wagtail.admin.panels import FieldPanel
 from wagtail.blocks import RichTextBlock
+from wagtail.contrib.settings.models import BaseGenericSetting, register_setting
 from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.models import Page
 
 from birdbox.protocol_links import get_docs_link
 
-from .blocks import CardLayoutBlock, SplitBlock
+from .blocks import (
+    CardLayoutBlock,
+    FooterAfterMatterLinksBlock,
+    FooterColumnBlock,
+    FooterSocialLinksGroupBlock,
+    SplitBlock,
+)
 
 
 class ProtocolLayout(TextChoices):
@@ -78,3 +85,63 @@ class ProtocolTestPage(BaseProtocolPage):
     content_panels = BaseProtocolPage.content_panels + [
         FieldPanel("body"),
     ]
+
+
+@register_setting(icon="list-ul", order=1)
+class Footer(BaseGenericSetting):
+    # Rather than model this as a Snippet + some singleton hackery and _then_
+    # have a separate Setting to decide whether to use it, we do it in one place
+
+    display_footer = BooleanField(
+        verbose_name="Display footer in this site?",
+        default=True,
+    )
+
+    columns = StreamField(
+        [
+            ("grouped_links", FooterColumnBlock(label="Column of links")),
+        ],
+        block_counts={
+            "grouped_links": {"max_num": 6},
+        },
+        blank=True,
+        null=True,
+        help_text="Add up to six columns of links OR five + social links",
+        use_json_field=True,
+    )
+
+    social_links = StreamField(
+        [
+            ("socials", FooterSocialLinksGroupBlock()),
+        ],
+        block_counts={
+            "socials": {"max_num": 1},
+        },
+        blank=True,
+        null=True,
+        help_text="Add an group of social links (optional)",
+        use_json_field=True,
+    )
+
+    aftermatter = StreamField(
+        [
+            ("content", FooterAfterMatterLinksBlock()),
+        ],
+        block_counts={
+            "content": {"max_num": 1},
+        },
+        blank=True,
+        null=True,
+        help_text="Add one aftermatter block; this is important for legal links etc",
+        use_json_field=True,
+    )
+
+    panels = [
+        FieldPanel("display_footer"),
+        FieldPanel("columns"),
+        FieldPanel("social_links"),
+        FieldPanel("aftermatter"),
+    ]
+
+    class Meta:
+        verbose_name = "Sitewide footer"

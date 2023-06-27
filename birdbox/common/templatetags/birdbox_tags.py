@@ -7,21 +7,33 @@ from typing import Dict, List
 from django.template import Library
 from django.template.loader import render_to_string
 
+from microsite.models import Footer
+
 from ..utils import get_frontend_media
 
 register = Library()
 
 
-@register.simple_tag
-def frontend_media_for_page(page_obj) -> Dict[str, List[str]]:
+@register.simple_tag(takes_context=True)
+def frontend_media_for_page(context, page) -> Dict[str, List[str]]:
     """Gather the frontend CSS and JS associated with any Protocol-styled
     blocks in the page"""
+
+    request = context["request"]
+
     css_files = []
     js_files = []
 
-    for media_obj in get_frontend_media(page_obj.specific):
+    for media_obj in get_frontend_media(page.specific):
         css_files.extend(set([x for x in media_obj.render_css()]))
         js_files.extend(set([x for x in media_obj.render_js()]))
+
+    # See if we need to gather footer media too
+    footer = Footer.load(request_or_site=request)
+    if footer and footer.display_footer:
+        for media_obj in get_frontend_media(footer):
+            css_files.extend(set([x for x in media_obj.render_css()]))
+            js_files.extend(set([x for x in media_obj.render_js()]))
 
     return {
         "css": render_to_string(

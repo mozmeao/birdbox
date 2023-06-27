@@ -13,6 +13,7 @@ links = {
     "card-layout": "https://protocol.mozilla.org/components/detail/card-layout--overview.html",
     "card": "https://protocol.mozilla.org/components/detail/card--overview.html",
     "split": "https://protocol.mozilla.org/components/detail/split--default.html",
+    "footer": "https://protocol.mozilla.org/components/detail/footer.html",
 }
 
 

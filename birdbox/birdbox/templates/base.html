@@ -1,6 +1,5 @@
 {% load static wagtailcore_tags wagtailuserbar birdbox_tags %}
 
-
 {% frontend_media_for_page page as frontend_media %}
 
 <!DOCTYPE html>
@@ -32,9 +31,11 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/protocol-mozilla-theme.css' %}">
 
         {# Block-specific CSS from streamfield content #}
+        {% block frontend_media_css %}
         {% if frontend_media.css %}
           {{frontend_media.css}}
         {% endif %}
+        {% endblock frontend_media_css %}
 
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
@@ -46,6 +47,8 @@
 
         {% block content %}{% endblock %}
 
+        {% block footer %}{% endblock footer %}
+
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/protocol-global.js' %}"></script>
 
@@ -54,9 +57,11 @@
         {% endblock %}
 
         {# Block-specific JS from streamfield content #}
-        {% if frontend_media.js %}
+        {% block frontend_media_js %}
+          {% if frontend_media.js %}
           {{frontend_media.js}}
         {% endif %}
+        {% endblock frontend_media_js %}
 
       </body>
 </html>
