@@ -11,6 +11,7 @@ from django.utils.safestring import mark_safe
 links = {
     "card-layout": "https://protocol.mozilla.org/components/detail/card-layout--overview.html",
     "card": "https://protocol.mozilla.org/components/detail/card--overview.html",
+    "columns": "https://protocol.mozilla.org/components/detail/columns--overview.html",
     "footer": "https://protocol.mozilla.org/components/detail/footer.html",
     "layout": "https://protocol.mozilla.org/components/detail/content-container--default.html",
     "picto": "https://protocol.mozilla.org/components/detail/picto--default.html",
@@ -20,6 +21,6 @@ links = {
 
 def get_docs_link(link_name):
     try:
-        return mark_safe(f"<a href='{links[link_name.lower()]}'>See Protocol docs</a>.")
+        return mark_safe(f"<a href='{links[link_name.lower()]}'>Protocol docs for {link_name}</a>.")
     except KeyError:
         return None

@@ -1,0 +1,8 @@
+{# https://protocol.mozilla.org/components/detail/columns--overview.html #}
+
+{% load wagtailcore_tags %}
+<div class="{{block.value.column_layout}}">
+  {% for block in block.value.content %}
+    {% include_block block %}
+  {% endfor %}
+</div>
