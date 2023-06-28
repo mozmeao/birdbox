@@ -67,6 +67,13 @@ class SocialIconChoices(TextChoices):
     SOCIAL_YOUTUBE = "youtube", "YouTube"
 
 
+class ColumnOptions(TextChoices):
+    COLUMN_LAYOUT_ONE_COLUMN = "mzp-l-content", "One column"
+    COLUMN_LAYOUT_TWO_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-two", "Two column"
+    COLUMN_LAYOUT_THREE_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-three", "Three column"
+    COLUMN_LAYOUT_FOUR_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-four", "Four column"
+
+
 class LinkStructValue(wagtail_blocks.StructValue):
     def url(self):
         external_url = self.get("external_url")
@@ -304,4 +311,38 @@ class PictoBlock(wagtail_blocks.StructBlock):
         max_length=150,
         required=False,
         help_text="Don’t use this component for long-form content; it’s only for blurbs.",
+    )
+
+
+class ColumnContentBlock(wagtail_blocks.StreamBlock):
+    picto = PictoBlock(
+        required=False,
+    )
+
+
+class ColumnBlock(wagtail_blocks.StructBlock):
+    """The multi-column layout made available as a block, wrapping various content items
+    that need structure around them.
+
+    This block will support 1 to 4 columns
+    """
+
+    class Meta:
+        template = "microsite/blocks/column.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={"all": [static("css/protocol-columns.css"), static("css/protocol-picto.css")]},
+        )
+
+    column_layout = wagtail_blocks.ChoiceBlock(
+        choices=ColumnOptions.choices,
+        default=ColumnOptions.COLUMN_LAYOUT_TWO_COLUMN,
+        required=True,
+    )
+
+    content = ColumnContentBlock(
+        help_text="Only blocks that can fit/flow well in a multi-column layout are allowed here - e.g. Picto",
     )
