@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% load microsite_tags static %}
 
+{% block global_stylesheets %}
+{% with "css/"|add:settings.microsite.MicrositeSettings.site_theme|add:".css" as global_css_filepath %}
+<link rel="stylesheet" type="text/css" href="{% static global_css_filepath %}">
+{% endwith %}
+{% endblock global_stylesheets %}
+
 {% block footer %}
   {% site_footer %}
 {% endblock footer %}

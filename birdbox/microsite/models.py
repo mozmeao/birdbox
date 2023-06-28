@@ -96,7 +96,7 @@ class ProtocolTestPage(BaseProtocolPage):
     ]
 
 
-@register_setting(icon="list-ul", order=1)
+@register_setting(icon="list-ul", order=2)
 class Footer(BaseGenericSetting):
     # Rather than model this as a Snippet + some singleton hackery and _then_
     # have a separate Setting to decide whether to use it, we do it in one place
@@ -153,4 +153,22 @@ class Footer(BaseGenericSetting):
     ]
 
     class Meta:
-        verbose_name = "Sitewide footer"
+        verbose_name = "Configure Footer"
+
+
+class BrandChoices(TextChoices):
+    MOZORG_BRAND = "protocol-mozilla-theme", "Mozilla.org theme"
+    FIREFOX_BRAND = "protocol-firefox-theme", "Firefox theme"
+
+
+@register_setting(icon="globe", order=1)
+class MicrositeSettings(BaseGenericSetting):
+    site_theme = CharField(
+        max_length=64,
+        choices=BrandChoices.choices,
+        default=BrandChoices.MOZORG_BRAND,
+        help_text="Choose the design theme for this site. Changes will be immediately applied - there is no preview",
+    )
+
+    class Meta:
+        verbose_name = "General site settings"

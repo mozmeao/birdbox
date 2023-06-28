@@ -28,7 +28,7 @@
         <script type="text/javascript" src="{% static 'js/protocol-base.js' %}"></script>
 
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/protocol-mozilla-theme.css' %}">
+        {% block global_stylesheets %}{% endblock global_stylesheets %}
 
         {# Block-specific CSS from streamfield content #}
         {% block frontend_media_css %}
