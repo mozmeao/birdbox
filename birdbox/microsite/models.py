@@ -157,8 +157,8 @@ class Footer(BaseGenericSetting):
 
 
 class BrandChoices(TextChoices):
-    MOZORG_BRAND = "protocol-mozilla-theme", "Mozilla.org theme"
-    FIREFOX_BRAND = "protocol-firefox-theme", "Firefox theme"
+    MOZORG_BRAND = "mozilla", "Mozilla.org theme"
+    FIREFOX_BRAND = "firefox", "Firefox theme"
 
 
 @register_setting(icon="globe", order=1)

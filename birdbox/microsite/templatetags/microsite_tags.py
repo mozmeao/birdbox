@@ -4,7 +4,7 @@
 
 from django.template import Library
 
-from ..models import Footer
+from ..models import Footer, MicrositeSettings
 
 register = Library()
 
@@ -18,3 +18,30 @@ def site_footer(context):
         footer = None
 
     return {"footer": footer}
+
+
+@register.inclusion_tag("microsite/partials/global_css_tag.html", takes_context=True)
+def global_css_tag(context):
+    request = context["request"]
+    microsite_settings = MicrositeSettings.load(request_or_site=request)
+    filepath = f"css/protocol-{microsite_settings.site_theme}-theme.css"
+    return {"filepath": filepath}
+
+
+@register.inclusion_tag("microsite/partials/favicons.html", takes_context=True)
+def favicon_links(context):
+    request = context["request"]
+
+    microsite_settings = MicrositeSettings.load(request_or_site=request)
+
+    _base_path = f"img/favicons/{microsite_settings.site_theme}/"
+
+    apple_icon_path = _base_path + "apple-touch-icon.png"
+    large_favicon_path = _base_path + "favicon-196x196.png"
+    favicon_path = _base_path + "favicon.ico"
+
+    return {
+        "apple_icon_path": apple_icon_path,
+        "large_favicon_path": large_favicon_path,
+        "favicon_path": favicon_path,
+    }
