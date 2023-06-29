@@ -13,6 +13,21 @@ from wagtail import blocks as wagtail_blocks
 from birdbox.protocol_links import get_docs_link
 from common.blocks import AccessibleImageBlock
 
+# https://docs.wagtail.org/en/stable/advanced_topics/customisation/page_editing_interface.html#limiting-features-in-a-rich-text-field
+RICHTEXT_ARTICLE_FEATURES = RICHTEXT_ARTICLE_FEATURES = [
+    # Order here is the order used in the editor UI
+    "h2",
+    "h3",
+    "bold",
+    "italic",
+    "strikethrough",
+    "code",
+    "blockquote",
+    "link",
+    "ol",
+    "ul",
+]
+
 
 class AspectRatios(TextChoices):
     ASPECT_1_1 = "mzp-has-aspect-1-1", "1:1"
@@ -345,4 +360,29 @@ class ColumnBlock(wagtail_blocks.StructBlock):
 
     content = ColumnContentBlock(
         help_text="Only blocks that can fit/flow well in a multi-column layout are allowed here - e.g. Picto",
+    )
+
+
+class ArticleBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/article.html"
+        icon = "doc-full-inverse"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={"all": [static("css/protocol-article.css")]},
+        )
+
+    header = wagtail_blocks.CharBlock(
+        max_length=250,
+        help_text="Rendered as a H1",
+    )
+    intro_para = wagtail_blocks.CharBlock(
+        max_length=1000,
+        help_text="Rendered as a single styled paragraph element  (<p>). 2000 chars max, but less is better.",
+    )
+    body = wagtail_blocks.RichTextBlock(
+        features=RICHTEXT_ARTICLE_FEATURES,
     )

@@ -16,6 +16,7 @@ from wagtail.models import Page
 from birdbox.protocol_links import get_docs_link
 
 from .blocks import (
+    ArticleBlock,
     CardLayoutBlock,
     ColumnBlock,
     FooterAfterMatterLinksBlock,
@@ -26,7 +27,6 @@ from .blocks import (
 
 
 class ProtocolLayout(TextChoices):
-    DEFAULT = "mzp-l-content", "Default"
     SMALL = "mzp-l-content mzp-t-content-sm", "Small"
     MEDIUM = "mzp-l-content mzp-t-content-md", "Medium"
     LARGE = "mzp-l-content mzp-t-content-lg", "Large"
@@ -45,8 +45,9 @@ class BaseProtocolPage(Page):
     page_layout = CharField(
         choices=ProtocolLayout.choices,
         blank=True,
+        default=ProtocolLayout.LARGE,
         max_length=64,
-        help_text=mark_safe(f'Optional layout wrapper for the entire page. {get_docs_link("layout")}'),
+        help_text=mark_safe(f'Optional layout wrapper <i>– only for components that need one</i>. {get_docs_link("layout")}'),
     )
     settings_panels = Page.settings_panels + [
         FieldPanel("page_layout"),
@@ -85,6 +86,14 @@ class ProtocolTestPage(BaseProtocolPage):
                     label="Column block",
                     required=False,
                     help_text=mark_safe(f'Column layout wrapper. {get_docs_link("columns")}. Has sub-components. {get_docs_link("picto")}'),
+                ),
+            ),
+            (
+                "article",
+                ArticleBlock(
+                    label="Article block",
+                    required=False,
+                    help_text=get_docs_link("article"),
                 ),
             ),
         ],

@@ -9,6 +9,7 @@
 from django.utils.safestring import mark_safe
 
 links = {
+    "article": "https://protocol.mozilla.org/components/detail/article.html",
     "card-layout": "https://protocol.mozilla.org/components/detail/card-layout--overview.html",
     "card": "https://protocol.mozilla.org/components/detail/card--overview.html",
     "columns": "https://protocol.mozilla.org/components/detail/columns--overview.html",

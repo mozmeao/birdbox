@@ -14,10 +14,16 @@ const path = require("path");
 
 module.exports = {
     entry: {
+        // base/core
         "protocol-base": "./src/js/protocol/base.js",
         "protocol-global": "./src/js/protocol/global.js",
         "protocol-mozilla-theme": "./src/css/protocol/mozilla.scss",
         "protocol-firefox-theme": "./src/css/protocol/firefox.scss",
+
+        // layouts
+        "protocol-columns": "./src/css/protocol/layouts/columns.scss",
+
+        // individual components
         "protocol-navigation-css":
             "./src/css/protocol/components/navigation.scss",
         "protocol-navigation-js": "./src/js/protocol/components/navigation.js",
@@ -26,7 +32,7 @@ module.exports = {
         "protocol-split": "./src/css/protocol/components/split.scss",
         "protocol-card": "./src/css/protocol/components/card.scss",
         "protocol-picto": "./src/css/protocol/components/picto.scss",
-        "protocol-columns": "./src/css/protocol/layouts/columns.scss",
+        "protocol-article": "./src/css/protocol/components/article.scss",
     },
     output: {
         filename: "js/[name].js",

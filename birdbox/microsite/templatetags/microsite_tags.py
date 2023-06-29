@@ -45,3 +45,11 @@ def favicon_links(context):
         "large_favicon_path": large_favicon_path,
         "favicon_path": favicon_path,
     }
+
+
+@register.simple_tag(takes_context=True)
+def get_layout_class_from_page(context):
+    page = context.get("page")
+    if page:
+        return page.specific.page_layout
+    return ""
