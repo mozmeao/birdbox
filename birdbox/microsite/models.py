@@ -98,6 +98,7 @@ class ProtocolTestPage(BaseProtocolPage):
             ),
         ],
         use_json_field=True,
+        collapsed=True,
     )
 
     content_panels = BaseProtocolPage.content_panels + [
@@ -126,6 +127,7 @@ class Footer(BaseGenericSetting):
         null=True,
         help_text="Add up to six columns of links OR five + social links",
         use_json_field=True,
+        collapsed=True,
     )
 
     social_links = StreamField(
@@ -139,6 +141,7 @@ class Footer(BaseGenericSetting):
         null=True,
         help_text="Add an group of social links (optional)",
         use_json_field=True,
+        collapsed=True,
     )
 
     aftermatter = StreamField(
@@ -152,6 +155,7 @@ class Footer(BaseGenericSetting):
         null=True,
         help_text="Add one aftermatter block; this is important for legal links etc",
         use_json_field=True,
+        collapsed=True,
     )
 
     panels = [

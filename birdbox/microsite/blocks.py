@@ -189,6 +189,7 @@ class CardLayoutBlock(wagtail_blocks.StructBlock):
     cards = wagtail_blocks.ListBlock(
         CardBlock(),
         help_text=get_docs_link("card-layout"),
+        collapsed=True,
     )
 
 
@@ -238,7 +239,10 @@ class FooterColumnBlock(wagtail_blocks.StructBlock):
         max_length=50,
         required=False,
     )
-    links = wagtail_blocks.ListBlock(LabelledLinkBlock())
+    links = wagtail_blocks.ListBlock(
+        LabelledLinkBlock(),
+        collapsed=True,
+    )
 
 
 class FooterSocialLinkBlock(wagtail_blocks.StructBlock):
@@ -275,6 +279,7 @@ class FooterSocialLinksGroupBlock(wagtail_blocks.StructBlock):
         FooterSocialLinkBlock(),
         label="Social links",
         max_num=6,
+        collapsed=True,
     )
 
 
@@ -290,6 +295,7 @@ class FooterAfterMatterLinksBlock(wagtail_blocks.StructBlock):
     links = wagtail_blocks.ListBlock(
         LabelledLinkBlock(),
         max_num=10,
+        collapsed=True,
     )
     legal_text = wagtail_blocks.RichTextBlock(
         features=["link"],
