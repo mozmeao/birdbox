@@ -17,16 +17,22 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from django.conf import settings
+
+import sentry_sdk
+from everett.manager import ConfigManager
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.logging import ignore_logger
+
+config = ConfigManager.basic_config()
+
+APP_NAME = "birdbox"
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-
-# We're sticking to LTS releases of Wagtail, so we don't want to be told there's a new version if that's not LTS
-WAGTAIL_ENABLE_UPDATE_CHECK = False
 
 # Application definition
 
@@ -102,6 +108,14 @@ DATABASES = {
     }
 }
 
+# Cacheing
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "common_newsletter_config_cache",
+    }
+}
+
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"  # No need for BigIntAutoField
 
 # Password validation
@@ -165,6 +179,9 @@ MEDIA_URL = "/media/"
 
 WAGTAIL_SITE_NAME = "birdbox"
 
+# We're sticking to LTS releases of Wagtail, so we don't want to be told there's a new version if that's not LTS
+WAGTAIL_ENABLE_UPDATE_CHECK = False
+
 # Search
 # https://docs.wagtail.org/en/stable/topics/search/backends.html
 WAGTAILSEARCH_BACKENDS = {
@@ -175,4 +192,48 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "http://example.com"
+WAGTAILADMIN_BASE_URL = config(
+    "WAGTAILADMIN_BASE_URL",
+    default="http://birdbox.mozilla.com",
+)
+
+# Sentry
+SENTRY_DSN = config("SENTRY_DSN", default="")
+
+# DisallowedHost gets a lot of action thanks to scans/bots/scripts,
+# but we need not take any action because it's already HTTP 400-ed.
+# Note that we ignore at the Sentry client level
+ignore_logger("django.security.DisallowedHost")
+
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        release=config("GIT_SHA", default=""),
+        server_name=".".join(x for x in ["birdbox", APP_NAME] if x),
+        integrations=[DjangoIntegration()],
+    )
+
+
+# Mozillaverse settings
+
+BASKET_SUBSCRIPTION_URL = config(
+    "BASKET_SUBSCRIPTION_URL",
+    default="https://basket.mozilla.org/news/subscribe/",
+)
+
+BASKET_NEWSLETTER_DATA_URL = config(
+    "BASKET_NEWSLETTER_DATA_URL",
+    default="https://www.mozilla.org/newsletter/newsletter-all.json",  # Updated regularly by Bedrock
+)
+
+BASKET_NEWSLETTER_DATA_TTL_HOURS = config(
+    "BASKET_NEWSLETTER_DATA_TTL",
+    default="24",
+    parser=int,
+)
+
+FALLBACK_NEWSLETTER_DATA_PATH = f"{BASE_DIR}/data/basket/basket.mozilla.org.json"
+
+settings.LANGUAGES.append(
+    ("zh-tw", "Traditional Chinese, Taiwan"),
+)

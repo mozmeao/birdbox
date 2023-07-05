@@ -31,12 +31,12 @@ migrate:
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  compile-requirements   	- update Python requirements files"
-	@echo "  clean-local-deps   		- uninstall Python dependencies"
-	@echo "  djshell   					- run a local Django shell"
+	@echo "  compile-requirements       - update Python requirements files"
+	@echo "  clean-local-deps           - uninstall Python dependencies"
+	@echo "  djshell                    - run a local Django shell"
 	@echo "  install-local-python-deps  - install Python requirements"
-	@echo "  preflight   				- install essentials before running"
-	@echo "  makemigrations   			- make new Django migrations if needed"
-	@echo "  migrate   					- apply Django migrations if needed"
+	@echo "  preflight                  - install essentials before running"
+	@echo "  makemigrations             - make new Django migrations if needed"
+	@echo "  migrate                    - apply Django migrations if needed"
 
 .PHONY: all clean-local-deps compile-requirements djshell help install-local-python-deps makemigrations migrate preflight

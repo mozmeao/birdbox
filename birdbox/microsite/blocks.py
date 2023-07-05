@@ -5,13 +5,16 @@
 """Custom Wagtail blocks that map to Protocol components, intended for use in a StreamField"""
 
 from django import forms
+from django.conf import settings
 from django.db.models import TextChoices
 from django.templatetags.static import static
+from django.utils.safestring import mark_safe
 
 from wagtail import blocks as wagtail_blocks
 
 from birdbox.protocol_links import get_docs_link
 from common.blocks import AccessibleImageBlock
+from common.utils import get_freshest_newsletter_options
 
 # https://docs.wagtail.org/en/stable/advanced_topics/customisation/page_editing_interface.html#limiting-features-in-a-rich-text-field
 RICHTEXT_ARTICLE_FEATURES = RICHTEXT_ARTICLE_FEATURES = [
@@ -53,7 +56,7 @@ class CardLayoutOptions(TextChoices):
 class SplitBlockVariants(TextChoices):
     SPLIT_BLOCK_STANDARD = "", "Standard"
     SPLIT_BLOCK_REVERSED = "mzp-l-split-reversed", "Reversed"
-    SPLIT_BLOCK_DARK_BACKGORUND = "mzp-t-dark mzp-t-background-secondary", "Dark Background"
+    SPLIT_BLOCK_DARK_BACKGROUND = "mzp-t-dark mzp-t-background-secondary", "Dark Background"
 
 
 class SplitBlockSizes(TextChoices):
@@ -391,4 +394,49 @@ class ArticleBlock(wagtail_blocks.StructBlock):
     )
     body = wagtail_blocks.RichTextBlock(
         features=RICHTEXT_ARTICLE_FEATURES,
+    )
+
+
+class NewsletterFormBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/newsletter.html"
+        icon = "mail"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={"all": [static("css/protocol-newsletter-form.css")]},
+            js=[static("js/newsletter-form.js")],
+        )
+
+    newsletter = wagtail_blocks.MultipleChoiceBlock(
+        choices=get_freshest_newsletter_options(),
+        help_text=mark_safe(
+            "Which newsletter(s) should be selectable? "
+            f"See <a href='{settings.BASKET_NEWSLETTER_DATA_URL}'>Basket for details and available locales</a>",
+        ),
+    )
+    title = wagtail_blocks.CharBlock(
+        default="Love the Web?",
+        max_length=50,
+    )
+    tagline = wagtail_blocks.CharBlock(
+        default="Get the Mozilla newsletter and help us keep it open and free.",
+        max_length=100,
+    )
+    accompanying_image = AccessibleImageBlock(
+        required=True,
+        help_text="NB: Needs to match background colour (for now - working on a no-image variation)",
+    )
+    success_title = wagtail_blocks.CharBlock(
+        default="Thanks!",
+        max_length=50,
+    )
+    sucess_message = wagtail_blocks.CharBlock(
+        default=(
+            "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. "
+            "Please check your inbox or your spam filter for an email from us."
+        ),
+        max_length=200,
     )

@@ -22,6 +22,7 @@ from .blocks import (
     FooterAfterMatterLinksBlock,
     FooterColumnBlock,
     FooterSocialLinksGroupBlock,
+    NewsletterFormBlock,
     SplitBlock,
 )
 
@@ -96,7 +97,17 @@ class ProtocolTestPage(BaseProtocolPage):
                     help_text=get_docs_link("article"),
                 ),
             ),
+            (
+                "newsletter_form",
+                NewsletterFormBlock(
+                    label="Newsletter signup form",
+                    required=False,
+                ),
+            ),
         ],
+        block_counts={
+            "newsletter_form": {"max_num": 1},
+        },
         use_json_field=True,
         collapsed=True,
     )

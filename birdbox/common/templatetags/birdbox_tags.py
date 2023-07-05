@@ -64,7 +64,7 @@ def get_alt_text_for_accessible_image_block(block_data):
     if not block_data.get("decorative_only"):
         retval = block_data.get("alt_text")
         if not retval:
-            retval = block_data.get("image").title
+            retval = getattr(block_data.get("image"), "title")
     return retval
 
 

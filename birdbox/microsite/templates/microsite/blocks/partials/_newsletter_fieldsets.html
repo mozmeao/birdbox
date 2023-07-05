@@ -1,0 +1,84 @@
+<fieldset class="mzp-c-newsletter-content">
+  <div class="mzp-c-form-errors hidden" id="newsletter-errors">
+    <ul class="mzp-u-list-styled">
+        <li class="error-email-invalid hidden">
+            Please enter a valid email address
+        </li>
+        <li class="error-select-country hidden">
+            Please select a country or region
+        </li>
+        <li class="error-select-language hidden">
+            Please select a language
+        </li>
+        <li class="error-newsletter-checkbox hidden">
+            Please check at least one of the newsletter options
+        </li>
+        <li class="error-privacy-policy hidden">
+            You must agree to the privacy notice
+        </li>
+        <li class="error-try-again-later hidden">
+            We are sorry, but there was a problem with our system. Please try again later!
+        </li>
+    </ul>
+</div>
+
+  <div>
+    <label for="email">Your email address</label>
+    <input type="email" class="mzp-js-email-field" id="email" name="email" placeholder="yourname@example.com" required aria-required="true">
+  </div>
+
+  <div id="newsletter-details" class="mzp-c-newsletter-details">
+
+    <input type="hidden" name="source_url" value="{{ request.build_absolute_uri }}">
+
+    <label for="">Country</label>
+    <select name="country" id="id_country">
+      {% for country_data in countries  %}
+      <option value="{{country_data.0}}">{{country_data.1}}</option>
+      {% endfor %}
+    </select>
+
+    <label for="language">Language</label>
+    <select name="language" id="id_lang">
+      {% for language_data in languages  %}
+      <option value="{{language_data.0}}">{{language_data.1}}</option>
+      {% endfor %}
+    </select>
+
+    <fieldset class="mzp-u-inline">
+      <label>I want information about:</label>
+      <p>
+        {% for newsletter_data in newsletters %}
+        <label for="id_newsletters_{forloop.counter.0}" class="mzp-u-inline">
+          <input type="checkbox" name="newsletters" value="{{newsletter_data.0}}" id="id_newsletters_{forloop.counter.0}" checked="">
+          {{newsletter_data.1}}
+        </label>
+        {% endfor %}
+      </p>
+    </fieldset>
+
+    <fieldset class="mzp-u-inline">
+      <legend>Format</legend>
+      <p>
+        <label for="format-html" class="mzp-u-inline">
+          <input type="radio" id="format-html" name="format" value="H" checked> HTML
+        </label>
+        <label for="format-text" class="mzp-u-inline">
+          <input type="radio" id="format-text" name="format" value="T"> Text
+        </label>
+      </p>
+    </fieldset>
+
+    <p>
+      <label for="privacy" class="mzp-u-inline">
+        <input type="checkbox" id="privacy" name="privacy" required aria-required="true">
+        I’m okay with Mozilla handling my info as explained in <a href="https://www.mozilla.org/privacy/websites/">this Privacy Notice</a>
+      </label>
+    </p>
+  </div>
+
+  <p class="mzp-c-form-submit">
+    <button type="submit" class="mzp-c-button" id="newsletter-submit">Sign up now</button>
+    <span class="mzp-c-fieldnote">We will only send you Mozilla-related information.</span>
+  </p>
+</fieldset>
