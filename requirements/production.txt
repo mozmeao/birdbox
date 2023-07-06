@@ -106,10 +106,10 @@ charset-normalizer==3.1.0 \
 dj-database-url==2.0.0 \
     --hash=sha256:9c9e5f7224f62635a787e9cc3c6762c9be2b19541a21e3c08fa573bd01609b4b \
     --hash=sha256:a35a9f0f43775ca6f90d819dc456233ef7bcc76b47377d5d908b75c7eb320624
-    # via -r requirements/production.in
-django==4.1.9 \
-    --hash=sha256:adae3a952fd86800094ae6f64aa558572e8b4ba8dfe21f0ed8175147e75a72a1 \
-    --hash=sha256:e9f074a84930662104871bfcea55c3c180c50a0a47739db82435deae6cbaf032
+    # via -r production.in
+django==4.1.10 \
+    --hash=sha256:26d0260c2fb8121009e62ffc548b2398dea2522b6454208a852fb0ef264c206c \
+    --hash=sha256:56343019a9fd839e2e5bf203daf45f25af79d5bffa4c71d56eae4f4404d82ade
     # via
     #   dj-database-url
     #   django-filter
@@ -135,7 +135,7 @@ django-permissionedforms==0.1 \
 django-storages[google]==1.13.2 \
     --hash=sha256:31dc5a992520be571908c4c40d55d292660ece3a55b8141462b4e719aa38eab3 \
     --hash=sha256:cbadd15c909ceb7247d4ffc503f12a9bec36999df8d0bef7c31e57177d512688
-    # via -r requirements/production.in
+    # via -r production.in
 django-taggit==3.1.0 \
     --hash=sha256:543218ac346fbe02a65733e0341c91b57a3e0f7a41568966b26f1cea9edc4805 \
     --hash=sha256:c8f2e4eae387939089b3d75d1d8649e008880970c068ce9d0e82f87fd5e29508
@@ -159,7 +159,7 @@ et-xmlfile==1.1.0 \
 everett==3.2.0 \
     --hash=sha256:80517946d9746734ff8e6bda56d629f0092083389730c72157745f8d5d43d196 \
     --hash=sha256:cdca5fc8815f402df650444eb1a2fa24c05ef524ff3ebbae3310d17edb11ea6a
-    # via -r requirements/production.in
+    # via -r production.in
 google-api-core==2.11.1 \
     --hash=sha256:25d29e05a0058ed5f19c61c0a78b1b53adea4d9364b464d014fbda941f6d1c9a \
     --hash=sha256:d92a5a92dc36dd4f4b9ee4e55528a90e432b059f93aee6ad857f9de8cc7ae94a
@@ -262,7 +262,7 @@ googleapis-common-protos==1.59.1 \
 gunicorn==20.1.0 \
     --hash=sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e \
     --hash=sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8
-    # via -r requirements/production.in
+    # via -r production.in
 html5lib==1.1 \
     --hash=sha256:0d78f8fde1c230e99fe37986a60526d7049ed4bf8a9fadbad5f00e22e58e041d \
     --hash=sha256:b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f
@@ -347,7 +347,7 @@ pillow==9.5.0 \
     --hash=sha256:fe7e1c262d3392afcf5071df9afa574544f28eac825284596ac6db56e6d11062 \
     --hash=sha256:fed1e1cf6a42577953abbe8e6cf2fe2f566daebde7c34724ec8803c4c0cda579
     # via
-    #   -r requirements/production.in
+    #   -r production.in
     #   wagtail
 protobuf==4.23.3 \
     --hash=sha256:0149053336a466e3e0b040e54d0b615fc71de86da66791c592cc3c8d18150bf8 \
@@ -369,7 +369,7 @@ protobuf==4.23.3 \
 psycopg[binary]==3.1.9 \
     --hash=sha256:ab400f207a8c120bafdd8077916d8f6c0106e809401378708485b016508c30c9 \
     --hash=sha256:fbbac339274d8733ee70ba9822297af3e8871790a26e967b5ea53e30a4b74dcc
-    # via -r requirements/production.in
+    # via -r production.in
 psycopg-binary==3.1.9 \
     --hash=sha256:03b08545ce1c627f4d5e6384eda2946660c4ba6ceb0a09ae47de07419f725669 \
     --hash=sha256:055537a9c20efe9bf17cb72bd879602eda71de6f737ebafa1953e017c6a37fbe \
@@ -457,7 +457,7 @@ rsa==4.9 \
 sentry-sdk==1.25.1 \
     --hash=sha256:79afb7c896014038e358401ad1d36889f97a129dfa8031c49b3f238cd1aa3935 \
     --hash=sha256:aa796423eb6a2f4a8cd7a5b02ba6558cb10aab4ccdc0537f63a47b038c520c38
-    # via -r requirements/production.in
+    # via -r production.in
 six==1.16.0 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
@@ -493,7 +493,7 @@ urllib3==1.26.16 \
 wagtail==4.2.4 \
     --hash=sha256:4bf146194e1725cd4305bf1998f507d46f587e207d609bc2ec73a6c5cce04410 \
     --hash=sha256:93e8d39a14a44099ca620e46613a3a2319b1d10c622dc7f0ff8658807b18190c
-    # via -r requirements/production.in
+    # via -r production.in
 webencodings==0.5.1 \
     --hash=sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78 \
     --hash=sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923
@@ -501,7 +501,7 @@ webencodings==0.5.1 \
 whitenoise==6.5.0 \
     --hash=sha256:15fe60546ac975b58e357ccaeb165a4ca2d0ab697e48450b8f0307ca368195a8 \
     --hash=sha256:16468e9ad2189f09f4a8c635a9031cc9bb2cdbc8e5e53365407acf99f7ade9ec
-    # via -r requirements/production.in
+    # via -r production.in
 willow==1.4.1 \
     --hash=sha256:0df8ff528531e00b48d40bf72ed81beac1dc82f2d42e5bbed4aff0218bef8c0d \
     --hash=sha256:fc4042696d090e75aef922fa1ed26d483c764f005b36cf523cf7c34e69d5dd7a
