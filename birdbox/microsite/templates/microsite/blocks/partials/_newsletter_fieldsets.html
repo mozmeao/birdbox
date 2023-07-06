@@ -49,8 +49,8 @@
       <label>I want information about:</label>
       <p>
         {% for newsletter_data in newsletters %}
-        <label for="id_newsletters_{forloop.counter.0}" class="mzp-u-inline">
-          <input type="checkbox" name="newsletters" value="{{newsletter_data.0}}" id="id_newsletters_{forloop.counter.0}" checked="">
+        <label for="id_newsletters_{{forloop.counter.0}}" class="mzp-u-inline">
+          <input type="checkbox" name="newsletters" value="{{newsletter_data.0}}" id="id_newsletters_{{forloop.counter.0}}" checked="">
           {{newsletter_data.1}}
         </label>
         {% endfor %}
