@@ -17,8 +17,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-from django.conf import settings
-
 import sentry_sdk
 from everett.manager import ConfigManager
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -234,7 +232,3 @@ BASKET_NEWSLETTER_DATA_TTL_HOURS = config(
 )
 
 FALLBACK_NEWSLETTER_DATA_PATH = f"{BASE_DIR}/data/basket/basket.mozilla.org.json"
-
-settings.LANGUAGES.append(
-    ("zh-tw", "Traditional Chinese, Taiwan"),
-)

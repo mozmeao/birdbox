@@ -7,11 +7,16 @@ from typing import Dict, List
 from django.conf import settings
 from django.template import Library
 
+from product_details import product_details
+
 from common.utils import get_freshest_newsletter_data
 
 from ..models import Footer, MicrositeSettings
 
 register = Library()
+
+# Use mozilla-django-product-details to get a set of localised language names
+LANGUAGE_LOOKUP = {k: v.get("native", k) for k, v in product_details.languages.items()}
 
 
 @register.inclusion_tag("microsite/partials/footer.html", takes_context=True)
@@ -60,10 +65,17 @@ def get_layout_class_from_page(context) -> str:
     return ""
 
 
+def _get_language_name_for_locale(locale_code):
+    adjusted_locale_code = {
+        "en": "en-US",
+        "pt": "pt-PT",
+    }.get(locale_code, locale_code)
+    return LANGUAGE_LOOKUP.get(adjusted_locale_code, locale_code)
+
+
 @register.inclusion_tag("microsite/blocks/partials/_newsletter_fieldsets.html", takes_context=True)
 def newsletter_form_fieldset(context, newsletter_slugs: List[str]) -> Dict:
     newsletter_data = get_freshest_newsletter_data()
-    language_lookup = {x[0]: x[1] for x in settings.LANGUAGES}
 
     country_choices = [
         # TODO: automatically populate me from product-details data
@@ -80,14 +92,11 @@ def newsletter_form_fieldset(context, newsletter_slugs: List[str]) -> Dict:
             newsletter_choices.add(
                 (slug, selected_newsletter.get("title", slug)),
             )
-            specific_newsletter_languages = set(["en"])
 
+            specific_newsletter_languages = set()
             for locale_code in selected_newsletter.get("languages", []):
                 specific_newsletter_languages.add(
-                    (
-                        locale_code,
-                        language_lookup.get(locale_code.lower(), locale_code),
-                    ),
+                    (locale_code, _get_language_name_for_locale(locale_code)),
                 )
 
             if language_choices:
