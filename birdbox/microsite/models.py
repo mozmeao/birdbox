@@ -3,7 +3,8 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 
-from django.db.models import BooleanField, CharField, TextChoices
+from django.core.exceptions import ValidationError
+from django.db.models import BooleanField, CharField, Model, TextChoices
 from django.utils.safestring import mark_safe
 
 from wagtail.admin.panels import FieldPanel
@@ -11,7 +12,8 @@ from wagtail.blocks import RichTextBlock
 from wagtail.contrib.settings.models import BaseGenericSetting, register_setting
 from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.models import Page
+from wagtail.models import LockableMixin, Page
+from wagtail.snippets.models import register_snippet
 
 from birdbox.protocol_links import get_docs_link
 
@@ -196,3 +198,93 @@ class MicrositeSettings(BaseGenericSetting):
 
     class Meta:
         verbose_name = "General site settings"
+
+
+@register_snippet
+class NewsletterStandardMessages(LockableMixin, Model):
+    # TODO: Support L10N via wagtail-localize
+    "Singleton-like snippet where we hold common messages, ready for L10N"
+
+    form_error_email_invalid = CharField(
+        blank=False,
+        max_length=150,
+        default="Please enter a valid email address",
+    )
+    form_error_select_contry = CharField(
+        blank=False,
+        max_length=150,
+        default="Please select a country or region",
+    )
+    form_error_select_languge = CharField(
+        blank=False,
+        max_length=150,
+        default="Please select a language",
+    )
+    form_error_newsletter_checkbox = CharField(
+        blank=False,
+        max_length=150,
+        default="Please check at least one of the newsletter options",
+    )
+    form_error_privacy_policy = CharField(
+        blank=False,
+        max_length=150,
+        default="You must agree to the privacy notice",
+    )
+    form_error_try_again_later = CharField(
+        blank=False,
+        max_length=150,
+        default="We are sorry, but there was a problem with our system. Please try again later!",
+    )
+    form_label_your_email_address = CharField(
+        blank=False,
+        max_length=150,
+        default="Your email address",
+    )
+    form_label_country = CharField(
+        blank=False,
+        max_length=150,
+        default="Country",
+    )
+    form_label_language = CharField(
+        blank=False,
+        max_length=150,
+        default="Language",
+    )
+    form_label_info_sought = CharField(
+        verbose_name="Form label for 'I want information about:'",
+        blank=False,
+        max_length=150,
+        default="I want information about:",
+    )
+    form_label_format = CharField(
+        blank=False,
+        max_length=150,
+        default="Format",
+    )
+    form_label_privacy = CharField(
+        blank=False,
+        max_length=150,
+        default='I’m okay with Mozilla handling my info as explained in <a href="https://www.mozilla.org/privacy/websites/">this Privacy Notice</a>',
+    )
+    form_label_submit_label = CharField(
+        blank=False,
+        max_length=150,
+        default="Sign up now",
+    )
+    form_label_submit_note = CharField(
+        blank=False,
+        max_length=150,
+        default="We will only send you Mozilla-related information.",
+    )
+
+    class Meta:
+        verbose_name_plural = "Newsletter Standard Messages - only one must exist"
+
+    def __str__(self):
+        return "Newsletter Boilerplate Wording"
+
+    def save(self, *args, **kwargs):
+        _model = self.__class__
+        if _model.objects.exclude(pk=self.pk).exists():
+            raise ValidationError("There can be only one instance of Newsletter Standard Messages")
+        return super().save(*args, **kwargs)

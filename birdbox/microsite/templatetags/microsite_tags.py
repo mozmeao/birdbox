@@ -12,7 +12,7 @@ from product_details import product_details
 
 from common.utils import get_freshest_newsletter_data
 
-from ..models import Footer, MicrositeSettings
+from ..models import Footer, MicrositeSettings, NewsletterStandardMessages
 
 register = Library()
 
@@ -108,6 +108,7 @@ def newsletter_form_fieldset(context, newsletter_slugs: List[str]) -> Dict:
         "countries": sorted(country_choices, key=lambda x: x[1]),
         "languages": sorted(language_choices, key=lambda x: x[1]),
         "newsletters": sorted(newsletter_choices, key=lambda x: x[1]),
+        "standard_messages": NewsletterStandardMessages.objects.first(),
     }
 
 

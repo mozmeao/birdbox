@@ -2,43 +2,45 @@
   <div class="mzp-c-form-errors hidden" id="newsletter-errors">
     <ul class="mzp-u-list-styled">
         <li class="error-email-invalid hidden">
-            Please enter a valid email address
+            {{standard_messages.form_error_email_invalid}}
         </li>
         <li class="error-select-country hidden">
-            Please select a country or region
+            {{standard_messages.form_error_select_country}}
         </li>
         <li class="error-select-language hidden">
-            Please select a language
+            {{standard_messages.select_language}}
         </li>
         <li class="error-newsletter-checkbox hidden">
-            Please check at least one of the newsletter options
+            {{standard_messages.form_error_newsletter_checkbox}}
         </li>
         <li class="error-privacy-policy hidden">
-            You must agree to the privacy notice
+            {{standard_messages.form_error_privacy_policy}}
         </li>
         <li class="error-try-again-later hidden">
-            We are sorry, but there was a problem with our system. Please try again later!
+            {{standard_messages.form_error_try_again_later}}
         </li>
     </ul>
 </div>
 
   <div>
-    <label for="email">Your email address</label>
-    <input type="email" class="mzp-js-email-field" id="email" name="email" placeholder="yourname@example.com" required aria-required="true">
+    <label for="email">
+      {{standard_messages.form_label_your_email_address}}
+    </label>
+    <input type="email" class="mzp-js-email-field" id="email" name="email" placeholder="name@example.com" required aria-required="true">
   </div>
 
   <div id="newsletter-details" class="mzp-c-newsletter-details">
 
     <input type="hidden" name="source_url" value="{{ request.build_absolute_uri }}">
 
-    <label for="">Country</label>
+    <label for="country">{{standard_messages.form_label_country}}</label>
     <select name="country" id="id_country">
       {% for country_data in countries  %}
       <option value="{{country_data.0}}">{{country_data.1}}</option>
       {% endfor %}
     </select>
 
-    <label for="language">Language</label>
+    <label for="language">{{standard_messages.form_label_language}}</label>
     <select name="language" id="id_lang">
       {% for language_data in languages  %}
       <option value="{{language_data.0}}">{{language_data.1}}</option>
@@ -46,7 +48,7 @@
     </select>
 
     <fieldset class="mzp-u-inline">
-      <label>I want information about:</label>
+      <label>{{standard_messages.form_label_info_sought}}</label>
       <p>
         {% for newsletter_data in newsletters %}
         <label for="id_newsletters_{{forloop.counter.0}}" class="mzp-u-inline">
@@ -58,7 +60,7 @@
     </fieldset>
 
     <fieldset class="mzp-u-inline">
-      <legend>Format</legend>
+      <legend>{{standard_messages.form_label_format}}</legend>
       <p>
         <label for="format-html" class="mzp-u-inline">
           <input type="radio" id="format-html" name="format" value="H" checked> HTML
@@ -72,13 +74,15 @@
     <p>
       <label for="privacy" class="mzp-u-inline">
         <input type="checkbox" id="privacy" name="privacy" required aria-required="true">
-        I’m okay with Mozilla handling my info as explained in <a href="https://www.mozilla.org/privacy/websites/">this Privacy Notice</a>
+        {{standard_messages.form_label_privacy|safe}}
       </label>
     </p>
   </div>
 
   <p class="mzp-c-form-submit">
-    <button type="submit" class="mzp-c-button" id="newsletter-submit">Sign up now</button>
-    <span class="mzp-c-fieldnote">We will only send you Mozilla-related information.</span>
+    <button type="submit" class="mzp-c-button" id="newsletter-submit">
+      {{standard_messages.form_label_submit_label}}
+    </button>
+    <span class="mzp-c-fieldnote">{{standard_messages.form_label_submit_note}}</span>
   </p>
 </fieldset>
