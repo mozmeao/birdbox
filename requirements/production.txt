@@ -114,6 +114,7 @@ django==4.1.9 \
     #   dj-database-url
     #   django-filter
     #   django-modelcluster
+    #   django-mozilla-product-details
     #   django-permissionedforms
     #   django-storages
     #   django-taggit
@@ -128,6 +129,10 @@ django-modelcluster==6.0 \
     --hash=sha256:4ae46f86c43702020f24f212222eef0a2588df937bbb523a5447da247b5fb130 \
     --hash=sha256:cdcffef5baf5d3759ee04c5b60ffaf1a0c95fc0f265e762f3ddfadde3394e5db
     # via wagtail
+django-mozilla-product-details==1.0.3 \
+    --hash=sha256:1d139ba01f4484f3bb43b72864ce33f249835405449e0dc940217cfa42ce5b46 \
+    --hash=sha256:a4aba6a68b296dffe8c1afb95d236cdbd402bd855cd49eef4d8a1a610105fd36
+    # via -r requirements/production.in
 django-permissionedforms==0.1 \
     --hash=sha256:4340bb20c4477fffb13b4cc5cccf9f1b1010b64f79956c291c72d2ad2ed243f8 \
     --hash=sha256:d341a961a27cc77fde8cc42141c6ab55cc1f0cb886963cc2d6967b9674fa47d6
@@ -448,6 +453,7 @@ requests==2.31.0 \
     --hash=sha256:942c5a758f98d790eaed1a29cb6eefc7ffb0d1cf7af05c3d2791656dbd6ad1e1
     # via
     #   -r requirements/production.in
+    #   django-mozilla-product-details
     #   google-api-core
     #   google-cloud-storage
     #   wagtail

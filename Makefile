@@ -22,6 +22,7 @@ preflight:
 	$ npm install
 	${MAKE} install-local-python-deps
 	python birdbox/manage.py createcachetable
+	python birdbox/manage.py update_product_details
 
 makemigrations:
 	python birdbox/manage.py makemigrations
