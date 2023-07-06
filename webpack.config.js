@@ -14,9 +14,13 @@ const path = require("path");
 
 module.exports = {
     entry: {
-        // base/core
+        // JS
         "protocol-base": "./src/js/protocol/base.js",
         "protocol-global": "./src/js/protocol/global.js",
+        "newsletter-form": "./src/js/newsletter/newsletter-init.js", // not protocol JS (yet)
+
+        // CSS
+        // base/core
         "protocol-mozilla-theme": "./src/css/protocol/mozilla.scss",
         "protocol-firefox-theme": "./src/css/protocol/firefox.scss",
 
@@ -33,6 +37,11 @@ module.exports = {
         "protocol-card": "./src/css/protocol/components/card.scss",
         "protocol-picto": "./src/css/protocol/components/picto.scss",
         "protocol-article": "./src/css/protocol/components/article.scss",
+        "protocol-newsletter-form":
+            "./src/css/protocol/components/newsletter.scss",
+
+        // Custom Birdbox CSS
+        "birdbox-protocol-overrides": "./src/css/birdbox.scss",
     },
     output: {
         filename: "js/[name].js",

@@ -2,6 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+from django.utils.safestring import mark_safe
+
 from wagtail import blocks as wagtail_blocks
 from wagtail.images import blocks as wagtailimages_blocks
 
@@ -30,4 +32,14 @@ class AccessibleImageBlock(wagtail_blocks.StructBlock):
         label="Specific image height in px (optional)",
         min_value=0,
         required=False,
+    )
+    rendition_spec = wagtail_blocks.CharBlock(
+        max_length=256,
+        default="original",
+        blank=True,
+        help_text=mark_safe(
+            "Lots of options available. "
+            "See <a href='https://docs.wagtail.org/en/stable/topics/images.html#available-resizing-methods'>Wagtail docs on image sizing</a> "
+            "Defaults to 'original'"
+        ),
     )

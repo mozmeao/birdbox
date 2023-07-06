@@ -1,0 +1,31 @@
+{% load microsite_tags %}
+
+<div class="mzp-l-content">
+
+  <aside class="mzp-c-newsletter">
+    {% if block.value.accompanying_image %}
+    <div class="mzp-c-newsletter-image">
+      {% with block.value.accompanying_image as image_block %}
+        {% include "common/partials/accessible_image.html" with image_block=image_block %}
+      {% endwith %}
+    </div>
+    {% endif %}
+
+    <form id="newsletter-form" class="mzp-c-newsletter-form" name="newsletter-form" action="{% newsletter_service_url %}" method="">
+
+      <header class="mzp-c-newsletter-header">
+        <h3 class="mzp-c-newsletter-title">{{block.value.title}}</h3>
+        <p class="mzp-c-newsletter-tagline">{{block.value.tagline}}</p>
+      </header>
+
+      {% newsletter_form_fieldset block.value.newsletter %}
+
+    </form>
+
+    <div id="newsletter-thanks" class="mzp-c-newsletter-thanks hidden">
+      <h3>{{block.value.success_title}}</h3>
+      <p>{{block.value.sucess_message}}</p>
+    </div>
+
+  </aside>
+</div>
