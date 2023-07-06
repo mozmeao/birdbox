@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+from operator import itemgetter
 from typing import Dict, List
 
 from django.conf import settings
@@ -77,13 +78,11 @@ def _get_language_name_for_locale(locale_code):
 def newsletter_form_fieldset(context, newsletter_slugs: List[str]) -> Dict:
     newsletter_data = get_freshest_newsletter_data()
 
-    country_choices = [
-        # TODO: automatically populate me from product-details data
-        ("DE", "Germany"),
-        ("FR", "France"),
-        ("US", "United States"),
-    ]
-
+    country_choices = sorted(
+        # TODO: localise me, taking the locale code from context
+        iter(product_details.get_regions(locale="en").items()),
+        key=itemgetter(1),
+    )
     language_choices = set()
     newsletter_choices = set()
 
