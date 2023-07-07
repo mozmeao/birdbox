@@ -51,6 +51,8 @@
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
+        {% include "partials/messages.html" %}
+
         {% block content %}{% endblock %}
 
         {% block footer %}{% endblock footer %}
