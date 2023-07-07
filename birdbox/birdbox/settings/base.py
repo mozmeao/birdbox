@@ -35,12 +35,10 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    "common",
-    "microsite",
-    "search",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
+    "wagtail.contrib.modeladmin",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.users",
@@ -51,6 +49,7 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail",
     "modelcluster",
+    "search",
     "taggit",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -59,6 +58,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "product_details",
+    "wagtailstreamforms",  # Has to come ahead of any custom apps that might extend it
+    "generic_chooser",  # Needed by wagtailstreamforms - see https://github.com/labd/wagtailstreamforms/issues/216
+    "common",
+    "microsite",
 ]
 
 MIDDLEWARE = [

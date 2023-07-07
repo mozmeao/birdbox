@@ -1,0 +1,41 @@
+// custom CSS overrides for Birdbox, tweaking parts of Protocol
+
+@import '~@mozilla-protocol/core/protocol/css/includes/lib';
+
+// Bring the errorlist closer to the field it's related to
+.mzp-c-field.mzp-is-error {
+    input, textarea, select {
+        margin-bottom: $spacing-xs;
+    }
+    ul.errorlist {
+        margin-bottom: $spacing-lg;
+    }
+}
+
+
+// Core protocol uses display: hidden to hide elements, but this isn't
+// what the newletter JS expects - it wants a hidden class to add/remove
+.mzp-c-newsletter-form .mzp-c-form-errors {
+    display: block;
+
+    &.hidden {
+        @include hidden;
+    }
+}
+
+
+.mzp-c-newsletter .mzp-c-newsletter-thanks {
+    display: block;
+
+    &.hidden {
+        @include hidden;
+    }
+}
+
+// On custom forms that are rendered with Django's default widget,
+// <select>s lack enough bottom margin
+.birdbox-checkbox-select-multiple-margin-fix {
+    div:last-child {
+        margin-bottom: $spacing-md;
+    }
+}
