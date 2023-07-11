@@ -458,6 +458,7 @@ requests==2.31.0 \
     #   google-api-core
     #   google-cloud-storage
     #   wagtail
+    #   wagtail-generic-chooser
 rsa==4.9 \
     --hash=sha256:90260d9058e514786967344d0ef75fa8727eed8a7d2e43ce9f4bcf1b536174f7 \
     --hash=sha256:e38464a49c6c85d7f1351b0126661487a7e0a14a50f1675ec50eb34d4f20ef21
@@ -491,6 +492,10 @@ typing-extensions==4.6.3 \
     # via
     #   dj-database-url
     #   psycopg
+unidecode==1.3.6 \
+    --hash=sha256:547d7c479e4f377b430dd91ac1275d593308dce0fc464fb2ab7d41f82ec653be \
+    --hash=sha256:fed09cf0be8cf415b391642c2a5addfc72194407caee4f98719e40ec2a72b830
+    # via wagtailstreamforms
 urllib3==1.26.16 \
     --hash=sha256:8d36afa7616d8ab714608411b4a3b13e58f463aee519024578e062e141dce20f \
     --hash=sha256:8f135f6502756bde6b2a9b28989df5fbe87c9970cecaa69041edcce7f0589b14
@@ -501,6 +506,16 @@ urllib3==1.26.16 \
 wagtail==4.2.4 \
     --hash=sha256:4bf146194e1725cd4305bf1998f507d46f587e207d609bc2ec73a6c5cce04410 \
     --hash=sha256:93e8d39a14a44099ca620e46613a3a2319b1d10c622dc7f0ff8658807b18190c
+    # via
+    #   -r requirements/production.in
+    #   wagtailstreamforms
+wagtail-generic-chooser==0.5.1 \
+    --hash=sha256:135f8cc413d83b82bb8956f625f4b9572aa7139ab3835e2ba2d7e19f2171b354 \
+    --hash=sha256:280ae7293641d1b121450e17a6d424305e31c832f1af5bd991bc3e49703bf79e
+    # via wagtailstreamforms
+wagtailstreamforms==4.0.5 \
+    --hash=sha256:426ad54410a59e7ea59e54647e5c32a35792f132c764d89c9dde1abfdaa6e1fc \
+    --hash=sha256:ab622483edaf22c5608df5c2bedb9f53e58279df85b4b1aa78587207431cae1f
     # via -r requirements/production.in
 webencodings==0.5.1 \
     --hash=sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78 \

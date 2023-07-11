@@ -1,0 +1,5 @@
+{% for message in messages %}
+<aside class="mzp-c-notification-bar{% if message.tags %} mzp-t-{{ message.tags }}{% endif %}">
+  <p>{{ message }}</p>
+</aside>
+{% endfor %}

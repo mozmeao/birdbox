@@ -21,6 +21,7 @@ install-local-python-deps:
 preflight:
 	$ npm install
 	${MAKE} install-local-python-deps
+	python birdbox/manage.py migrate
 	python birdbox/manage.py createcachetable
 	python birdbox/manage.py update_product_details
 

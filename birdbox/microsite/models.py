@@ -14,6 +14,7 @@ from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.models import LockableMixin, Page
 from wagtail.snippets.models import register_snippet
+from wagtailstreamforms.blocks import WagtailFormBlock
 
 from birdbox.protocol_links import get_docs_link
 
@@ -104,6 +105,13 @@ class ProtocolTestPage(BaseProtocolPage):
                 NewsletterFormBlock(
                     label="Newsletter signup form",
                     required=False,
+                ),
+            ),
+            (
+                "custom_form",
+                WagtailFormBlock(
+                    required=False,
+                    icon="radio-empty",
                 ),
             ),
         ],

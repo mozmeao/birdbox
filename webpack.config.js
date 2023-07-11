@@ -39,9 +39,6 @@ module.exports = {
         "protocol-article": "./src/css/protocol/components/article.scss",
         "protocol-newsletter-form":
             "./src/css/protocol/components/newsletter.scss",
-
-        // Custom Birdbox CSS
-        "birdbox-protocol-overrides": "./src/css/birdbox.scss",
     },
     output: {
         filename: "js/[name].js",

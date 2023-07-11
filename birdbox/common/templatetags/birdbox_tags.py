@@ -82,3 +82,14 @@ def seek_dark_theme_class(parent_class_string):
         return DARK_THEME_CLASSNAME
 
     return ""
+
+
+@register.simple_tag
+def gather_field_errors(form):
+    errors = []
+    for field in form.visible_fields():
+        if field.errors:
+            combined_errors = ";".join(field.errors)
+            errors.append(f"{field.label}: {combined_errors}")
+
+    return errors
