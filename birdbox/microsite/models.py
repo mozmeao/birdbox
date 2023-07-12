@@ -4,10 +4,11 @@
 
 
 from django.core.exceptions import ValidationError
-from django.db.models import BooleanField, CharField, Model, TextChoices
+from django.db.models import SET_NULL, BooleanField, CharField, ForeignKey, Model, TextChoices
+from django.shortcuts import redirect
 from django.utils.safestring import mark_safe
 
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.blocks import RichTextBlock
 from wagtail.contrib.settings.models import BaseGenericSetting, register_setting
 from wagtail.fields import StreamField
@@ -53,9 +54,63 @@ class BaseProtocolPage(Page):
         max_length=64,
         help_text=mark_safe(f'Optional layout wrapper <i>– only for components that need one</i>. {get_docs_link("layout")}'),
     )
+    menu_icon = ForeignKey(
+        "wagtailimages.Image",
+        blank=True,
+        null=True,
+        on_delete=SET_NULL,
+        related_name="+",
+        help_text="Icon to accompany an entry in the navigation menu. Optional.",
+    )
+    menu_description = CharField(
+        blank=True,
+        max_length=200,
+        help_text="Text to accompany an entry in the navigation menu. Optional.",
+    )
+
     settings_panels = Page.settings_panels + [
         FieldPanel("page_layout"),
+        MultiFieldPanel(
+            [
+                FieldPanel("show_in_menus"),  # From base page. TODO: avoid duplication
+                FieldPanel("menu_icon"),
+                FieldPanel("menu_description"),
+            ],
+            "Menu options",
+        ),
     ]
+
+    # Crudely drop the show_in_menus section. TODO: make this more elegant and less brittle
+    promote_panels = Page.promote_panels[:-1]
+
+    def has_menu_icon(self):
+        print(self.menu_icon)
+        return bool(self.menu_icon)
+
+
+class StructuralPage(BaseProtocolPage):
+    """A page used to create structure within a page tree, akin to a 'folder' under/in which other pages live.
+    Not directly viewable - will redirect to its parent page if called"""
+
+    # Minimal fields on this model - only exactly what we need
+    # `title` and `slug` fields come from BaseProtocolPage->Page
+
+    is_structural_page = True
+
+    # TO COME: guard rails on page heirarchy
+    # subpage_types = []
+
+    settings_panels = Page.settings_panels + [
+        FieldPanel("show_in_menus"),
+    ]
+    promote_panels = []
+
+    def serve_preview(self, request, mode_name="irrelevant"):
+        # Regardless of mode_name, always redirect to the parent page
+        return redirect(self.get_parent().get_full_url())
+
+    def serve(self, request):
+        return redirect(self.get_parent().get_full_url())
 
 
 class ProtocolTestPage(BaseProtocolPage):
@@ -204,8 +259,52 @@ class MicrositeSettings(BaseGenericSetting):
         help_text="Choose the design theme for this site. Changes will be immediately applied - there is no preview",
     )
 
+    navigation_enabled = BooleanField(
+        default=True,
+        verbose_name="Show nav bar on site?",
+    )
+    navigation_generate_nav_from_page_tree = BooleanField(
+        default=True,
+        help_text="Note that this will only go two levels deep",
+        verbose_name="Automatically generate nav from page heirarchy?",
+    )
+    navigation_show_cta_button = BooleanField(
+        default=False,
+        help_text="HIDDEN ON MOBILE VIEWPORT. Button requires label and URL, below, to be set. ",
+        verbose_name="Show CTA button in top nav?",
+    )
+    navigation_cta_button_label = CharField(
+        max_length=100,
+        verbose_name="CTA button label",
+        blank=True,
+    )
+    navigation_cta_button_url = CharField(
+        max_length=500,
+        verbose_name="CTA button URL",
+        blank=True,
+    )
+
+    panels = [
+        FieldPanel("site_theme"),
+        MultiFieldPanel(
+            [
+                FieldPanel("navigation_enabled"),
+                FieldPanel("navigation_generate_nav_from_page_tree"),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("navigation_show_cta_button"),
+                        FieldPanel("navigation_cta_button_label"),
+                        FieldPanel("navigation_cta_button_url"),
+                    ],
+                    "CTA button",
+                ),
+            ],
+            "Site Navigation config",
+        ),
+    ]
+
     class Meta:
-        verbose_name = "General site settings"
+        verbose_name = "Site settings"
 
 
 @register_snippet

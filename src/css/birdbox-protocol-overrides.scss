@@ -39,3 +39,35 @@
         margin-bottom: $spacing-md;
     }
 }
+
+
+// Nav bar tweaks compared to default protocol
+
+.mzp-c-navigation-container {
+    @media #{$mq-md} {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.mzp-c-navigation {
+    a.mzp-c-button {
+        @media #{$mq-md} {
+            display: block;
+        }
+        @include hidden;
+    }
+}
+
+
+.mzp-c-navigation .c-menu-item .c-menu-item-title {
+    @media #{$mq-md} {
+        font-size: 0.875rem;
+        line-height: 1.1;
+        text-decoration: none !important;
+    }
+    font-size: 1rem;
+    line-height: 1.5;
+}
