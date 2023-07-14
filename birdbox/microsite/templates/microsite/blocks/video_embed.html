@@ -1,0 +1,8 @@
+{% load microsite_tags wagtailembeds_tags %}
+
+<div class="{% get_layout_class_from_page %}">
+  <div class="mzp-c-video">
+  {% embed block.value.video.url 1080 %}
+  </div>
+</div>
+

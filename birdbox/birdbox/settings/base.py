@@ -21,6 +21,7 @@ import sentry_sdk
 from everett.manager import ConfigManager
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import ignore_logger
+from wagtail.embeds.oembed_providers import vimeo, youtube
 
 config = ConfigManager.basic_config()
 
@@ -198,6 +199,17 @@ WAGTAILADMIN_BASE_URL = config(
     "WAGTAILADMIN_BASE_URL",
     default="http://birdbox.mozilla.com",
 )
+
+WAGTAILEMBEDS_FINDERS = [
+    {
+        "class": "wagtail.embeds.finders.oembed",
+        "providers": [
+            # Only these two
+            youtube,
+            vimeo,
+        ],
+    }
+]
 
 # Sentry
 SENTRY_DSN = config("SENTRY_DSN", default="")

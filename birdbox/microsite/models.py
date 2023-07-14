@@ -27,6 +27,7 @@ from .blocks import (
     FooterSocialLinksGroupBlock,
     NewsletterFormBlock,
     SplitBlock,
+    VideoEmbedBlock,
 )
 
 
@@ -112,6 +113,13 @@ class ProtocolTestPage(BaseProtocolPage):
                 WagtailFormBlock(
                     required=False,
                     icon="radio-empty",
+                ),
+            ),
+            (
+                "video",
+                VideoEmbedBlock(
+                    required=False,
+                    icon="media",
                 ),
             ),
         ],

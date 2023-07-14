@@ -39,6 +39,7 @@ module.exports = {
         "protocol-article": "./src/css/protocol/components/article.scss",
         "protocol-newsletter-form":
             "./src/css/protocol/components/newsletter.scss",
+        "protocol-video": "./src/css/protocol/components/video.scss",
     },
     output: {
         filename: "js/[name].js",

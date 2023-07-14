@@ -11,6 +11,7 @@ from django.templatetags.static import static
 from django.utils.safestring import mark_safe
 
 from wagtail import blocks as wagtail_blocks
+from wagtail.embeds.blocks import EmbedBlock
 
 from birdbox.protocol_links import get_docs_link
 from common.blocks import AccessibleImageBlock
@@ -439,4 +440,19 @@ class NewsletterFormBlock(wagtail_blocks.StructBlock):
             "Please check your inbox or your spam filter for an email from us."
         ),
         max_length=200,
+    )
+
+
+class VideoEmbedBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/video_embed.html"
+        icon = "media"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(css={"all": [static("css/protocol-video.css")]})
+
+    video = EmbedBlock(
+        required=True,
     )
