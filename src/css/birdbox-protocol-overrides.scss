@@ -2,6 +2,14 @@
 
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
+figcaption {
+    @include text-body-sm;
+}
+
+figure {
+    text-align: center;
+}
+
 // Bring the errorlist closer to the field it's related to
 .mzp-c-field.mzp-is-error {
     input, textarea, select {
