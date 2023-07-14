@@ -3,6 +3,7 @@
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
 figcaption {
+    margin-top: $spacing-md;
     @include text-body-sm;
 }
 

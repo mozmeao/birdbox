@@ -1,7 +1,6 @@
 {% load microsite_tags wagtailcore_tags %}
 
 <div class="{% get_layout_class_from_page %}">
-
   <figure>
     {% include "common/partials/accessible_image.html" with image_block=value %}
     {% if value.image_caption %}

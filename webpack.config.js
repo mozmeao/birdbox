@@ -40,6 +40,9 @@ module.exports = {
         "protocol-newsletter-form":
             "./src/css/protocol/components/newsletter.scss",
         "protocol-video": "./src/css/protocol/components/video.scss",
+
+        // custom CSS
+        "birdbox-blog": "./src/css/blog.scss",
     },
     output: {
         filename: "js/[name].js",

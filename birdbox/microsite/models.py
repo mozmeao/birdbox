@@ -2,16 +2,29 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-
+from django import forms
+from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.db.models import BooleanField, CharField, Model, TextChoices
+from django.db.models import (
+    CASCADE,
+    SET_NULL,
+    BooleanField,
+    CharField,
+    DateField,
+    ForeignKey,
+    Model,
+    TextChoices,
+)
+from django.templatetags.static import static
 from django.utils.safestring import mark_safe
 
-from wagtail.admin.panels import FieldPanel
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from taggit.models import TaggedItemBase
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.blocks import RichTextBlock
 from wagtail.contrib.settings.models import BaseGenericSetting, register_setting
 from wagtail.fields import StreamField
-from wagtail.images.blocks import ImageChooserBlock
 from wagtail.models import LockableMixin, Page
 from wagtail.snippets.models import register_snippet
 from wagtailstreamforms.blocks import WagtailFormBlock
@@ -20,6 +33,7 @@ from birdbox.protocol_links import get_docs_link
 
 from .blocks import (
     ArticleBlock,
+    CaptionedImageBlock,
     CardLayoutBlock,
     ColumnBlock,
     FooterAfterMatterLinksBlock,
@@ -29,6 +43,8 @@ from .blocks import (
     SplitBlock,
     VideoEmbedBlock,
 )
+
+RICHTEXT_FEATURES_BLOGPAGE = []
 
 
 class ProtocolLayout(TextChoices):
@@ -66,8 +82,6 @@ class ProtocolTestPage(BaseProtocolPage):
 
     body = StreamField(
         [
-            ("paragraph", RichTextBlock(required=False)),
-            ("image", ImageChooserBlock(required=False)),
             # MORE TO COME: custom blocks for all the configured protocol components
             (
                 "cards",
@@ -122,6 +136,12 @@ class ProtocolTestPage(BaseProtocolPage):
                     icon="media",
                 ),
             ),
+            (
+                "captioned_image",
+                CaptionedImageBlock(
+                    required=False,
+                ),
+            ),
         ],
         block_counts={
             "newsletter_form": {"max_num": 1},
@@ -133,6 +153,137 @@ class ProtocolTestPage(BaseProtocolPage):
     content_panels = BaseProtocolPage.content_panels + [
         FieldPanel("body"),
     ]
+
+
+class BlogPageTag(TaggedItemBase):
+    content_object = ParentalKey(
+        "BlogPage",
+        related_name="tagged_items",
+        on_delete=CASCADE,
+    )
+
+
+class BlogPage(BaseProtocolPage):
+    # title and slug come from the superclass
+    standfirst = CharField(
+        max_length=500,
+        blank=True,
+    )
+    body = StreamField(
+        [
+            (
+                "blogtext",
+                RichTextBlock(
+                    features=settings.RICHTEXT_FEATURES__BLOGPAGE,
+                    label="Text block for blog post",
+                    required=False,
+                ),
+            ),
+            (
+                "image",
+                CaptionedImageBlock(
+                    label="Mid-body image",
+                    required=False,
+                ),
+            ),
+            (
+                "video",
+                VideoEmbedBlock(
+                    label="Mid-body video",
+                    required=False,
+                ),
+            ),
+        ]
+    )
+    date = DateField("Post date")
+    authors = ParentalManyToManyField("auth.User", blank=True)
+    custom_authors_text = CharField(
+        max_length=150,
+        blank=True,
+        help_text="If set, will override any automatic author name(s) from the linked users",
+    )
+    header_image = ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=SET_NULL,
+        related_name="+",
+        help_text="Optional image at the top of the page",
+    )
+    header_image_alt_text = CharField(
+        max_length=500,
+        blank=True,
+    )
+    feed_image = ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=SET_NULL,
+        related_name="+",
+        help_text="Recommended: image to use in the blog list view. Falls back to header image, if set",
+    )
+
+    tags = ClusterTaggableManager(
+        through=BlogPageTag,
+        blank=True,
+    )
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel("standfirst"),
+                FieldPanel("body"),
+            ],
+            "Content",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("header_image"),
+                FieldPanel("header_image_alt_text"),
+            ],
+            "Header image",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("date"),
+                FieldPanel("authors"),
+                FieldPanel("custom_authors_text"),
+            ],
+        ),
+    ]
+
+    promote_panels = [
+        MultiFieldPanel(
+            Page.promote_panels,
+        ),
+        FieldPanel("feed_image"),
+        FieldPanel("tags"),
+    ]
+
+    # Parent page / subpage type rules
+    # parent_page_types = ["BlogIndexPage"]
+    # subpage_types = []
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={
+                "all": [
+                    static("css/birdbox-blog.css"),
+                ]
+            },
+        )
+
+    def get_author_info(self):
+        if author := self.custom_authors_text:
+            return author
+        return ",".join([author.get_full_name() for author in self.authors.all()])
+
+    def get_feed_image(self):
+        if image := self.feed_image:
+            return image
+        return self.header_image
 
 
 @register_setting(icon="list-ul", order=2)

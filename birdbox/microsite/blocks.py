@@ -17,21 +17,6 @@ from birdbox.protocol_links import get_docs_link
 from common.blocks import AccessibleImageBlock
 from common.utils import get_freshest_newsletter_options
 
-# https://docs.wagtail.org/en/stable/advanced_topics/customisation/page_editing_interface.html#limiting-features-in-a-rich-text-field
-RICHTEXT_ARTICLE_FEATURES = RICHTEXT_ARTICLE_FEATURES = [
-    # Order here is the order used in the editor UI
-    "h2",
-    "h3",
-    "bold",
-    "italic",
-    "strikethrough",
-    "code",
-    "blockquote",
-    "link",
-    "ol",
-    "ul",
-]
-
 
 class AspectRatios(TextChoices):
     ASPECT_1_1 = "mzp-has-aspect-1-1", "1:1"
@@ -394,7 +379,22 @@ class ArticleBlock(wagtail_blocks.StructBlock):
         help_text="Rendered as a single styled paragraph element  (<p>). 2000 chars max, but less is better.",
     )
     body = wagtail_blocks.RichTextBlock(
-        features=RICHTEXT_ARTICLE_FEATURES,
+        features=settings.RICHTEXT_FEATURES__ARTICLE,
+    )
+
+
+class CaptionedImageBlock(AccessibleImageBlock):
+    class Meta:
+        template = "microsite/blocks/captioned_image.html"
+        icon = "doc-full"
+
+    image_caption = wagtail_blocks.CharBlock(
+        max_length=250,
+        required=False,
+    )
+    image_credit = wagtail_blocks.CharBlock(
+        max_length=250,
+        required=False,
     )
 
 

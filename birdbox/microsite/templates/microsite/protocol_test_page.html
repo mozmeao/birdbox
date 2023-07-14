@@ -1,17 +1,17 @@
 {% extends "microsite/base.html" %}
-{% load static wagtailcore_tags %}
+{% load microsite_tags static wagtailcore_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
 {% block extra_css %}{% endblock extra_css %}
 
 {% block content %}
-<div class="mzp-l-content mzp-t-content-lg">
+<div class="{% get_layout_class_from_page %}">
   <h1>{{page.title}}</h1>
 </div>
 {% for block in page.body %}
     {% include_block block %}
-  {% endfor %}
+{% endfor %}
   {% comment %}
   <button class="mzp-c-button" type="button">Test button</button>
   <button class="mzp-c-button mzp-t-product" type="button">Test button</button>
