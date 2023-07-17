@@ -1,0 +1,34 @@
+// Pagination links
+
+@import '~@mozilla-protocol/core/protocol/css/includes/lib';
+
+.pagination {
+
+    @include text-body-sm;
+    margin: $spacing-lg 0;
+    text-align: center;
+
+    li.page-item {
+        display: inline;
+    }
+
+    a,
+    .current {
+        background: #fff;
+        // border: 2px solid #000;
+        margin: 0 $spacing-xs;
+        padding: $spacing-sm $spacing-md;
+        text-decoration: none;
+        &:hover,
+        &:focus {
+            background: #e3e3e3;
+            font-weight: bold;
+            border-bottom: $spacing-xs solid $color-black
+        }
+    }
+
+    .current{
+        font-weight: bold;
+        border-bottom: $spacing-xs solid $color-black
+    }
+}

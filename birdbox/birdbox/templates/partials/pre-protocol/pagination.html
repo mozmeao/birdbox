@@ -1,0 +1,27 @@
+{% if posts.paginator.num_pages > 1 %}
+  <ul class="pagination">
+    {% if posts.has_previous %}
+      <li class="page-item">
+        <a href="?page={{ posts.previous_page_number }}" class="prev">
+          <span>Previous</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% for page_num in posts.paginator.page_range %}
+      <li class="page-item">
+        <a href="?page={{ page_num }}" class="page-link{% if page_num == posts.number %} current{% endif %}">
+          {{ page_num }}
+        </a>
+      </li>
+    {% endfor %}
+
+    {% if posts.has_next %}
+      <li class="page-item">
+        <a href="?page={{ posts.next_page_number }}" class="next">
+          <span>Next</span>
+        </a>
+      </li>
+    {% endif %}
+    </ul>
+{% endif %}

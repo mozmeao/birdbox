@@ -344,7 +344,12 @@ class ColumnBlock(wagtail_blocks.StructBlock):
     def frontend_media(self):
         "Custom property that lets us selectively include CSS"
         return forms.Media(
-            css={"all": [static("css/protocol-columns.css"), static("css/protocol-picto.css")]},
+            css={
+                "all": [
+                    static("css/protocol-columns.css"),
+                    static("css/protocol-picto.css"),
+                ]
+            },
         )
 
     column_layout = wagtail_blocks.ChoiceBlock(

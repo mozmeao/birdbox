@@ -15,7 +15,9 @@
 
     <h1 class="mzp-c-article-title">{{page.title}}</h1>
 
-    <p>{{page.date|date}} | {{page.get_author_info}}</p>
+    {% with page.get_author_info as author_info %}
+    <p>{{page.date|date}} {% if author_info %}{% if page.date %}|{% endif %}{% endif %} {{page.get_author_info}}</p>
+    {% endwith %}
 
     {% if page.header_image %}
     <figure class="header-image">

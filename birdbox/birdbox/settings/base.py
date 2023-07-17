@@ -264,3 +264,9 @@ BASKET_NEWSLETTER_DATA_TTL_HOURS = config(
 )
 
 FALLBACK_NEWSLETTER_DATA_PATH = f"{BASE_DIR}/data/basket/basket.mozilla.org.json"
+
+BLOG_PAGINATION_PAGE_SIZE = config(
+    "BLOG_PAGINATION_PAGE_SIZE",
+    default="6",
+    parser=int,
+)

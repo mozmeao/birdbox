@@ -5,6 +5,11 @@
 
 @import '~@mozilla-protocol/core/protocol/css/components/article';
 
+@import '~@mozilla-protocol/core/protocol/css/components/split';
+
+@import 'pre-protocol/pagination.scss';
+
+
 .blog-category-tag {
     @include font-size(12px);
     background-color: $color-black;

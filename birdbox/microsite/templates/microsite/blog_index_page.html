@@ -1,0 +1,49 @@
+{% extends "microsite/base.html" %}
+{% load microsite_tags static wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}blog-index{% endblock %}
+
+{% block extra_css %}{% endblock extra_css %}
+
+{% block content %}
+
+<div class="{% get_layout_class_from_page %}">
+  <h1>{{page.title}}</h1>
+
+{% if featured_post and not request.GET.page or request.GET.page == "1" %}
+</div>
+<section class="mzp-c-split {% get_layout_class_from_page %} mzp-t-dark mzp-t-background-secondary">
+  <div class="mzp-c-split-container">
+    <div class="mzp-c-split-body">
+      {% for tag in featured_post.specific.tags.all %}
+      <div class="mzp-c-card-tag">{{tag}}</div>
+      {% endfor %}
+      <h1 class="mzp-u-title-md">{{featured_post.title}}</h1>
+      <p>{{featured_post.get_preview_text|truncatewords:30}}</p>
+      <p>
+        <a class="mzp-c-button mzp-t-dark" href="{{featured_post.url}}">
+          {{page.read_more_cta_label}}
+        </a>
+      </p>
+    </div>
+    <div class="mzp-c-split-media ">
+      {% with featured_post.get_feed_image_details as image_details %}
+      {% image image_details.image original alt=image_details.alt_text %}
+      {% endwith %}
+    </div>
+  </div>
+</section>
+
+<div class="{% get_layout_class_from_page %}">
+{% endif %}
+
+  <div class="mzp-l-card-third">
+    {% for post in non_featured_posts %}
+      {% include "microsite/partials/blog_index_single_post.html" with post=post %}
+    {% endfor %}
+  </div>
+  {% include "partials/pre-protocol/pagination.html" with posts=non_featured_posts %}
+
+</div>
+
+{% endblock content %}
