@@ -211,6 +211,23 @@ WAGTAILEMBEDS_FINDERS = [
     }
 ]
 
+# https://docs.wagtail.org/en/stable/advanced_topics/customisation/page_editing_interface.html#limiting-features-in-a-rich-text-field
+RICHTEXT_FEATURES__ARTICLE = [
+    # Order here is the order used in the editor UI
+    "h2",
+    "h3",
+    "bold",
+    "italic",
+    "strikethrough",
+    "code",
+    "blockquote",
+    "link",
+    "ol",
+    "ul",
+]
+
+RICHTEXT_FEATURES__BLOGPAGE = RICHTEXT_FEATURES__ARTICLE
+
 # Sentry
 SENTRY_DSN = config("SENTRY_DSN", default="")
 
@@ -247,3 +264,9 @@ BASKET_NEWSLETTER_DATA_TTL_HOURS = config(
 )
 
 FALLBACK_NEWSLETTER_DATA_PATH = f"{BASE_DIR}/data/basket/basket.mozilla.org.json"
+
+BLOG_PAGINATION_PAGE_SIZE = config(
+    "BLOG_PAGINATION_PAGE_SIZE",
+    default="6",
+    parser=int,
+)

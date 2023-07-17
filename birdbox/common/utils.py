@@ -17,12 +17,17 @@ from wagtail.models import Page
 
 
 def get_frontend_media(page: Page) -> List[Media]:
-    """For a given Page, return Media objects featuring extra JS and CSS URIs needed
-    in the HTML template for that Page"""
+    """For a given Page, return Media objects featuring extra
+    JS and CSS URIs needed in the HTML template for that Page
+    whether the come from the Page or blocks in its StreamField"""
 
     gathered_frontend_media = []
 
-    # find all the streamfields
+    # Check for any frontend media on the page itself
+    if hasattr(page, "frontend_media"):
+        gathered_frontend_media.append(page.frontend_media)
+
+    # find all the streamfields and see if they have associated media
     streamfields = []
     for fieldname, value in vars(page).items():
         if not fieldname.startswith("_") and type(value) == StreamValue:

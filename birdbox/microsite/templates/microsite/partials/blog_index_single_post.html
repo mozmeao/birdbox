@@ -1,0 +1,20 @@
+{% load wagtailimages_tags %}
+
+<section class="mzp-c-card mzp-c-card-medium mzp-has-aspect-16-9">
+    <a class="mzp-c-card-block-link" href="{{post.url}}">
+        <div class="mzp-c-card-media-wrapper">
+            {% with post.get_feed_image_details as image_details %}
+            {% image image_details.image original alt=image_details.alt_text %}
+            {% endwith %}
+        </div>
+        <div class="mzp-c-card-content">
+            {% for tag in post.specific.tags.all %}
+            <div class="mzp-c-card-tag">{{tag}}</div>
+            {% endfor %}
+            <h2 class="mzp-c-card-title">{{post.title}}</h2>
+            <p class="mzp-c-card-desc">
+              {{post.get_preview_text|truncatewords:20}}
+            </p>
+        </div>
+    </a>
+</section>
