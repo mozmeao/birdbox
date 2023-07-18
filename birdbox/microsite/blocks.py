@@ -512,7 +512,6 @@ class BiographyGridBlock(wagtail_blocks.StructBlock):
         max_length=500,
         required=False,
     )
-
     theme = wagtail_blocks.ChoiceBlock(
         choices=ThemeOptions.choices,
         required=True,
