@@ -501,7 +501,8 @@ class BiographyGridBlock(wagtail_blocks.StructBlock):
         template = "microsite/blocks/biography_grid.html"
         icon = "group"
 
-    # TODO: frontend_media
+    # frontend_media comes from the individual blocks
+    # used in this grid
 
     title = wagtail_blocks.CharBlock(
         max_length=150,
@@ -511,14 +512,41 @@ class BiographyGridBlock(wagtail_blocks.StructBlock):
         max_length=500,
         required=False,
     )
-
     theme = wagtail_blocks.ChoiceBlock(
         choices=ThemeOptions.choices,
         required=True,
         default=ThemeOptions.THEME_LIGHT,
     )
-
     people = wagtail_blocks.ListBlock(
         BiographyBlock(),
         collapsed=True,
+    )
+
+
+class CompactCalloutBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/compact_callout.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(css={"all": [static("css/protocol-callout.css")]})
+
+    headline = wagtail_blocks.CharBlock(
+        max_length=50,
+        required=True,
+        help_text="Around 50 chars",
+    )
+    body = wagtail_blocks.TextBlock(
+        max_length=180,
+        required=True,
+        help_text="Around 150 chars",
+    )
+    cta = CTAButtonBlock(
+        required=True,
+    )
+    theme = wagtail_blocks.ChoiceBlock(
+        choices=ThemeOptions.choices,
+        required=True,
+        default=ThemeOptions.THEME_LIGHT,
     )
