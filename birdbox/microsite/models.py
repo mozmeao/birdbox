@@ -37,6 +37,7 @@ from birdbox.protocol_links import get_docs_link
 
 from .blocks import (
     ArticleBlock,
+    BiographyGridBlock,
     CaptionedImageBlock,
     CardLayoutBlock,
     ColumnBlock,
@@ -143,6 +144,12 @@ class ProtocolTestPage(BaseProtocolPage):
             (
                 "captioned_image",
                 CaptionedImageBlock(
+                    required=False,
+                ),
+            ),
+            (
+                "biography_grid",
+                BiographyGridBlock(
                     required=False,
                 ),
             ),
