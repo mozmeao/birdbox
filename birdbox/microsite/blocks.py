@@ -78,9 +78,9 @@ class ColumnOptions(TextChoices):
     COLUMN_LAYOUT_FOUR_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-four", "Four column"
 
 
-class BiographyGridStyleOptions(TextChoices):
-    BIO_GRID_LIGHT = "mzp-t-light", "Light background"
-    BIO_GRID_DARK = "mzp-t-dark", "Dark background"
+class ThemeOptions(TextChoices):
+    THEME_LIGHT = "mzp-t-light", "Light theme"
+    THEME_DARK = "mzp-t-dark", "Dark theme"
 
 
 class LinkStructValue(wagtail_blocks.StructValue):
@@ -512,10 +512,10 @@ class BiographyGridBlock(wagtail_blocks.StructBlock):
         required=False,
     )
 
-    layout_style = wagtail_blocks.ChoiceBlock(
-        choices=BiographyGridStyleOptions.choices,
+    theme = wagtail_blocks.ChoiceBlock(
+        choices=ThemeOptions.choices,
         required=True,
-        default=BiographyGridStyleOptions.BIO_GRID_LIGHT,
+        default=ThemeOptions.THEME_LIGHT,
     )
 
     people = wagtail_blocks.ListBlock(
