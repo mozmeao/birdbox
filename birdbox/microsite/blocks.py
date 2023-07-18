@@ -78,6 +78,11 @@ class ColumnOptions(TextChoices):
     COLUMN_LAYOUT_FOUR_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-four", "Four column"
 
 
+class BiographyGridStyleOptions(TextChoices):
+    BIO_GRID_LIGHT = "mzp-t-light", "Light background"
+    BIO_GRID_DARK = "mzp-t-dark", "Dark background"
+
+
 class LinkStructValue(wagtail_blocks.StructValue):
     def url(self):
         external_url = self.get("external_url")
@@ -460,4 +465,60 @@ class VideoEmbedBlock(wagtail_blocks.StructBlock):
 
     video = EmbedBlock(
         required=True,
+    )
+
+
+class BiographyBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/biography.html"
+        icon = "user"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(css={"all": [static("css/protocol-card.css")]})
+
+    name = wagtail_blocks.CharBlock(
+        max_length=100,
+    )
+    meta_info = wagtail_blocks.CharBlock(
+        max_length=50,
+        required=False,
+    )
+    image = AccessibleImageBlock(
+        required=False,
+    )
+    website = wagtail_blocks.URLBlock(
+        required=False,
+    )
+    bio = wagtail_blocks.RichTextBlock(
+        features=settings.RICHTEXT_FEATURES__BIO,
+    )
+
+
+class BiographyGridBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/biography_grid.html"
+        icon = "group"
+
+    # TODO: frontend_media
+
+    title = wagtail_blocks.CharBlock(
+        max_length=150,
+        required=False,
+    )
+    standfirst = wagtail_blocks.TextBlock(
+        max_length=500,
+        required=False,
+    )
+
+    layout_style = wagtail_blocks.ChoiceBlock(
+        choices=BiographyGridStyleOptions.choices,
+        required=True,
+        default=BiographyGridStyleOptions.BIO_GRID_LIGHT,
+    )
+
+    people = wagtail_blocks.ListBlock(
+        BiographyBlock(),
+        collapsed=True,
     )

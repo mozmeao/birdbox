@@ -1,0 +1,18 @@
+{% load microsite_tags wagtailcore_tags %}
+
+<div class="{{block.value.layout_style}}">
+
+  <div class="{% get_layout_class_from_page %}">
+    {% if block.value.title %}
+      <h2>{{block.value.title}}</h2>
+    {% endif %}
+    {% if block.value.standfirst %}
+      <p>{{block.value.standfirst}}</p>
+    {% endif %}
+    <div class="mzp-l-card-third">
+    {% for bio_block in block.value.people %}
+      {% include "microsite/blocks/biography.html" with block=bio_block %}
+    {% endfor %}
+    </div>
+  </div>
+</div>

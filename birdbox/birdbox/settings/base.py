@@ -228,6 +228,16 @@ RICHTEXT_FEATURES__ARTICLE = [
 
 RICHTEXT_FEATURES__BLOGPAGE = RICHTEXT_FEATURES__ARTICLE
 
+RICHTEXT_FEATURES__BIO = [
+    "bold",
+    "italic",
+    "strikethrough",
+    "link",
+    "ol",
+    "ul",
+]
+
+
 # Sentry
 SENTRY_DSN = config("SENTRY_DSN", default="")
 

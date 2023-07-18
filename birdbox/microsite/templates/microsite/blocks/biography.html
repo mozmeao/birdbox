@@ -1,0 +1,31 @@
+{# https://protocol.mozilla.org/components/detail/card--overview.html #}
+{# NB: Does not behave inside an mzp-l-content wrapper - that's against planned use #}
+
+{% load birdbox_tags wagtailcore_tags wagtailimages_tags %}
+
+
+<section class="mzp-c-card mzp-card-small mzp-has-aspect-1-1">
+  {% if block.image.image %}
+  <div class="mzp-c-card-media-wrapper">
+    {% with block.image as image_block %}
+      {% include "common/partials/accessible_image.html" with image_block=image_block %}
+    {% endwith %}
+  </div>
+  {% endif %}
+  <div class="mzp-c-card-content">
+      {% if block.meta_info %}
+      <p class="mzp-c-card-meta">{{block.meta_info}}</p>
+      {% endif %}
+      <h2 class="mzp-c-card-title">{{block.name}}</h2>
+      <div class="mzp-c-card-desc">
+          {% include_block block.bio %}
+      </div>
+      {% if block.website %}
+      <p class="mzp-c-card-cta">
+          <a href="{{block.website}}" class="mzp-c-card-cta-text">
+            {{block.website}}
+          </a>
+      </p>
+      {% endif %}
+  </div>
+</section>
