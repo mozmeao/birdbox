@@ -43,6 +43,7 @@ module.exports = {
         "protocol-callout": "./src/css/protocol/components/callout.scss",
 
         // custom CSS
+        "birdbox-hero": "./src/css/hero.scss",
         "birdbox-blog": "./src/css/blog.scss",
     },
     output: {

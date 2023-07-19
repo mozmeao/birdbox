@@ -1,0 +1,18 @@
+{% load wagtailimages_tags %}
+
+<section
+  class="{{block.value.theme}} hero-section"
+  style="background-color: {{block.value.background_color}};
+  {% if block.value.background_image %}
+    {% image block.value.background_image width-1600 as bg_image %}
+        background: no-repeat url('{{bg_image.url}}')
+  {% endif %}"
+>
+  <div class="mzp-l-content">
+      <div class="hero-text-wrapper">
+          <h1>{{block.value.main_heading}}</h1>
+          <h2>{{block.value.subheading}}</h2>
+          <p>{{block.value.standfirst|linebreaksbr}}</p>
+      </div>
+  </div>
+</section>

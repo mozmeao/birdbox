@@ -2,9 +2,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+from django import forms
 from django.utils.safestring import mark_safe
 
-from wagtail import blocks as wagtail_blocks
+from wagtail import blocks, blocks as wagtail_blocks
 from wagtail.images import blocks as wagtailimages_blocks
 
 
@@ -50,3 +51,14 @@ class AccessibleImageBlockBase(wagtail_blocks.StructBlock):
 
 class AccessibleImageBlock(AccessibleImageBlockBase):
     pass
+
+
+class ColorBlock(blocks.FieldBlock):
+    def __init__(self, help_text=None, required=True, **kwargs):
+        self.field = forms.CharField(
+            help_text=help_text,
+            max_length=7,
+            required=required,
+            widget=forms.TextInput(attrs={"type": "color"}),
+        )
+        super().__init__(**kwargs)
