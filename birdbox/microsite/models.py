@@ -45,6 +45,7 @@ from .blocks import (
     FooterAfterMatterLinksBlock,
     FooterColumnBlock,
     FooterSocialLinksGroupBlock,
+    HeroBlock,
     NewsletterFormBlock,
     SplitBlock,
     VideoEmbedBlock,
@@ -159,6 +160,13 @@ class ProtocolTestPage(BaseProtocolPage):
                 CompactCalloutBlock(
                     required=False,
                     help_text=get_docs_link("compact-callout"),
+                ),
+            ),
+            (
+                "hero",
+                HeroBlock(
+                    required=False,
+                    help_text="Not the core Protocol component",
                 ),
             ),
         ],

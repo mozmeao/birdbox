@@ -12,9 +12,10 @@ from django.utils.safestring import mark_safe
 
 from wagtail import blocks as wagtail_blocks
 from wagtail.embeds.blocks import EmbedBlock
+from wagtail.images.blocks import ImageChooserBlock
 
 from birdbox.protocol_links import get_docs_link
-from common.blocks import AccessibleImageBlock
+from common.blocks import AccessibleImageBlock, ColorBlock
 from common.utils import get_freshest_newsletter_options
 
 
@@ -544,6 +545,48 @@ class CompactCalloutBlock(wagtail_blocks.StructBlock):
     )
     cta = CTAButtonBlock(
         required=True,
+    )
+    theme = wagtail_blocks.ChoiceBlock(
+        choices=ThemeOptions.choices,
+        required=True,
+        default=ThemeOptions.THEME_LIGHT,
+    )
+
+
+class HeroBlock(wagtail_blocks.StructBlock):
+    """This is not a core Protocol component, but is based on work done
+    for MEICO"""
+
+    class Meta:
+        template = "microsite/blocks/hero.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(css={"all": [static("css/birdbox-hero.css")]})
+
+    main_heading = wagtail_blocks.CharBlock(
+        max_length=75,
+        required=True,
+        help_text="Up to 75 characters",
+    )
+    subheading = wagtail_blocks.CharBlock(
+        max_length=150,
+        required=True,
+        help_text="Up to 150 characters",
+    )
+    standfirst = wagtail_blocks.TextBlock(
+        max_length=400,
+        required=True,
+        help_text="Up to 400 characters",
+    )
+    background_image = ImageChooserBlock(
+        required=False,
+        help_text="Optional but recommended - needs to be something that will fill well",
+    )
+    background_color = ColorBlock(
+        required=True,
+        help_text="For a solid block of colour, matched to the background image",
     )
     theme = wagtail_blocks.ChoiceBlock(
         choices=ThemeOptions.choices,
