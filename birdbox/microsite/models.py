@@ -41,6 +41,7 @@ from .blocks import (
     CaptionedImageBlock,
     CardLayoutBlock,
     ColumnBlock,
+    CompactCalloutBlock,
     FooterAfterMatterLinksBlock,
     FooterColumnBlock,
     FooterSocialLinksGroupBlock,
@@ -151,6 +152,13 @@ class ProtocolTestPage(BaseProtocolPage):
                 "biography_grid",
                 BiographyGridBlock(
                     required=False,
+                ),
+            ),
+            (
+                "compact_callout",
+                CompactCalloutBlock(
+                    required=False,
+                    help_text=get_docs_link("compact-callout"),
                 ),
             ),
         ],
