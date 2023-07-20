@@ -94,6 +94,7 @@ class ProtocolTestPage(BaseProtocolPage):
                 "cards",
                 CardLayoutBlock(
                     label="Card group",
+                    label_format="Card group",  # Can't add more detials to this 'collapsed'-mode label
                     required=False,
                     help_text=mark_safe(f'Layout wrapper for Cards. {get_docs_link("card-layout")}'),
                 ),
@@ -102,6 +103,7 @@ class ProtocolTestPage(BaseProtocolPage):
                 "split",
                 SplitBlock(
                     label="Split content",
+                    label_format="Split: {title}",
                     required=False,
                     help_text=mark_safe(f'{get_docs_link("split")}  Not all options supported'),
                 ),
@@ -110,6 +112,7 @@ class ProtocolTestPage(BaseProtocolPage):
                 "columns",
                 ColumnBlock(
                     label="Column block",
+                    label_format="Column block: {column_layout}",
                     required=False,
                     help_text=mark_safe(f'Column layout wrapper. {get_docs_link("columns")}. Has sub-components. {get_docs_link("picto")}'),
                 ),
@@ -118,6 +121,7 @@ class ProtocolTestPage(BaseProtocolPage):
                 "article",
                 ArticleBlock(
                     label="Article block",
+                    label_format="Article: {header}",
                     required=False,
                     help_text=get_docs_link("article"),
                 ),
@@ -126,12 +130,14 @@ class ProtocolTestPage(BaseProtocolPage):
                 "newsletter_form",
                 NewsletterFormBlock(
                     label="Newsletter signup form",
+                    label_format="Newsletter: {title}",
                     required=False,
                 ),
             ),
             (
                 "custom_form",
                 WagtailFormBlock(
+                    label_format="Custom form",
                     required=False,
                     icon="radio-empty",
                 ),
@@ -139,6 +145,8 @@ class ProtocolTestPage(BaseProtocolPage):
             (
                 "video",
                 VideoEmbedBlock(
+                    label="Video embed",
+                    label_format="Video embed: {video}",
                     required=False,
                     icon="media",
                 ),
@@ -146,12 +154,14 @@ class ProtocolTestPage(BaseProtocolPage):
             (
                 "captioned_image",
                 CaptionedImageBlock(
+                    label_format="Captioned image: {image_caption}",
                     required=False,
                 ),
             ),
             (
                 "biography_grid",
                 BiographyGridBlock(
+                    label_format="Biography grid: {title}",
                     required=False,
                 ),
             ),
@@ -159,6 +169,7 @@ class ProtocolTestPage(BaseProtocolPage):
                 "compact_callout",
                 CompactCalloutBlock(
                     required=False,
+                    label_format="Compact callout: {headline}",
                     help_text=get_docs_link("compact-callout"),
                 ),
             ),
@@ -166,6 +177,7 @@ class ProtocolTestPage(BaseProtocolPage):
                 "hero",
                 HeroBlock(
                     required=False,
+                    label_format="Hero: {main_heading}",
                     help_text="Not the core Protocol component",
                 ),
             ),
