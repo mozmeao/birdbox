@@ -69,22 +69,6 @@ def get_alt_text_for_accessible_image_block(block_data):
 
 
 @register.simple_tag
-def seek_dark_theme_class(parent_class_string):
-    """Used with a child HTML node to determine whether it should have
-    the mzp-t-dark class added to it, based on a class string set on
-    a parent/grandparent node.
-
-    See microsite/templates/microsite/blocks/split.html for an example of its use
-    """
-    DARK_THEME_CLASSNAME = "mzp-t-dark"
-
-    if DARK_THEME_CLASSNAME in parent_class_string:
-        return DARK_THEME_CLASSNAME
-
-    return ""
-
-
-@register.simple_tag
 def gather_field_errors(form):
     errors = []
     for field in form.visible_fields():

@@ -115,3 +115,19 @@ def newsletter_form_fieldset(context, newsletter_slugs: List[str]) -> Dict:
 @register.simple_tag
 def newsletter_service_url():
     return settings.BASKET_SUBSCRIPTION_URL
+
+
+@register.simple_tag
+def seek_dark_theme_class(parent_class_string):
+    """Used with a child HTML node to determine whether it should have
+    the mzp-t-dark class added to it, based on a class string set on
+    a parent/grandparent node.
+
+    See microsite/templates/microsite/blocks/split.html for an example of its use
+    """
+    DARK_THEME_CLASSNAME = "mzp-t-dark"
+
+    if DARK_THEME_CLASSNAME in parent_class_string:
+        return DARK_THEME_CLASSNAME
+
+    return ""
