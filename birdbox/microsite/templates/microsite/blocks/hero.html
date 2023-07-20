@@ -1,4 +1,4 @@
-{% load wagtailimages_tags %}
+{% load microsite_tags wagtailimages_tags %}
 
 <section
   class="{{block.value.theme}} hero-section"
@@ -8,7 +8,7 @@
         background: no-repeat url('{{bg_image.url}}')
   {% endif %}"
 >
-  <div class="mzp-l-content">
+  <div class="{% get_layout_class_from_page %}">
       <div class="hero-text-wrapper">
           <h1>{{block.value.main_heading}}</h1>
           <h2>{{block.value.subheading}}</h2>
