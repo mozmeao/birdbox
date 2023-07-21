@@ -10,9 +10,10 @@ from django.template import Library
 
 from product_details import product_details
 
-from common.utils import get_freshest_newsletter_data
+from common.utils import find_streamfield_blocks_by_types, get_freshest_newsletter_data
 
-from ..models import Footer, MicrositeSettings, NewsletterStandardMessages
+from ..blocks import ArticleBlock, HeroBlock
+from ..models import Footer, MicrositeSettings, NewsletterStandardMessages, Page
 
 register = Library()
 
@@ -113,12 +114,12 @@ def newsletter_form_fieldset(context, newsletter_slugs: List[str]) -> Dict:
 
 
 @register.simple_tag
-def newsletter_service_url():
+def newsletter_service_url() -> str:
     return settings.BASKET_SUBSCRIPTION_URL
 
 
 @register.simple_tag
-def seek_dark_theme_class(parent_class_string):
+def seek_dark_theme_class(parent_class_string: str) -> str:
     """Used with a child HTML node to determine whether it should have
     the mzp-t-dark class added to it, based on a class string set on
     a parent/grandparent node.
@@ -131,3 +132,14 @@ def seek_dark_theme_class(parent_class_string):
         return DARK_THEME_CLASSNAME
 
     return ""
+
+
+@register.simple_tag
+def block_with_h1_exists_in_page(page: Page) -> bool:
+    candidate_blocks = find_streamfield_blocks_by_types(
+        page=page,
+        target_block_types=(HeroBlock, ArticleBlock),
+    )
+    # If we have more than one candidate block in a page, that's a separate problem
+    # but should be caught by Wagtail's own a11y checks
+    return len(candidate_blocks) > 0
