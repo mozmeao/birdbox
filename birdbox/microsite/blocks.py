@@ -113,6 +113,7 @@ class LabelledLinkBlock(LinkBlock):
 class CTAButtonBlock(LinkBlock):
     button_text = wagtail_blocks.CharBlock(
         max_length=50,
+        required=False,
     )
 
 

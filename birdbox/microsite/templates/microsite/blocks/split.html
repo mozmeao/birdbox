@@ -9,7 +9,7 @@
         <div class="mzp-c-split-body">
             <h1 class="mzp-u-title-md">{{block.value.title}}</h1>
             <p>{{block.value.text}}</p>
-            {% if block.value.cta_button %}
+            {% if block.value.cta_button.button_text and block.value.cta_button.url%}
             <p>
               <a class="mzp-c-button {% seek_dark_theme_class block.value.layout_variant %}" href="{{block.value.cta_button.url}}">
                 {{block.value.cta_button.button_text}}
