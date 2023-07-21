@@ -35,14 +35,14 @@
                                             <ul class="mzp-l-rows-two">
                                                 {% for child_page in top_level_page.get_children %}
                                                 <li>
-                                                    <section class="c-menu-item{% if child_page.specific.menu_icon %} mzp-has-icon{% endif %}">
-                                                        <a class="c-menu-item-link" href="{{child_page.url}}" data-link-name="{{child_page.title}}" data-link-type="nav">
+                                                    <section class="mzp-c-menu-item{% if child_page.specific.menu_icon %} mzp-has-icon{% endif %}">
+                                                        <a class="mzp-c-menu-item-link" href="{{child_page.url}}" data-link-name="{{child_page.title}}" data-link-type="nav">
                                                             {% if child_page.specific.menu_icon %}
-                                                                {% image child_page.specific.menu_icon fill-32x32 loading="lazy" class="c-menu-item-icon" width="32" height="32" alt="" %}
+                                                                {% image child_page.specific.menu_icon fill-32x32 loading="lazy" class="mzp-c-menu-item-icon" width="32" height="32" alt="" %}
                                                             {% endif %}
-                                                            <h4 class="c-menu-item-title">{{child_page.title}}</h4>
+                                                            <h4 class="mzp-c-menu-item-title">{{child_page.title}}</h4>
                                                             {% if child_page.specific.menu_description %}
-                                                            <p class="c-menu-item-desc">{{child_page.specific.menu_description}}</p>
+                                                            <p class="mzp-c-menu-item-desc">{{child_page.specific.menu_description}}</p>
                                                             {% endif %}
                                                         </a>
                                                     </section>
@@ -59,12 +59,16 @@
                     </nav>
                     {% endif %} {# nav_links #}
                 </div>
+                {% if cta_label and cta_url %}
+                  <div class="mzp-c-navigation-download">
+                    <div class="mzp-c-button-download-container">
+                      <a href="{{cta_url}}" class="mzp-c-button {% get_layout_class_from_page %}">
+                          {{cta_label}}
+                      </a>
+                    </div>
+                  </div>
+                {% endif %}
             </div>
-            {% if cta_label and cta_url %}
-            <a href="{{cta_url}}" class="mzp-c-button {% get_layout_class_from_page %}">
-                {{cta_label}}
-            </a>
-            {% endif %}
         </div>
     </div>
 </div>
