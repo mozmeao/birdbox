@@ -3,7 +3,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 import json
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 from django.conf import settings
 from django.core.cache import cache
@@ -12,8 +12,17 @@ from django.forms import Media
 
 import requests
 from sentry_sdk import capture_message
+from wagtail.blocks import StructBlock
 from wagtail.fields import StreamValue
 from wagtail.models import Page
+
+
+def _gather_streamfields_from_page(page: Page) -> List[StreamValue]:
+    streamfields = []
+    for fieldname, value in vars(page).items():
+        if not fieldname.startswith("_") and type(value) == StreamValue:
+            streamfields.append(value)
+    return streamfields
 
 
 def get_frontend_media(page: Page) -> List[Media]:
@@ -28,10 +37,7 @@ def get_frontend_media(page: Page) -> List[Media]:
         gathered_frontend_media.append(page.frontend_media)
 
     # find all the streamfields and see if they have associated media
-    streamfields = []
-    for fieldname, value in vars(page).items():
-        if not fieldname.startswith("_") and type(value) == StreamValue:
-            streamfields.append(value)
+    streamfields = _gather_streamfields_from_page(page)
 
     def _get_media_for_blocks(block):
         gathered_media = []
@@ -48,6 +54,17 @@ def get_frontend_media(page: Page) -> List[Media]:
             gathered_frontend_media.extend(_get_media_for_blocks(block))
 
     return gathered_frontend_media
+
+
+def find_streamfield_blocks_by_types(page: Page, target_block_types: Tuple[Any]) -> List[StructBlock]:
+    matching_blocks = []
+    streamfields = _gather_streamfields_from_page(page)
+    for sf in streamfields:
+        for blocks_list in sf.blocks_by_name().values():
+            for value in blocks_list:
+                if isinstance(value.block, target_block_types):
+                    matching_blocks.append(value.block)
+    return matching_blocks
 
 
 def get_freshest_newsletter_data() -> Dict:

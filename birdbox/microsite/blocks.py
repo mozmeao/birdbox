@@ -113,6 +113,7 @@ class LabelledLinkBlock(LinkBlock):
 class CTAButtonBlock(LinkBlock):
     button_text = wagtail_blocks.CharBlock(
         max_length=50,
+        required=False,
     )
 
 
@@ -383,7 +384,7 @@ class ArticleBlock(wagtail_blocks.StructBlock):
 
     header = wagtail_blocks.CharBlock(
         max_length=250,
-        help_text="Rendered as a H1",
+        help_text="Rendered as a H1, replacing the title of the page",
     )
     intro_para = wagtail_blocks.CharBlock(
         max_length=1000,
@@ -568,7 +569,7 @@ class HeroBlock(wagtail_blocks.StructBlock):
     main_heading = wagtail_blocks.CharBlock(
         max_length=75,
         required=True,
-        help_text="Up to 75 characters",
+        help_text="Up to 75 characters. Will be the H1 of the page it's used in",
     )
     subheading = wagtail_blocks.CharBlock(
         max_length=150,

@@ -82,21 +82,18 @@ class BaseProtocolPage(Page):
     ]
 
 
-class ProtocolTestPage(BaseProtocolPage):
-    "General-purpose page was a way to test out all Protocol-compliant components and options"
+class GeneralPurposePage(BaseProtocolPage):
+    """General-purpose page with most of the components available in it."""
 
     # title comes from the base Page class
-
-    body = StreamField(
+    content = StreamField(
         [
-            # MORE TO COME: custom blocks for all the configured protocol components
             (
-                "cards",
-                CardLayoutBlock(
-                    label="Card group",
-                    label_format="Card group",  # Can't add more detials to this 'collapsed'-mode label
+                "hero",
+                HeroBlock(
                     required=False,
-                    help_text=mark_safe(f'Layout wrapper for Cards. {get_docs_link("card-layout")}'),
+                    label_format="Hero: {main_heading}",
+                    help_text="Not the core Protocol component",
                 ),
             ),
             (
@@ -109,21 +106,21 @@ class ProtocolTestPage(BaseProtocolPage):
                 ),
             ),
             (
+                "cards",
+                CardLayoutBlock(
+                    label="Card group",
+                    label_format="Card group",  # Can't add more detials to this 'collapsed'-mode label
+                    required=False,
+                    help_text=mark_safe(f'Layout wrapper for Cards. {get_docs_link("card-layout")}'),
+                ),
+            ),
+            (
                 "columns",
                 ColumnBlock(
                     label="Column block",
                     label_format="Column block: {column_layout}",
                     required=False,
                     help_text=mark_safe(f'Column layout wrapper. {get_docs_link("columns")}. Has sub-components. {get_docs_link("picto")}'),
-                ),
-            ),
-            (
-                "article",
-                ArticleBlock(
-                    label="Article block",
-                    label_format="Article: {header}",
-                    required=False,
-                    help_text=get_docs_link("article"),
                 ),
             ),
             (
@@ -173,16 +170,9 @@ class ProtocolTestPage(BaseProtocolPage):
                     help_text=get_docs_link("compact-callout"),
                 ),
             ),
-            (
-                "hero",
-                HeroBlock(
-                    required=False,
-                    label_format="Hero: {main_heading}",
-                    help_text="Not the core Protocol component",
-                ),
-            ),
         ],
         block_counts={
+            "hero": {"max_num": 1},
             "newsletter_form": {"max_num": 1},
         },
         use_json_field=True,
@@ -190,8 +180,18 @@ class ProtocolTestPage(BaseProtocolPage):
     )
 
     content_panels = BaseProtocolPage.content_panels + [
-        FieldPanel("body"),
+        FieldPanel("content"),
     ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        title_field = self._meta.get_field("title")
+
+        title_field.help_text = (
+            "The page title as you'd like it to be seen by the public. "
+            "(However, this will not be displayed in the page if a block is "
+            "added that has its own H1-level heading field, such as a Hero)"
+        )
 
 
 class BlogPageTag(TaggedItemBase):
@@ -572,3 +572,119 @@ class NewsletterStandardMessages(LockableMixin, Model):
         if _model.objects.exclude(pk=self.pk).exists():
             raise ValidationError("There can be only one instance of Newsletter Standard Messages")
         return super().save(*args, **kwargs)
+
+
+class ProtocolTestPage(BaseProtocolPage):
+    """DEVELOPMNENT ONLY. General-purpose page was a way to test out all
+    Protocol-compliant components and options
+
+    DO NOT USE IN PRODUCTION
+    """
+
+    # title comes from the base Page class
+
+    body = StreamField(
+        [
+            # MORE TO COME: custom blocks for all the configured protocol components
+            (
+                "cards",
+                CardLayoutBlock(
+                    label="Card group",
+                    label_format="Card group",  # Can't add more detials to this 'collapsed'-mode label
+                    required=False,
+                    help_text=mark_safe(f'Layout wrapper for Cards. {get_docs_link("card-layout")}'),
+                ),
+            ),
+            (
+                "split",
+                SplitBlock(
+                    label="Split content",
+                    label_format="Split: {title}",
+                    required=False,
+                    help_text=mark_safe(f'{get_docs_link("split")}  Not all options supported'),
+                ),
+            ),
+            (
+                "columns",
+                ColumnBlock(
+                    label="Column block",
+                    label_format="Column block: {column_layout}",
+                    required=False,
+                    help_text=mark_safe(f'Column layout wrapper. {get_docs_link("columns")}. Has sub-components. {get_docs_link("picto")}'),
+                ),
+            ),
+            (
+                "article",
+                ArticleBlock(
+                    label="Article block",
+                    label_format="Article: {header}",
+                    required=False,
+                    help_text=get_docs_link("article"),
+                ),
+            ),
+            (
+                "newsletter_form",
+                NewsletterFormBlock(
+                    label="Newsletter signup form",
+                    label_format="Newsletter: {title}",
+                    required=False,
+                ),
+            ),
+            (
+                "custom_form",
+                WagtailFormBlock(
+                    label_format="Custom form",
+                    required=False,
+                    icon="radio-empty",
+                ),
+            ),
+            (
+                "video",
+                VideoEmbedBlock(
+                    label="Video embed",
+                    label_format="Video embed: {video}",
+                    required=False,
+                    icon="media",
+                ),
+            ),
+            (
+                "captioned_image",
+                CaptionedImageBlock(
+                    label_format="Captioned image: {image_caption}",
+                    required=False,
+                ),
+            ),
+            (
+                "biography_grid",
+                BiographyGridBlock(
+                    label_format="Biography grid: {title}",
+                    required=False,
+                ),
+            ),
+            (
+                "compact_callout",
+                CompactCalloutBlock(
+                    required=False,
+                    label_format="Compact callout: {headline}",
+                    help_text=get_docs_link("compact-callout"),
+                ),
+            ),
+            (
+                "hero",
+                HeroBlock(
+                    required=False,
+                    label_format="Hero: {main_heading}",
+                    help_text="Not the core Protocol component",
+                ),
+            ),
+        ],
+        block_counts={
+            "newsletter_form": {"max_num": 1},
+        },
+        use_json_field=True,
+        collapsed=True,
+    )
+
+    content_panels = BaseProtocolPage.content_panels + [
+        FieldPanel("body"),
+    ]
