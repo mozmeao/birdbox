@@ -1,0 +1,14 @@
+{# Outer part for https://protocol.mozilla.org/components/detail/details-component--default.html #}
+
+{% load microsite_tags wagtailcore_tags %}
+
+<section class="{% get_layout_class_from_page %} mzp-c-details">
+  {% if block.value.preamble %}
+  <div>
+    {{block.value.preamble|richtext}}
+  </div>
+  {% endif %}
+  {% for block in block.value.details %}
+  {% include_block block %}
+  {% endfor %}
+</section>

@@ -14,6 +14,7 @@ links = {
     "card": "https://protocol.mozilla.org/components/detail/card--overview.html",
     "columns": "https://protocol.mozilla.org/components/detail/columns--overview.html",
     "compact-callout": "https://protocol.mozilla.org/components/detail/compact-call-out--default.html",
+    "details": "https://protocol.mozilla.org/components/detail/details-component--default.html",
     "footer": "https://protocol.mozilla.org/components/detail/footer.html",
     "layout": "https://protocol.mozilla.org/components/detail/content-container--default.html",
     "picto": "https://protocol.mozilla.org/components/detail/picto--default.html",
