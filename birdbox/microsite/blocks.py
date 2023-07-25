@@ -635,6 +635,6 @@ class ExpandingDetailsBlock(wagtail_blocks.StructBlock):
 
     details = wagtail_blocks.ListBlock(
         DetailsBlock(),
-        collapsed=True,
+        collapsed=False,
         help_text="Each Details Block will be rendered as an expandable section",
     )
