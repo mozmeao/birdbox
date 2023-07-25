@@ -28,7 +28,7 @@ from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.blocks import RichTextBlock
 from wagtail.contrib.settings.models import BaseGenericSetting, register_setting
-from wagtail.fields import StreamField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.models import LockableMixin, Page
 from wagtail.snippets.models import register_snippet
 from wagtailstreamforms.blocks import WagtailFormBlock
@@ -51,8 +51,6 @@ from .blocks import (
     SplitBlock,
     VideoEmbedBlock,
 )
-
-RICHTEXT_FEATURES_BLOGPAGE = []
 
 
 class ProtocolLayout(TextChoices):
@@ -192,6 +190,47 @@ class GeneralPurposePage(BaseProtocolPage):
             "The page title as you'd like it to be seen by the public. "
             "(However, this will not be displayed in the page if a block is "
             "added that has its own H1-level heading field, such as a Hero)"
+        )
+
+
+class FAQPage(BaseProtocolPage):
+    """FAQ-focused page which leans heavily on the DetailsExpanderBlock."""
+
+    # title comes from the base Page class
+    introduction = RichTextField(
+        features=settings.RICHTEXT_FEATURES__ARTICLE,
+        blank=True,
+        help_text="Optional intro for the page",
+    )
+
+    content = StreamField(
+        [
+            (
+                "details",
+                ExpandingDetailsBlock(
+                    required=False,
+                    label_format="Expandable details: {preamble}",
+                    help_text=get_docs_link("details"),
+                ),
+            ),
+        ],
+        blank=True,
+        use_json_field=True,
+    )
+
+    content_panels = BaseProtocolPage.content_panels + [
+        FieldPanel("introduction"),
+        FieldPanel("content"),
+    ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        title_field = self._meta.get_field("title")
+
+        title_field.help_text = (
+            "The page title as you'd like it to be seen by the public. "
+            "(However, this will not be displayed in the page if a block is "
+            "added that has its own H1-level heading field, such the Article)"
         )
 
 

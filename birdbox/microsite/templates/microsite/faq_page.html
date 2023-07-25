@@ -1,0 +1,24 @@
+{% extends "microsite/base.html" %}
+{% load microsite_tags wagtailcore_tags %}
+
+{% block body_class %}template-faq{% endblock %}
+
+{% block extra_css %}{% endblock extra_css %}
+
+{% block content %}
+
+
+<div class="{% get_layout_class_from_page %}">
+  <h1>{{page.title}}</h1>
+
+  {% if page.introduction %}
+    {{page.introduction|richtext}}
+  {% endif %}
+
+  {% with True as is_faq_page %}
+  {% for block in page.content %}
+    {% include_block block %}
+  {% endfor %}
+  {% endwith %}
+</div>
+{% endblock content %}

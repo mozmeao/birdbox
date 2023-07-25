@@ -2,12 +2,13 @@
 
 {% load microsite_tags wagtailcore_tags %}
 
-<section class="{% get_layout_class_from_page %} mzp-c-details">
+<section class="{% if not is_faq_page %}{% get_layout_class_from_page %} {% endif %}mzp-c-details">
   {% if block.value.preamble %}
   <div>
     {{block.value.preamble|richtext}}
   </div>
   {% endif %}
+
   {% for block in block.value.details %}
   {% include_block block %}
   {% endfor %}
