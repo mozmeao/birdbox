@@ -594,3 +594,47 @@ class HeroBlock(wagtail_blocks.StructBlock):
         required=True,
         default=ThemeOptions.THEME_LIGHT,
     )
+
+
+class DetailsBlock(wagtail_blocks.StructBlock):
+    # Individual block for https://protocol.mozilla.org/components/detail/details-component--default.html
+    # This block is used either in a streamfield that's specifically for a page
+    # that contains only Detail blocks, or in an ExpandingDetailsBlock in a
+    # StreamField in any page
+
+    class Meta:
+        template = "microsite/blocks/details.html"
+
+    # No custom frontend_media needed - the JS is already in the main bundle and
+    # there is no related CSS
+
+    heading = wagtail_blocks.CharBlock(
+        max_length=75,
+        required=True,
+        help_text="Up to 75 characters. Will be the H3 of the page it's used in",
+    )
+
+    body = wagtail_blocks.RichTextBlock(
+        features=settings.RICHTEXT_FEATURES__DETAIL,
+    )
+
+
+class ExpandingDetailsBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        icon = "collapse-down"
+        template = "microsite/blocks/expanding_details.html"
+
+    # No custom frontend_media needed - the JS is already in the main bundle and
+    # there is no related CSS
+
+    preamble = wagtail_blocks.RichTextBlock(
+        features=settings.RICHTEXT_FEATURES__DETAIL,
+        required=False,
+        help_text="Optional rich-text to go before the section. Not standard Protocol",
+    )
+
+    details = wagtail_blocks.ListBlock(
+        DetailsBlock(),
+        collapsed=True,
+        help_text="Each Details Block will be rendered as an expandable section",
+    )

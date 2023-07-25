@@ -42,6 +42,7 @@ from .blocks import (
     CardLayoutBlock,
     ColumnBlock,
     CompactCalloutBlock,
+    ExpandingDetailsBlock,
     FooterAfterMatterLinksBlock,
     FooterColumnBlock,
     FooterSocialLinksGroupBlock,
@@ -675,6 +676,14 @@ class ProtocolTestPage(BaseProtocolPage):
                     required=False,
                     label_format="Hero: {main_heading}",
                     help_text="Not the core Protocol component",
+                ),
+            ),
+            (
+                "details",
+                ExpandingDetailsBlock(
+                    required=False,
+                    label_format="Expandable details: {preamble}",
+                    help_text=get_docs_link("details"),
                 ),
             ),
         ],

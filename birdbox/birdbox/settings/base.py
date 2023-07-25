@@ -212,7 +212,7 @@ WAGTAILEMBEDS_FINDERS = [
 ]
 
 # https://docs.wagtail.org/en/stable/advanced_topics/customisation/page_editing_interface.html#limiting-features-in-a-rich-text-field
-RICHTEXT_FEATURES__ARTICLE = [
+RICHTEXT_FEATURES__FULL = [
     # Order here is the order used in the editor UI
     "h2",
     "h3",
@@ -226,9 +226,7 @@ RICHTEXT_FEATURES__ARTICLE = [
     "ul",
 ]
 
-RICHTEXT_FEATURES__BLOGPAGE = RICHTEXT_FEATURES__ARTICLE
-
-RICHTEXT_FEATURES__BIO = [
+RICHTEXT_FEATURES__SIMPLE = [
     "bold",
     "italic",
     "strikethrough",
@@ -236,6 +234,11 @@ RICHTEXT_FEATURES__BIO = [
     "ol",
     "ul",
 ]
+
+RICHTEXT_FEATURES__ARTICLE = RICHTEXT_FEATURES__FULL
+RICHTEXT_FEATURES__BLOGPAGE = RICHTEXT_FEATURES__FULL
+RICHTEXT_FEATURES__BIO = RICHTEXT_FEATURES__SIMPLE
+RICHTEXT_FEATURES__DETAIL = RICHTEXT_FEATURES__SIMPLE
 
 
 # Sentry
