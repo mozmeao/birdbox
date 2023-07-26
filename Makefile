@@ -21,8 +21,8 @@ install-local-python-deps:
 preflight:
 	$ npm install
 	${MAKE} install-local-python-deps
-	python birdbox/manage.py migrate
 	python birdbox/manage.py createcachetable
+	python birdbox/manage.py migrate
 	python birdbox/manage.py update_product_details
 
 makemigrations:
@@ -30,6 +30,9 @@ makemigrations:
 
 migrate:
 	python birdbox/manage.py migrate
+
+superuser:
+	python birdbox/manage.py createsuperuser
 
 
 help:
@@ -41,5 +44,6 @@ help:
 	@echo "  preflight                  - install essentials before running"
 	@echo "  makemigrations             - make new Django migrations if needed"
 	@echo "  migrate                    - apply Django migrations if needed"
+	@echo "  superuser                  - bootstrap a Django admin user"
 
 .PHONY: all clean-local-deps compile-requirements djshell help install-local-python-deps makemigrations migrate preflight
