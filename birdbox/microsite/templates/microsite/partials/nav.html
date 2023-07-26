@@ -19,7 +19,7 @@
                     <nav class="mzp-c-menu mzp-is-basic">
                         <ul class="mzp-c-menu-category-list">
                         {% for top_level_page in nav_links %}
-                            {% if not top_level_page.get_children.exists %}
+                            {% if not top_level_page.specific.get_children_for_nav.exists %}
                             <li class="mzp-c-menu-category">
                                 <a class="mzp-c-menu-title" href="{{top_level_page.url}}">{{top_level_page.title}}</a>
                             </li>
@@ -33,7 +33,7 @@
                                         </button>
                                         <div class="mzp-c-menu-panel-content">
                                             <ul class="mzp-l-rows-two">
-                                                {% for child_page in top_level_page.get_children %}
+                                                {% for child_page in top_level_page.specific.get_children_for_nav %}
                                                 <li>
                                                     <section class="mzp-c-menu-item{% if child_page.specific.menu_icon %} mzp-has-icon{% endif %}">
                                                         <a class="mzp-c-menu-item-link" href="{{child_page.url}}" data-link-name="{{child_page.title}}" data-link-type="nav">
@@ -47,13 +47,13 @@
                                                         </a>
                                                     </section>
                                                   </li>
-                                                  {% endfor %} {# child_page in top_level_page.get_children #}
+                                                  {% endfor %} {# child_page in top_level_page.get_children_for_nav #}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </li>
-                            {% endif %} {# if/not top_level_page.get_children.exists #}
+                            {% endif %} {# if/not top_level_page.get_children_for_nav.exists #}
                         {% endfor %} {# top_level_page in nav_links #}
                         </ul>
                     </nav>

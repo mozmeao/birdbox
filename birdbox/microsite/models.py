@@ -107,8 +107,11 @@ class BaseProtocolPage(Page):
     promote_panels = Page.promote_panels[:-1]
 
     def has_menu_icon(self):
-        print(self.menu_icon)
         return bool(self.menu_icon)
+
+    def get_children_for_nav(self):
+        "Only return children that may be shown in a nav menu"
+        return self.get_children().specific().filter(show_in_menus=True)
 
 
 class StructuralPage(BaseProtocolPage):
