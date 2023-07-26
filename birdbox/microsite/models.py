@@ -449,12 +449,18 @@ class BlogIndexPage(BaseProtocolPage):
     # No additional fields needed
 
     read_more_cta_label = CharField(
+        verbose_name="Featured Post CTA button label",
         max_length=50,
         default="Read more",
+        help_text="Only shown if you mark a post as featured",
     )
 
     content_panels = Page.content_panels + [
         FieldPanel("read_more_cta_label"),
+    ]
+
+    subpage_types = [
+        BlogPage,
     ]
 
     @property
