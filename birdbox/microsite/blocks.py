@@ -237,7 +237,7 @@ class FooterColumnBlock(wagtail_blocks.StructBlock):
     )
     links = wagtail_blocks.ListBlock(
         LabelledLinkBlock(),
-        collapsed=True,
+        collapsed=False,
     )
 
 
@@ -275,7 +275,7 @@ class FooterSocialLinksGroupBlock(wagtail_blocks.StructBlock):
         FooterSocialLinkBlock(),
         label="Social links",
         max_num=6,
-        collapsed=True,
+        collapsed=False,
     )
 
 
@@ -291,7 +291,7 @@ class FooterAfterMatterLinksBlock(wagtail_blocks.StructBlock):
     links = wagtail_blocks.ListBlock(
         LabelledLinkBlock(),
         max_num=10,
-        collapsed=True,
+        collapsed=False,
     )
     legal_text = wagtail_blocks.RichTextBlock(
         features=["link"],

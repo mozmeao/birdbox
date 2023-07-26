@@ -519,7 +519,7 @@ class Footer(BaseGenericSetting):
         null=True,
         help_text="Add up to six columns of links OR five + social links",
         use_json_field=True,
-        collapsed=True,
+        collapsed=False,
     )
 
     social_links = StreamField(
@@ -533,7 +533,7 @@ class Footer(BaseGenericSetting):
         null=True,
         help_text="Add an group of social links (optional)",
         use_json_field=True,
-        collapsed=True,
+        collapsed=False,
     )
 
     aftermatter = StreamField(
@@ -547,7 +547,7 @@ class Footer(BaseGenericSetting):
         null=True,
         help_text="Add one aftermatter block; this is important for legal links etc",
         use_json_field=True,
-        collapsed=True,
+        collapsed=False,
     )
 
     panels = [

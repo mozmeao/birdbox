@@ -84,17 +84,17 @@
       {% with footer.aftermatter.0 as aftermatter %}
       {% if aftermatter.value %}
       <div class="mzp-c-footer-legal">
-        {% if aftermatter.value.legal_text %}
-        <div class="mzp-c-footer-license">
-            {{ aftermatter.value.legal_text|richtext }}
-        </div>
-        {% endif %}
         {% if aftermatter.value.links %}
         <ul class="mzp-c-footer-terms">
             {% for link in aftermatter.value.links %}
             <li><a href="{{link.url}}">{{link.label}}</a></li>
             {% endfor %}
         </ul>
+        {% endif %}
+        {% if aftermatter.value.legal_text %}
+        <div class="mzp-c-footer-license">
+            {{ aftermatter.value.legal_text|richtext }}
+        </div>
         {% endif %}
       </div>
       {% endif %}
