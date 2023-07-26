@@ -1,0 +1,75 @@
+{% load microsite_tags wagtailimages_tags %}
+
+{% if show_nav %}
+<div class="mzp-c-navigation {% get_layout_class_from_page %} {% comment %} mzp-is-sticky{% endcomment %}">
+    <div class="mzp-c-navigation-l-content">
+        <div class="mzp-c-navigation-container">
+            {% if nav_links %}
+            <button class="mzp-c-navigation-menu-button" type="button" aria-controls="navigation-bar">
+                Menu
+            </button>
+            {% endif %}
+            <div class="mzp-c-navigation-logo">
+                <a href="/">Mozilla</a>
+            </div>
+
+            <div class="mzp-c-navigation-items" id="navigation-bar">
+                <div class="mzp-c-navigation-menu">
+                    {% if nav_links %}
+                    <nav class="mzp-c-menu mzp-is-basic">
+                        <ul class="mzp-c-menu-category-list">
+                        {% for top_level_page in nav_links %}
+                            {% if not top_level_page.get_children.exists %}
+                            <li class="mzp-c-menu-category">
+                                <a class="mzp-c-menu-title" href="{{top_level_page.url}}">{{top_level_page.title}}</a>
+                            </li>
+                            {% else %}
+                            <li class="mzp-c-menu-category mzp-has-drop-down mzp-js-expandable">
+                                <a class="mzp-c-menu-title" href="{{top_level_page.url}}" aria-haspopup="true" aria-controls="mzp-c-menu-panel-{{top_level_page.slug}}">{{top_level_page.title}}</a>
+                                <div class="mzp-c-menu-panel mzp-has-card" id="mzp-c-menu-panel-{{top_level_page.slug}}">
+                                    <div class="mzp-c-menu-panel-container">
+                                        <button class="mzp-c-menu-button-close" type="button" aria-controls="mzp-c-menu-panel-{{top_level_page.slug}}">
+                                            Close menu
+                                        </button>
+                                        <div class="mzp-c-menu-panel-content">
+                                            <ul class="mzp-l-rows-two">
+                                                {% for child_page in top_level_page.get_children %}
+                                                <li>
+                                                    <section class="mzp-c-menu-item{% if child_page.specific.menu_icon %} mzp-has-icon{% endif %}">
+                                                        <a class="mzp-c-menu-item-link" href="{{child_page.url}}" data-link-name="{{child_page.title}}" data-link-type="nav">
+                                                            {% if child_page.specific.menu_icon %}
+                                                                {% image child_page.specific.menu_icon fill-32x32 loading="lazy" class="mzp-c-menu-item-icon" width="32" height="32" alt="" %}
+                                                            {% endif %}
+                                                            <h4 class="mzp-c-menu-item-title">{{child_page.title}}</h4>
+                                                            {% if child_page.specific.menu_description %}
+                                                            <p class="mzp-c-menu-item-desc">{{child_page.specific.menu_description}}</p>
+                                                            {% endif %}
+                                                        </a>
+                                                    </section>
+                                                  </li>
+                                                  {% endfor %} {# child_page in top_level_page.get_children #}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endif %} {# if/not top_level_page.get_children.exists #}
+                        {% endfor %} {# top_level_page in nav_links #}
+                        </ul>
+                    </nav>
+                    {% endif %} {# nav_links #}
+                </div>
+                {% if cta_label and cta_url %}
+                  <div class="mzp-c-navigation-download">
+                    <div class="mzp-c-button-download-container">
+                      <a href="{{cta_url}}" class="mzp-c-button {% get_layout_class_from_page %}">
+                          {{cta_label}}
+                      </a>
+                    </div>
+                  </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

@@ -9,6 +9,7 @@ from django.conf import settings
 from django.template import Library
 
 from product_details import product_details
+from wagtail.models import Site
 
 from common.utils import find_streamfield_blocks_by_types, get_freshest_newsletter_data
 
@@ -19,6 +20,29 @@ register = Library()
 
 # Use mozilla-django-product-details to get a set of localised language names
 LANGUAGE_LOOKUP = {k: v.get("native", k) for k, v in product_details.languages.items()}
+
+
+@register.inclusion_tag("microsite/partials/nav.html", takes_context=True)
+def navigation(context) -> Dict:
+    request = context["request"]
+    microsite_settings = MicrositeSettings.load(request_or_site=request)
+    homepage = Site.objects.get(is_default_site=True).root_page
+
+    context = {
+        "show_nav": microsite_settings.navigation_enabled,
+        "nav_links": [],
+        "cta_label": "",
+        "cta_url": "",
+    }
+
+    if microsite_settings.navigation_generate_nav_from_page_tree:
+        context["nav_links"] = [child_page for child_page in homepage.get_children().defer_streamfields().live().in_menu()]
+
+    if microsite_settings.navigation_show_cta_button:
+        context["cta_label"] = microsite_settings.navigation_cta_button_label
+        context["cta_url"] = microsite_settings.navigation_cta_button_url
+
+    return context
 
 
 @register.inclusion_tag("microsite/partials/footer.html", takes_context=True)

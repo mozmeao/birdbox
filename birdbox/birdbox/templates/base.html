@@ -1,7 +1,11 @@
 {% load static wagtailcore_tags wagtailuserbar birdbox_tags %}
 
 {% frontend_media_for_page page as frontend_media %}
-
+<!--
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v.2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
 <!DOCTYPE html>
 <html class="no-js" lang="en">
     <head>
@@ -48,6 +52,8 @@
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
+        {% block navigation %}{% endblock %}
+
         {% include "partials/messages.html" %}
 
         {% block content %}{% endblock %}
@@ -65,7 +71,7 @@
         {% block frontend_media_js %}
           {% if frontend_media.js %}
           {{frontend_media.js}}
-        {% endif %}
+          {% endif %}
         {% endblock frontend_media_js %}
 
       </body>
