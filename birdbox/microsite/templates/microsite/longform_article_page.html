@@ -1,0 +1,23 @@
+{% extends "microsite/base.html" %}
+{% load microsite_tags wagtailcore_tags %}
+
+{% block body_class %}template-longform{% endblock %}
+
+{% block content %}
+
+<div class="{% get_layout_class_from_page %}">
+  <h1>{{page.title}}</h1>
+
+  {% if page.introduction %}
+  <div>
+    {{ page.introduction|richtext }}
+  </div>
+  {% endif %}
+
+  {% for block in page.content %}
+    {% include_block block %}
+  {% endfor %}
+
+</div>
+
+{% endblock content %}

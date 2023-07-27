@@ -6,3 +6,7 @@ $font-path: '/static/protocol/fonts';
 $image-path: '/static/protocol/img';
 
 @import '~@mozilla-protocol/core/protocol/css/components/call-out';
+
+.mzp-c-call-out-compact {
+    margin: $spacing-lg auto;
+}
