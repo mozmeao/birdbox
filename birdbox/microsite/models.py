@@ -251,6 +251,57 @@ class GeneralPurposePage(BaseProtocolPage):
         )
 
 
+class LongformArticlePage(BaseProtocolPage):
+    # title comes from base page
+
+    introduction = RichTextField(
+        features=settings.RICHTEXT_FEATURES__ARTICLE,
+        blank=True,
+        help_text="Optional intro for the page",
+    )
+
+    content = StreamField(
+        [
+            (
+                "text",
+                RichTextBlock(
+                    required=False,
+                    features=settings.RICHTEXT_FEATURES__ARTICLE,
+                ),
+            ),
+            (
+                "image",
+                CaptionedImageBlock(
+                    label_format="Captioned image: {image_caption}",
+                    required=False,
+                ),
+            ),
+            (
+                "callout",
+                CompactCalloutBlock(
+                    required=False,
+                    label_format="Compact callout: {headline}",
+                    help_text=get_docs_link("compact-callout"),
+                ),
+            ),
+        ],
+        blank=True,
+        use_json_field=True,
+    )
+
+    content_panels = BaseProtocolPage.content_panels + [
+        FieldPanel("introduction"),
+        FieldPanel("content"),
+    ]
+
+    @property
+    def frontend_media(self):
+        # The intro para needs the Article CSS
+        return forms.Media(
+            css={"all": [static("css/protocol-article.css")]},
+        )
+
+
 class FAQPage(BaseProtocolPage):
     """FAQ-focused page which leans heavily on the DetailsExpanderBlock."""
 

@@ -396,6 +396,13 @@ class ArticleBlock(wagtail_blocks.StructBlock):
 
 
 class CaptionedImageBlock(AccessibleImageBlock):
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={"all": [static("css/birdbox-captioned-image.css")]},
+        )
+
     class Meta:
         template = "microsite/blocks/captioned_image.html"
         icon = "doc-full"

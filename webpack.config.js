@@ -44,7 +44,8 @@ module.exports = {
 
         // custom CSS
         "birdbox-hero": "./src/css/hero.scss",
-        "birdbox-blog": "./src/css/blog.scss",
+        "birdbox-captioned-image": "./src/css/captioned-image.scss",
+        "birdbox-hero": "./src/css/hero.scss",
     },
     output: {
         filename: "js/[name].js",

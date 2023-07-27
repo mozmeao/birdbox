@@ -31,6 +31,14 @@ repos:
           - --comment-style
           - /*|*|*/
       - id: insert-license
+        exclude: media\/.*\/libs\/.*$
+        files: \.s{0,1}css$
+        args:
+          - --license-filepath
+          - license_header/mpl2_header.txt
+          - --comment-style
+          - "//"
+      - id: insert-license
         files: \.sh$
         args:
           - --license-filepath

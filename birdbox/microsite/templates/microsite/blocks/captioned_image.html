@@ -1,16 +1,13 @@
 {% load microsite_tags wagtailcore_tags %}
-
-<div class="{% get_layout_class_from_page %}">
-  <figure>
-    {% include "common/partials/accessible_image.html" with image_block=value %}
-    {% if value.image_caption %}
-    <figcaption>
-      {{value.image_caption}}
-      {% if value.image_credit %}
-      <br>
-      <span>({{value.image_credit}})<span>
-      {% endif %}
-    </figcaption>
+<figure class="c-captioned-image">
+  {% include "common/partials/accessible_image.html" with image_block=value %}
+  {% if value.image_caption %}
+  <figcaption>
+    {{value.image_caption}}
+    {% if value.image_credit %}
+    <br>
+    <span>({{value.image_credit}})<span>
     {% endif %}
-  </figure>
-</div>
+  </figcaption>
+  {% endif %}
+</figure>
