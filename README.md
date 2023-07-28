@@ -10,12 +10,13 @@ LICENSE: [Mozilla Public License Version 2.0](LICENSE)
 
 ## Running locally, for development
 
+* Install the `just` taskrunner (Docs [here](https://github.com/casey/just); spoiler: `brew install just`)
 * Check out the repo
 * `cd` path/to/birdbox
 * Create then activate a virtual environment (pyenv + pyenv-virtualenv is recommended, but not required - see [Bedrock docs](https://bedrock.readthedocs.io/en/latest/install.html#local-installation) for an example)
-* `make preflight` to install Python and JS dependencies, run migrations (against a simple SQLite DB for local dev), create a cache table/
-* To make an admin user `python birdbox/manage.py createsuperuser`
-* To run the local webpack bundler + django runserver: `npm start`
+* `just preflight` to install Python and JS dependencies, run migrations (against a simple SQLite DB for local dev), create a cache table
+* To make an admin user `just createsuperuser`
+* To run the local webpack bundler + django runserver: `just run-local` or `npm start` (both do the same thing)
 
 Docker version: TO COME
 

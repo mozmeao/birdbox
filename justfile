@@ -3,14 +3,18 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 
-all: help
+JUST := just_executable()
 
+all: help
 
 clean-local-deps:
 	pip freeze | xargs pip uninstall -y
 
 compile-requirements:
 	./bin/compile-requirements.sh
+
+run-local:
+    npm start
 
 djshell:
 	python birdbox/manage.py shell
@@ -19,31 +23,29 @@ install-local-python-deps:
 	pip install -r requirements/production.txt
 
 preflight:
-	$ npm install
-	${MAKE} install-local-python-deps
+	npm install
+	{{JUST}} install-local-python-deps
 	python birdbox/manage.py createcachetable
 	python birdbox/manage.py migrate
 	python birdbox/manage.py update_product_details
 
-makemigrations:
-	python birdbox/manage.py makemigrations
+makemigrations ARGS:
+	python birdbox/manage.py makemigrations {{ARGS}}
 
 migrate:
 	python birdbox/manage.py migrate
 
-superuser:
+make-superuser:
 	python birdbox/manage.py createsuperuser
 
 
 help:
-	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  compile-requirements       - update Python requirements files"
+	@echo "Please use \`just <target>' where <target> is one of"
 	@echo "  clean-local-deps           - uninstall Python dependencies"
+	@echo "  compile-requirements       - update Python requirements files"
+	@echo "  createsuperuser            - bootstrap a Django admin user"
 	@echo "  djshell                    - run a local Django shell"
 	@echo "  install-local-python-deps  - install Python requirements"
 	@echo "  preflight                  - install essentials before running"
 	@echo "  makemigrations             - make new Django migrations if needed"
 	@echo "  migrate                    - apply Django migrations if needed"
-	@echo "  superuser                  - bootstrap a Django admin user"
-
-.PHONY: all clean-local-deps compile-requirements djshell help install-local-python-deps makemigrations migrate preflight
