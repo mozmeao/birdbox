@@ -108,7 +108,7 @@ WSGI_APPLICATION = "birdbox.wsgi.application"
 DATABASES = {
     "default": config(
         "DATABASE_URL",
-        default=f"sqlite:////{os.path.join(BASE_DIR, 'birdbox.sqlite3')}",
+        default=f"sqlite:////{os.path.join(BASE_DIR, 'data', 'birdbox.sqlite3')}",
         parser=dj_database_url.parse,
     )
 }

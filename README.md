@@ -24,6 +24,28 @@ Main Wagtail admin/editor docs are at https://guide.wagtail.org/en-latest/
 
 Deployment/actual use instructions: TO COME
 
+----
+
+## Local development
+
+### How To: import and export local data
+
+For local development, we use sqlite as our database, in part because it makes it easier to give another developer a copy of your state, which they can load in to be able to work with the same content you have. This is particularly useful for code review.
+
+(Note that it's not just the database we need to share around: we also need media files that line up with the records in the relevant DB table.)
+
+1. To export a zip file of your local DB and images:
+
+    `just export-local-data`
+
+    ...and note where the zip file is generated. Send that file to a colleague as needed. Note that it is zipped but not password-protected.
+
+2. To load in a zip file of DB and image data
+
+    `just import-local-data /path/to/file.zip`
+
+    This will replace your DB file and load in all the images, overwriting existing files. Note that it does not drop image files that aren't in the zip of data.
+
 
 ----
 ## How To: Add a new StreamField component based on a Protocol component
