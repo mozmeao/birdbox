@@ -12,9 +12,9 @@ set -xeuo pipefail
 
 ZIP_FILE_PATH=$1
 
-if [[ -z $ZIP_FILE_PATH ]];
+if [[ ! -f "$ZIP_FILE_PATH" ]];
 then
-    echo " Missing mandatory arguments: path to zip of exported data. "
+    echo "Missing mandatory arguments: path to zip of exported data."
     exit 1
 fi
 
@@ -44,4 +44,3 @@ cp -Rv "${WORKING_PATH}/original_images" $MEDIA_PATH
 cd $BIRDBOX_ROOT_DIR
 
 echo "All done"
-
