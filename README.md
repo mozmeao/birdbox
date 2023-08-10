@@ -8,25 +8,40 @@ LICENSE: [Mozilla Public License Version 2.0](LICENSE)
 
 ----
 
-## Running locally, for development
+## Running locally, for development of Birdbox itself
 
 * Install the `just` taskrunner (Docs [here](https://github.com/casey/just); spoiler: `brew install just`)
 * Check out the repo
 * `cd` path/to/birdbox
-* Create then activate a virtual environment (pyenv + pyenv-virtualenv is recommended, but not required - see [Bedrock docs](https://bedrock.readthedocs.io/en/latest/install.html#local-installation) for an example)
+* Create then activate a virtual environment (`pyenv` + `pyenv-virtualenv` is recommended, but not required - see [Bedrock docs](https://bedrock.readthedocs.io/en/latest/install.html#local-installation) for installation details)
+
+    ```
+    pyenv virtualenv 3.10 birdbox
+    pyenv activate birdbox
+    ```
+
 * `just preflight` to install Python and JS dependencies, run migrations (against a simple SQLite DB for local dev), create a cache table
 * To make an admin user `just createsuperuser`
 * To run the local webpack bundler + django runserver: `just run-local` or `npm start` (both do the same thing)
-
-Docker version: TO COME
+* Go to http://localhost:8000 for the default Wagtail site, and http://localhost:8000/admin/ for the CMS UI
+* Ideally you will now load in set of sample pages - see Local development tips, below
 
 Main Wagtail admin/editor docs are at https://guide.wagtail.org/en-latest/
 
-Deployment/actual use instructions: TO COME
+**Docker setup details**: TO COME
+
+## Deployment instructions
+
+TO COME
+## Real-world use instructions
+
+(i.e. making a new site using Birdbox as a template project)
+
+TO COME
 
 ----
 
-## Local development
+## Local development tips
 
 ### How To: import and export local data
 
