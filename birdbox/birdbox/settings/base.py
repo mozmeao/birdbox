@@ -17,6 +17,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+import dj_database_url
 import sentry_sdk
 from everett.manager import ConfigManager
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -105,10 +106,11 @@ WSGI_APPLICATION = "birdbox.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "birdbox.sqlite3"),
-    }
+    "default": config(
+        "DATABASE_URL",
+        default=f"sqlite:////{os.path.join(BASE_DIR, 'data', 'birdbox.sqlite3')}",
+        parser=dj_database_url.parse,
+    )
 }
 
 # Cacheing

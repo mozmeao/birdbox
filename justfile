@@ -38,6 +38,11 @@ migrate:
 make-superuser:
 	python birdbox/manage.py createsuperuser
 
+export-local-data:
+    ./bin/package-up-local-data.sh
+
+import-local-data ARGS:
+    ./bin/import-packaged-data-to-local.sh {{ARGS}}
 
 help:
 	@echo "Please use \`just <target>' where <target> is one of"
@@ -46,6 +51,8 @@ help:
 	@echo "  createsuperuser            - bootstrap a Django admin user"
 	@echo "  djshell                    - run a local Django shell"
 	@echo "  install-local-python-deps  - install Python requirements"
+	@echo "  export-local-data          - export sqlite DB and media for loading elsewhere"
+	@echo "  import-local-data          - import sqlite DB and media for loading elsewhere"
 	@echo "  preflight                  - install essentials before running"
 	@echo "  makemigrations             - make new Django migrations if needed"
 	@echo "  migrate                    - apply Django migrations if needed"

@@ -8,21 +8,58 @@ LICENSE: [Mozilla Public License Version 2.0](LICENSE)
 
 ----
 
-## Running locally, for development
+## Running locally, for development of Birdbox itself
 
 * Install the `just` taskrunner (Docs [here](https://github.com/casey/just); spoiler: `brew install just`)
 * Check out the repo
 * `cd` path/to/birdbox
-* Create then activate a virtual environment (pyenv + pyenv-virtualenv is recommended, but not required - see [Bedrock docs](https://bedrock.readthedocs.io/en/latest/install.html#local-installation) for an example)
+* Create then activate a virtual environment (`pyenv` + `pyenv-virtualenv` is recommended, but not required - see [Bedrock docs](https://bedrock.readthedocs.io/en/latest/install.html#local-installation) for installation details)
+
+    ```
+    pyenv virtualenv 3.10 birdbox
+    pyenv activate birdbox
+    ```
+
 * `just preflight` to install Python and JS dependencies, run migrations (against a simple SQLite DB for local dev), create a cache table
 * To make an admin user `just createsuperuser`
 * To run the local webpack bundler + django runserver: `just run-local` or `npm start` (both do the same thing)
-
-Docker version: TO COME
+* Go to http://localhost:8000 for the default Wagtail site, and http://localhost:8000/admin/ for the CMS UI
+* Ideally you will now load in set of sample pages - see Local development tips, below
 
 Main Wagtail admin/editor docs are at https://guide.wagtail.org/en-latest/
 
-Deployment/actual use instructions: TO COME
+**Docker setup details**: TO COME
+
+## Deployment instructions
+
+TO COME
+## Real-world use instructions
+
+(i.e. making a new site using Birdbox as a template project)
+
+TO COME
+
+----
+
+## Local development tips
+
+### How To: import and export local data
+
+For local development, we use sqlite as our database, in part because it makes it easier to give another developer a copy of your state, which they can load in to be able to work with the same content you have. This is particularly useful for code review.
+
+(Note that it's not just the database we need to share around: we also need media files that line up with the records in the relevant DB table.)
+
+1. To export a zip file of your local DB and images:
+
+    `just export-local-data`
+
+    ...and note where the zip file is generated. Send that file to a colleague as needed. Note that it is zipped but not password-protected.
+
+2. To load in a zip file of DB and image data
+
+    `just import-local-data /path/to/file.zip`
+
+    This will replace your DB file and load in all the images, overwriting existing files. Note that it does not drop image files that aren't in the zip of data.
 
 
 ----
