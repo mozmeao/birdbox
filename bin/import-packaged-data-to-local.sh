@@ -18,10 +18,7 @@ then
     exit 1
 fi
 
-BIRDBOX_ARCHIVE_REGEX="^[\w\d\_\/\~]*\/(birdbox_\d*)\.zip$"
-
 BIRDBOX_ROOT_DIR=$(pwd)
-
 DB_PATH_ROOT="${BIRDBOX_ROOT_DIR}/birdbox/data/"
 MEDIA_PATH="${BIRDBOX_ROOT_DIR}/birdbox/media/"
 
@@ -44,3 +41,4 @@ cp -Rv "${WORKING_PATH}/original_images" $MEDIA_PATH
 cd $BIRDBOX_ROOT_DIR
 
 echo "All done"
+
