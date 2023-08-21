@@ -1,0 +1,236 @@
+{
+  "columns": [
+    {
+      "type": "grouped_links",
+      "value": {
+        "title": "Company",
+        "links": [
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/about/manifesto/",
+              "label": "Mozilla Manifesto"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://blog.mozilla.org/press/?utm_source=www.mozilla.org&amp;utm_medium=referral&amp;utm_campaign=footer&utm_content=company",
+              "label": "Press Center"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://blog.mozilla.org/?utm_source=www.mozilla.org&amp;utm_medium=referral&amp;utm_campaign=footer&utm_content=company",
+              "label": "Corporate Blog"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/careers/",
+              "label": "Careers"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "grouped_links",
+      "value": {
+        "title": "Resources",
+        "links": [
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/privacy/",
+              "label": "Privacy Hub"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/firefox/browsers/compare/",
+              "label": "Browser Comparison"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://mozilla.design/?utm_source=www.mozilla.org&amp;utm_medium=referral&amp;utm_campaign=footer&utm_content=resources",
+              "label": "Brand Standards"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "grouped_links",
+      "value": {
+        "title": "Support",
+        "links": [
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://support.mozilla.org/?utm_source=www.mozilla.org&amp;utm_medium=referral&amp;utm_campaign=footer&utm_content=support",
+              "label": "Product Help"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://bugzilla.mozilla.org/?utm_source=www.mozilla.org&amp;utm_medium=referral&amp;utm_campaign=footer&utm_content=support",
+              "label": "File a Bug"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://pontoon.mozilla.org/?utm_source=www.mozilla.org&amp;utm_medium=referral&amp;utm_campaign=footer&utm_content=support",
+              "label": "Localize Mozilla"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "grouped_links",
+      "value": {
+        "title": "Developers",
+        "links": [
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/firefox/developer/",
+              "label": "Firefox Developer Edition"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/firefox/channel/desktop/#beta",
+              "label": "Firefox Beta"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/firefox/channel/android/#beta",
+              "label": "Firefox Beta for Android"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/firefox/channel/desktop/#nightly",
+              "label": "Firefox Nightly"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/firefox/channel/android/#nightly",
+              "label": "Firefox Nightly for Android"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/firefox/enterprise/",
+              "label": "Firefox for Enterprise"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://firefox-source-docs.mozilla.org/devtools-user/?utm_source=www.mozilla.org&amp;utm_medium=referral&amp;utm_campaign=footer&utm_content=developers",
+              "label": "Tools",
+              "rel": "external"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "social_links": [
+    {
+      "type": "socials",
+      "value": {
+        "title": "Follow @mozilla",
+        "links": [
+          {
+            "type": "item",
+            "value": {
+              "icon": "twitter",
+              "url": "https://twitter.com/mozilla",
+              "data_label": "Twitter (@mozilla)"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "icon": "mastodon",
+              "url": "https://mozilla.social/@Mozilla",
+              "rel": "me",
+              "data_label": "Mastodon (@mozilla)"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "icon": "instagram",
+              "url": "https://www.instagram.com/mozilla/",
+              "data_label": "Instagram (@mozilla)"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "aftermatter": [
+    {
+      "type": "content",
+      "value": {
+        "links": [
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/privacy/websites/",
+              "label": "Privacy"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/privacy/websites/#user-choices",
+              "label": "Cookies"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/about/legal/",
+              "label": "Legal"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/about/governance/policies/participation/",
+              "label": "Community Participation Guidelines"
+            }
+          },
+          {
+            "type": "item",
+            "value": {
+              "external_url": "https://www.mozilla.org/about/this-site/",
+              "label": "About this site"
+            }
+          }
+        ],
+        "legal_text": "Visit <a href=\"https: //www.mozilla.org/\">Mozilla Corporation’s</a> not-for-profit parent, the <a href=\"https: //foundation.mozilla.org/\" rel=\"external noopener\">Mozilla Foundation</a>.<br>Portions of this content are ©1998–2023 by individual mozilla.org contributors. Content available under a <a rel=\"license\" href=\"/en-US/foundation/licensing/website-content/\">Creative Commons license</a>."
+      }
+    }
+  ]
+}

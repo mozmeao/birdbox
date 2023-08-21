@@ -67,6 +67,12 @@ def find_streamfield_blocks_by_types(page: Page, target_block_types: Tuple[Any])
     return matching_blocks
 
 
+def _load_local_newsletter_data():
+    with open(settings.FALLBACK_NEWSLETTER_DATA_PATH, "r") as fp:
+        data = json.loads(fp.read())
+    return data
+
+
 def get_freshest_newsletter_data() -> Dict:
     # If the refresh fails, we still have older records in the DB and they are
     # unlikely to change.
@@ -80,12 +86,14 @@ def get_freshest_newsletter_data() -> Dict:
         pass
 
     if not data:
-        try:
-            data = requests.get(settings.BASKET_NEWSLETTER_DATA_URL).json()
-        except requests.RequestException as ex:
-            capture_message(f"Unable to load newsletter data from {settings.BASKET_NEWSLETTER_DATA_URL}, so loading from backup file: {ex}")
-            with open(settings.FALLBACK_NEWSLETTER_DATA_PATH, "r") as fp:
-                data = json.loads(fp.read())
+        if not settings.BASKET_NEWSLETTER_DATA_DO_SYNC:
+            data = _load_local_newsletter_data()
+        else:
+            try:
+                data = requests.get(settings.BASKET_NEWSLETTER_DATA_URL).json()
+            except requests.RequestException as ex:
+                capture_message(f"Unable to load newsletter data from {settings.BASKET_NEWSLETTER_DATA_URL}, so loading from backup file: {ex}")
+                data = _load_local_newsletter_data()
         try:
             cache.set(key, data, timeout=settings.BASKET_NEWSLETTER_DATA_TTL_HOURS)
         except OperationalError:

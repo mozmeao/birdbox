@@ -29,7 +29,7 @@ preflight:
 	python birdbox/manage.py migrate
 	python birdbox/manage.py update_product_details
 
-makemigrations ARGS:
+makemigrations *ARGS:
 	python birdbox/manage.py makemigrations {{ARGS}}
 
 migrate:

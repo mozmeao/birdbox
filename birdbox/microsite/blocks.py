@@ -98,6 +98,11 @@ class LinkBlock(wagtail_blocks.StructBlock):
     "Block that allows linking to ether a Wagtail Page or an external URL"
     page = wagtail_blocks.PageChooserBlock(label="Page", required=False)
     external_url = wagtail_blocks.URLBlock(label="External URL", required=False)
+    rel = wagtail_blocks.CharBlock(
+        max_length=100,
+        required=False,
+        help_text="Optional 'rel' attribute. If blank, no attribute will be set",
+    )
 
     class Meta:
         icon = "site"
@@ -260,6 +265,11 @@ class FooterSocialLinkBlock(wagtail_blocks.StructBlock):
         max_length=50,
         required=True,
         help_text='Service name and handle - e.g. "Twitter (@mozilla)"',
+    )
+    rel = wagtail_blocks.CharBlock(
+        max_length=100,
+        required=False,
+        help_text="Optional 'rel' attribute. If blank, no attribute will be set",
     )
 
 
