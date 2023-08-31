@@ -128,15 +128,11 @@ class Command(BaseCommand):
 
         footer.save()
 
-        footer.refresh_from_db()
-
+        footer.refresh_from_db()  # just to be sure
         _print("\nData loaded:\n")
-
         _print("Columns", self._pprint_data(footer.columns))
         _print("Social links", self._pprint_data(footer.social_links))
         _print("Aftermatter", self._pprint_data(footer.aftermatter))
-
-        footer.save()
 
         if inert:
             raise DryRunException("Not committing changes - dry run only")
