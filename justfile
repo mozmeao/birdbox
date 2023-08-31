@@ -41,6 +41,7 @@ make-superuser:
 
 test *ARGS:
     DJANGO_SETTINGS_MODULE=birdbox.settings.test \
+    BASKET_NEWSLETTER_DATA_DO_SYNC=false \
         pytest birdbox {{ARGS}} \
         --cov-config=.coveragerc \
         --cov-report=html \

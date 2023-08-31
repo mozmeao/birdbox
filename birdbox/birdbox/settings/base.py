@@ -279,7 +279,7 @@ BASKET_NEWSLETTER_DATA_TTL_HOURS = config(
 )
 
 # Set this to False in your .env to disable the pull-down of latest data
-# (e.g. if working offline)
+# (e.g. if working offline or running tests that don't need it)
 BASKET_NEWSLETTER_DATA_DO_SYNC = config(
     "BASKET_NEWSLETTER_DATA_DO_SYNC",
     default="True",
