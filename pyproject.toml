@@ -23,6 +23,7 @@ extend-exclude = ["__pycache__", "docs", "assets", "static", "bedrock/externalfi
 
 [tool.ruff.per-file-ignores]
 "birdbox/birdbox/settings/dev.py" = ["F403", "F405"]
+"birdbox/birdbox/settings/test.py" = ["F403", "F405"]
 "birdbox/birdbox/settings/production.py" = ["F403", "F405"]
 "birdbox/microsite/migrations/*.py" = ["E501"]
 
@@ -38,3 +39,44 @@ django = ["django"]
 line-length = 150  # To match ruff
 target-version = ['py39']
 include = '\.pyi?$'
+
+[tool.coverage.run]
+omit = [
+    ".github/*",
+    ".venv/*",
+    "**/migrations/*",
+    "**/tests/*",
+    "config/*",
+    "conftest.py",
+    "docs/*",
+    "manage.py",
+    "node_modules/*",
+    "python_coverage/*",
+    "setup.py",
+    "static/*",
+    "tests/*",
+    "venv/*",
+    "wsgi/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    # Have to re-enable the standard pragma
+    "pragma: no cover",
+
+    # Don't complain about missing debug-only code:
+    "def __repr__",
+    "if self.debug",
+
+    # Don't complain if tests don't hit defensive assertion code:
+    "raise AssertionError",
+    "raise NotImplementedError",
+
+    # Don't complain if non-runnable code isn't run:
+    "if __name__ == .__main__.:",
+]
+ignore_errors = true
+
+[tool.coverage.html]
+directory = "python_coverage"
+
