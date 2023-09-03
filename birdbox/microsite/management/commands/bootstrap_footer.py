@@ -135,4 +135,6 @@ class Command(BaseCommand):
         _print("Aftermatter", self._pprint_data(footer.aftermatter))
 
         if inert:
+            # Because this method is decorated with @atomic we can throw
+            # an exeception here to trigger a rollback
             raise DryRunException("Not committing changes - dry run only")
