@@ -56,7 +56,7 @@ repos:
           - --comment-style
           - "|#|"
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.272
+    rev: v0.0.287
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix] # autofix means we go BEFORE black

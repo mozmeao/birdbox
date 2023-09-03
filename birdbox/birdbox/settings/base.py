@@ -278,6 +278,14 @@ BASKET_NEWSLETTER_DATA_TTL_HOURS = config(
     parser=int,
 )
 
+# Set this to False in your .env to disable the pull-down of latest data
+# (e.g. if working offline or running tests that don't need it)
+BASKET_NEWSLETTER_DATA_DO_SYNC = config(
+    "BASKET_NEWSLETTER_DATA_DO_SYNC",
+    default="True",
+    parser=bool,
+)
+
 FALLBACK_NEWSLETTER_DATA_PATH = f"{BASE_DIR}/data/basket/basket.mozilla.org.json"
 
 BLOG_PAGINATION_PAGE_SIZE = config(

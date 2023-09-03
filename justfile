@@ -21,6 +21,7 @@ djshell:
 
 install-local-python-deps:
 	pip install -r requirements/production.txt
+	pip install -r requirements/test.txt
 
 preflight:
 	npm install
@@ -29,7 +30,7 @@ preflight:
 	python birdbox/manage.py migrate
 	python birdbox/manage.py update_product_details
 
-makemigrations ARGS:
+makemigrations *ARGS:
 	python birdbox/manage.py makemigrations {{ARGS}}
 
 migrate:
@@ -37,6 +38,17 @@ migrate:
 
 make-superuser:
 	python birdbox/manage.py createsuperuser
+
+test *ARGS:
+    DJANGO_SETTINGS_MODULE=birdbox.settings.test \
+    BASKET_NEWSLETTER_DATA_DO_SYNC=false \
+        pytest birdbox {{ARGS}} \
+        --cov-config=.coveragerc \
+        --cov-report=html \
+        --cov-report=term-missing \
+        --cov-report=xml:python_coverage/coverage.xml \
+        --cov=.
+
 
 export-local-data:
     ./bin/package-up-local-data.sh
@@ -56,3 +68,4 @@ help:
 	@echo "  preflight                  - install essentials before running"
 	@echo "  makemigrations             - make new Django migrations if needed"
 	@echo "  migrate                    - apply Django migrations if needed"
+	@echo "  test                       - run all tests that can be run locally"

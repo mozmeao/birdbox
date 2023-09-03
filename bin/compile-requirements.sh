@@ -12,3 +12,4 @@ set -exo pipefail
 pip install -U pip
 pip install pip-tools
 pip-compile --generate-hashes -r requirements/production.in --resolver=backtracking --rebuild
+pip-compile --generate-hashes -r requirements/test.in --resolver=backtracking --rebuild
