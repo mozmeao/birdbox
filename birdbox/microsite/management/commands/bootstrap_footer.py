@@ -50,7 +50,7 @@ class Command(BaseCommand):
         collected = []
         for block in sv:
             for key, value in block.value.items():
-                if type(value) == ListValue:
+                if isinstance(value, ListValue):
                     collected.append(f"{key}: \n")
                     for val in value:
                         collected.append(" ".join([f"{k}: {v} |" for k, v in val.items() if v]))
