@@ -7,10 +7,17 @@ JUST := just_executable()
 
 all: help
 
+build-python-builder:
+    # build the lowest-level Docker image in our multi-stage build
+    docker-compose build builder
+
 clean-local-deps:
 	pip freeze | xargs pip uninstall -y
 
-compile-requirements:
+compile-requirements: build-python-builder
+    docker-compose run compile-requirements
+
+compile-requirements-locally:
 	./bin/compile-requirements.sh
 
 run-local:
@@ -58,14 +65,15 @@ import-local-data ARGS:
 
 help:
 	@echo "Please use \`just <target>' where <target> is one of"
-	@echo "  clean-local-deps           - uninstall Python dependencies"
-	@echo "  compile-requirements       - update Python requirements files"
-	@echo "  createsuperuser            - bootstrap a Django admin user"
-	@echo "  djshell                    - run a local Django shell"
-	@echo "  install-local-python-deps  - install Python requirements"
-	@echo "  export-local-data          - export sqlite DB and media for loading elsewhere"
-	@echo "  import-local-data          - import sqlite DB and media for loading elsewhere"
-	@echo "  preflight                  - install essentials before running"
-	@echo "  makemigrations             - make new Django migrations if needed"
-	@echo "  migrate                    - apply Django migrations if needed"
-	@echo "  test                       - run all tests that can be run locally"
+	@echo "  clean-local-deps               - uninstall Python dependencies"
+	@echo "  compile-requirements           - update Python requirements files via Docker"
+	@echo "  compile-requirements-locally   - update Python requirements files directly on your machine"
+	@echo "  createsuperuser                - bootstrap a Django admin user"
+	@echo "  djshell                        - run a local Django shell"
+	@echo "  install-local-python-deps      - install Python requirements"
+	@echo "  export-local-data              - export sqlite DB and media for loading elsewhere"
+	@echo "  import-local-data              - import sqlite DB and media for loading elsewhere"
+	@echo "  preflight                      - install essentials before running"
+	@echo "  makemigrations                 - make new Django migrations if needed"
+	@echo "  migrate                        - apply Django migrations if needed"
+	@echo "  test                           - run all tests that can be run locally"

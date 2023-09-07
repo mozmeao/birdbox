@@ -14,8 +14,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build paths inside the project like this: os.path.join(BIRDBOX_BASE_DIR, ...)
 import os
+from os.path import abspath
+from pathlib import Path
 
 import dj_database_url
 import sentry_sdk
@@ -28,7 +30,14 @@ config = ConfigManager.basic_config()
 
 APP_NAME = "birdbox"
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
+BIRDBOX_BASE_DIR = os.path.dirname(PROJECT_DIR)
+ROOT_DIR = Path(__file__).resolve().parents[2]
+
+config = ConfigManager.basic_config()
+
+
+def path_from_root(*args):
+    return abspath(str(ROOT_DIR.joinpath(*args)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -74,6 +83,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
@@ -99,8 +109,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "birdbox.wsgi.application"
-
+# WSGI_APPLICATION doesn't need to be defined here
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -108,7 +117,7 @@ WSGI_APPLICATION = "birdbox.wsgi.application"
 DATABASES = {
     "default": config(
         "DATABASE_URL",
-        default=f"sqlite:////{os.path.join(BASE_DIR, 'data', 'birdbox.sqlite3')}",
+        default=f"sqlite:////{os.path.join(BIRDBOX_BASE_DIR, 'data', 'birdbox.sqlite3')}",
         parser=dj_database_url.parse,
     )
 }
@@ -168,17 +177,26 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static"),
 ]
 
-# ManifestStaticFilesStorage is recommended in production, to prevent outdated
-# JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
-# See https://docs.djangoproject.com/en/4.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BIRDBOX_BASE_DIR, "static")
 STATIC_URL = "/static/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.join(BIRDBOX_BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
+
+def set_whitenoise_headers(headers, path, url):
+    if "/fonts/" in url:
+        headers["Cache-Control"] = "public, max-age=604800"  # one week
+
+
+WHITENOISE_ADD_HEADERS_FUNCTION = set_whitenoise_headers
+WHITENOISE_ROOT = config(
+    "WHITENOISE_ROOT",
+    default=path_from_root("root_files"),
+)
+WHITENOISE_MAX_AGE = 6 * 60 * 60  # 6 hours
 
 # Wagtail settings
 
@@ -286,7 +304,7 @@ BASKET_NEWSLETTER_DATA_DO_SYNC = config(
     parser=bool,
 )
 
-FALLBACK_NEWSLETTER_DATA_PATH = f"{BASE_DIR}/data/basket/basket.mozilla.org.json"
+FALLBACK_NEWSLETTER_DATA_PATH = f"{BIRDBOX_BASE_DIR}/data/basket/basket.mozilla.org.json"
 
 BLOG_PAGINATION_PAGE_SIZE = config(
     "BLOG_PAGINATION_PAGE_SIZE",
