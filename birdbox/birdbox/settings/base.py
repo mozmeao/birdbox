@@ -31,7 +31,7 @@ config = ConfigManager.basic_config()
 APP_NAME = "birdbox"
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BIRDBOX_BASE_DIR = os.path.dirname(PROJECT_DIR)
-ROOT_DIR = Path(__file__).resolve().parents[2]
+ROOT_DIR = Path(__file__).resolve().parents[3]
 
 config = ConfigManager.basic_config()
 
