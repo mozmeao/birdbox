@@ -172,7 +172,7 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-STATIC_ROOT = os.path.join(BIRDBOX_BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BIRDBOX_BASE_DIR, "static_collected")
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(BIRDBOX_BASE_DIR, "media")
