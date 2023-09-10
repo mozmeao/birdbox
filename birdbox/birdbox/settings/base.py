@@ -116,12 +116,24 @@ DATABASES = {
 }
 
 # Cacheing
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "common_newsletter_config_cache",
+
+if REDIS_URL := config("REDIS_URL", default="", parser=str):
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": REDIS_URL,
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            },
+        }
     }
-}
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "birdbox_cache",
+        }
+    }
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"  # No need for BigIntAutoField
 

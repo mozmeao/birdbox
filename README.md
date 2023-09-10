@@ -10,6 +10,8 @@ LICENSE: [Mozilla Public License Version 2.0](LICENSE)
 
 ## Running locally, for development of Birdbox itself
 
+### Directly on your machine
+
 * Install the `just` taskrunner (Docs [here](https://github.com/casey/just); spoiler: `brew install just`)
 * Check out the repo
 * `cd` path/to/birdbox
@@ -28,11 +30,39 @@ LICENSE: [Mozilla Public License Version 2.0](LICENSE)
 
 Main Wagtail admin/editor docs are at https://guide.wagtail.org/en-latest/
 
-**Docker setup details**: TO COME
+
+### On your machine, via Docker
+
+We expect most active development to happen directly on 'bare metal' but it's possible to build  and use Docker containers to run Birdbox locally, avoiding the virtualenv and local dependency steps.
+
+Dockerized Birdbox uses a separate Postgres container for its database, not sqlite, so does not (currently) support the exporting and importing of local state.
+
+* Install the `just` taskrunner (Docs [here](https://github.com/casey/just); spoiler: `brew install just`)
+* Have Docker desktop and Docker Compose installed
+* Check out the repo
+* `cd` path/to/birdbox
+* Build the needed containers: `docker-compose build assets app`
+* Run the app container: `docker-compose run app` then go to http://localhost:8080 -- note that at the moment you'll start with the default, empty, Wagtail site
+
+To run commands in the docker containers, there are a couple of convenience helpers:
+
+* `just docker-preflight` - the same preflighting steps as for local, just run in Docker
+* `just docker-shell` - run a bash shell in an already-running Docker container
+* `just docker-manage-py SOME_COMMAND` - run Django's manage.py script in the already-running docker container, with SOME_COMMAND passed as extra args. e.g. `just docker-manage-py makemigrations`
+
+To that end, if you're setting up a new Docker build locally, you'll want to do the following just
+to get Wagtail running, but with no content. This is the equivalent of `just preflight`:
+
+```
+just docker-preflight
+just docker-manage-py createsuperuser
+just docker-manage-py bootstrap_footer
+```
 
 ## Deployment instructions
 
 TO COME
+
 ## Real-world use instructions
 
 (i.e. making a new site using Birdbox as a template project)
