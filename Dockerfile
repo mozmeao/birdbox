@@ -105,7 +105,7 @@ RUN pip install --require-hashes --no-cache-dir -r requirements/test.txt
 
 RUN bin/run-sync-all.sh
 
-RUN chown webdev.webdev -R .
+RUN chown webdev:webdev -R .
 
 USER webdev
 
@@ -126,7 +126,7 @@ COPY --from=assets /app/birdbox/birdbox/static/ /app/birdbox/birdbox/static/
 RUN honcho run --env docker/envfiles/prod.env docker/bin/build_staticfiles.sh
 
 # Change User
-RUN chown webdev.webdev -R .
+RUN chown webdev:webdev -R .
 USER webdev
 
 # build args
