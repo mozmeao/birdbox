@@ -39,6 +39,7 @@ install-local-python-deps:
 docker-preflight:
 	docker-compose exec app python birdbox/manage.py createcachetable
 	docker-compose exec app python birdbox/manage.py migrate
+	docker-compose exec app python birdbox/manage.py update_product_details
 
 preflight:
 	npm install

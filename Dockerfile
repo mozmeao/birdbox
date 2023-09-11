@@ -7,7 +7,7 @@ WORKDIR /app
 ENV LANG=C.UTF-8
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV PATH="/venv/bin:$PATH"
+ENV PATH="/app/venv/bin:$PATH"
 
 COPY docker/bin/apt-install.sh /usr/local/bin/
 RUN apt-install.sh \
@@ -17,7 +17,7 @@ RUN apt-install.sh \
     zlib1g-dev \
     libwebp-dev
 
-RUN python -m venv /venv
+RUN python -m venv /app/venv
 
 COPY requirements/production.txt ./requirements/
 
@@ -32,13 +32,6 @@ FROM node:18-slim AS assets
 
 ENV PATH=/app/node_modules/.bin:$PATH
 WORKDIR /app
-
-# Required for required glean_parser dependencies
-COPY docker/bin/apt-install.sh /usr/local/bin/
-RUN apt-install.sh python3 python3-venv
-RUN python3 -m venv /.venv
-COPY --from=python-builder /venv /.venv
-ENV PATH="/.venv/bin:$PATH"
 
 # copy dependency definitions
 COPY package.json package-lock.json ./
@@ -62,7 +55,7 @@ FROM python:3.11-slim-bookworm AS app-base
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
-ENV PATH="/venv/bin:$PATH"
+ENV PATH="/app/venv/bin:$PATH"
 
 # add non-priviledged user
 RUN adduser --uid 1000 --disabled-password --gecos '' --no-create-home webdev
@@ -75,7 +68,7 @@ COPY docker/bin/apt-install.sh /usr/local/bin/
 RUN apt-install.sh gettext libxslt1.1 git curl
 
 # copy in Python environment
-COPY --from=python-builder /venv /venv
+COPY --from=python-builder /app/venv /app/venv
 
 # changes infrequently
 COPY ./bin ./bin
