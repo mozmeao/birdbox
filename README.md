@@ -12,6 +12,8 @@ LICENSE: [Mozilla Public License Version 2.0](LICENSE)
 
 ### Directly on your machine
 
+_This mode uses sqlite for the DB and stores uploaded media on your machine_
+
 * Install the `just` taskrunner (Docs [here](https://github.com/casey/just); spoiler: `brew install just`)
 * Check out the repo
 * `cd` path/to/birdbox
@@ -58,6 +60,15 @@ just docker-preflight
 just docker-manage-py createsuperuser
 just docker-manage-py bootstrap_footer
 ```
+
+#### Cloud storage with local Docker build
+
+When using Docker locally, it's possible to configure birdbox to use cloud storage, as we do on a deployed site.
+
+To do this, copy ./docker/envfiles/local.env.example as local.env and add the relevant env vars. The link in the example file to Django-storages documentation shows what to set and also links to how to get the GCS credentials. For local use of Docker with GCS, you'll need to put those credentiuals somewhere that the Docker container can reach them - that's what the local-credentials directory is for: copy the relevant JSON credentials into there and update the  `GOOGLE_APPLICATION_CREDENTIALS` var in `local.env`` file to match.
+
+Once that's done, it should Just Work.
+
 
 ## Deployment instructions
 

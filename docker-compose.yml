@@ -29,7 +29,7 @@ services:
     depends_on:
       - db
       - redis
-    env_file: .env
+    env_file: ./docker/envfiles/local.env
     environment:
       DATABASE_URL: postgres://postgres:postgres@db/postgres
       REDIS_URL: redis://redis:6379
@@ -40,6 +40,7 @@ services:
     volumes:
       - ./birdbox/:/app/birdbox:delegated
       - ./bin/:/app/bin:delegated
+      - ./local-credentials/:/app/local-credentials:delegated
       - ./docker/:/app/docker:delegated
       - ./etc/:/app/etc:delegated
       - ./src/:/app/src:delegated
@@ -58,6 +59,7 @@ services:
       DATABASE_URL: postgres://postgres:postgres@db/postgres
       REDIS_URL: redis://redis:6379
     volumes:
+      # NB: no ./local-credentials mounted as not needed
       - ./birdbox/:/app/birdbox:delegated
       - ./bin/:/app/bin:delegated
       - ./docker/:/app/docker:delegated
@@ -88,6 +90,7 @@ services:
     depends_on:
       - db
       - redis
+    env_file: ./docker/envfiles/prod.env
     environment:
       ALLOWED_HOSTS: "*"
       DATABASE_URL: postgres://postgres:postgres@db/postgres
@@ -100,6 +103,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
+      # NB: ./local-credentials not mounted because we're not running with
+      # external env vars to be able to benefit from them
       - ./birdbox/:/app/birdbox:delegated
       - ./bin/:/app/bin:delegated
       - ./docker/:/app/docker:delegated
@@ -116,19 +121,20 @@ services:
     depends_on:
       - db
       - redis
-    env_file: .env
+    env_file: ./docker/envfiles/local.env
     environment:
       ALLOWED_HOSTS: "*"
       DATABASE_URL: postgres://postgres:postgres@db/postgres
       EMAIL_BACKEND: "django.core.mail.backends.console.EmailBackend"
       REDIS_URL: redis://redis:6379
-      SECRET_KEY: "This is not the 53cr3t k3Y, it is just a tribute"
+      SECRET_KEY: "This is not the 53cr3t k3Y, this is just a tribute"
     image: mozmeao/birdbox:${GIT_COMMIT:-latest}
     ports:
       - "8000:8000"
     volumes:
       - ./birdbox/:/app/birdbox:delegated
       - ./bin/:/app/bin:delegated
+      - ./local-credentials/:/app/local-credentials:delegated
       - ./docker/:/app/docker:delegated
       - ./etc/:/app/etc:delegated
       - ./lib/:/app/lib:delegated

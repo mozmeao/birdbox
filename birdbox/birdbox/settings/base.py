@@ -114,6 +114,7 @@ DATABASES = {
         parser=dj_database_url.parse,
     )
 }
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"  # No need for BigIntAutoField
 
 # Cacheing
 
@@ -135,7 +136,24 @@ else:
         }
     }
 
-DEFAULT_AUTO_FIELD = "django.db.models.AutoField"  # No need for BigIntAutoField
+# Storage
+# If config is available, we use Google Cloud Storage, else (for local dev)
+# fall back to filesytem storage
+
+GS_BUCKET_NAME = config("GS_BUCKET_NAME", default="", parser=str)
+GS_PROJECT_ID = config("GS_PROJECT_ID", default="", parser=str)
+
+# This is the path to a JSON file of credentials for the service account
+# associated with y
+GOOGLE_APPLICATION_CREDENTIALS = config(
+    "GOOGLE_APPLICATION_CREDENTIALS",
+    default="",
+    parser=str,
+)
+if GS_BUCKET_NAME and GS_PROJECT_ID and GOOGLE_APPLICATION_CREDENTIALS:
+    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    GS_DEFAULT_ACL = "publicRead"
+    GS_FILE_OVERWRITE = True
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

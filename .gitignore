@@ -12,10 +12,11 @@ __pycache__/*
 *.sqlite3
 *~
 assets
-static_collected
+local-credentials/*.json
 birdbox/birdbox/static/
-birdbox/static/
+birdbox/static_collected/
 birdbox/media/
+docker/envfiles/local.env
 node_modules/
 python_coverage
 venv
