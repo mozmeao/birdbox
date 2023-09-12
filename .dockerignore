@@ -1,0 +1,14 @@
+__pycache__
+.coverage
+.DS_Store
+.env
+.pytest_cache
+.ruff_cache
+*.log
+*.pyc
+*.sqlite3
+birdbox/data/birdbox.sqlite3
+birdbox/media/*
+birdbox/static_collected/*
+node_modules
+python_coverage
