@@ -44,7 +44,7 @@ Dockerized Birdbox uses a separate Postgres container for its database, not sqli
 * Check out the repo
 * `cd` path/to/birdbox
 * Build the needed containers: `docker-compose build assets app`
-* Run the app container: `docker-compose run app` then go to http://localhost:8080 -- note that at the moment you'll start with the default, empty, Wagtail site
+* Run the app container: `docker-compose up app` then go to http://localhost:8080 -- note that at the moment you'll start with the default, empty, Wagtail site
 
 To run commands in the docker containers, there are a couple of convenience helpers:
 
