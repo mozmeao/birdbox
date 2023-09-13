@@ -6,9 +6,7 @@
 
 set -exo pipefail
 
-rm -rf ./static
-
-python birdbox/manage.py collectstatic --noinput
+python birdbox/manage.py collectstatic --noinput --clear
 
 # See Bedrock's build_staticfiles.sh if we want to link unhashed to hashed to
 # reduce Docker image space
