@@ -20,6 +20,9 @@ compile-requirements:
 docker-compile-requirements: build-python-builder
     docker-compose run compile-requirements
 
+createsuperuser:
+    python birdbox/manage.py createsuperuser
+
 run-local:
     npm start
 
@@ -80,6 +83,7 @@ import-local-data ARGS:
 help:
 	@echo "Please use \`just <target>' where <target> is one of"
 	@echo "  clean-local-deps                 - uninstall Python dependencies. Not for Docker"
+	@echo "  createsuperuser                  - locally, create a superuser to log in with. Not for Docker"
 	@echo "  docker-compile-requirements      - update Python requirements files via Docker"
 	@echo "  docker-shell                     - start a bash shell in an already running Docker container"
 	@echo "  docker-manage-py SOME_COMMAND    - run manage.py SOME_COMMAND in an already running Docker container"
@@ -91,6 +95,7 @@ help:
 	@echo "  import-local-data                - import LOCAL sqlite DB and media from elsewhere. Not for Docker"
 	@echo "  docker-preflight                 - install essentials in the Docker container before running"
 	@echo "  preflight                        - install essentials before running. Not for Docker"
+	@echo "  run-local                        - run the site locally using webpack, watching and recompilin CSS and JS"
 	@echo "  makemigrations                   - make new Django migrations if needed. Not for Docker"
 	@echo "  manage-py                        - run manage.py SOME_COMMAND on your onw machine"
 	@echo "  migrate                          - apply Django migrations if needed. Not for Docker"
