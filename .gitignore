@@ -1,5 +1,4 @@
 __pycache__/*
-*.pyc
 .cache
 .coverage
 .docker-build*
@@ -8,11 +7,16 @@ __pycache__/*
 .eslintcache
 .idea
 .vscode/
-*~
-venv
 *.db
+*.pyc
 *.sqlite3
-node_modules/
+*~
+assets
+local-credentials/*.json
 birdbox/birdbox/static/
+birdbox/static_collected/
 birdbox/media/
+docker/envfiles/local.env
+node_modules/
 python_coverage
+venv

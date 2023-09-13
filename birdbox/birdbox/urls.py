@@ -19,13 +19,15 @@ urlpatterns = [
 ]
 
 
-if settings.DEBUG:
-    from django.conf.urls.static import static
-    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+if settings.DEBUG or settings.DEFAULT_FILE_STORAGE == "django.core.files.storage.FileSystemStorage":
+    # Serve media files from Django itself - production won't use this
+    from django.urls import re_path
+    from django.views.static import serve
 
-    # Serve static and media files from development server
-    urlpatterns += staticfiles_urlpatterns()
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns = urlpatterns + [
+        re_path(r"^media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
+    ]
+    # Note that statics are handled via Whitenoise's middleware
 
 urlpatterns = urlpatterns + [
     # For anything not caught by a more specific rule above, hand over to

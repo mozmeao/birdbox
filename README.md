@@ -10,6 +10,10 @@ LICENSE: [Mozilla Public License Version 2.0](LICENSE)
 
 ## Running locally, for development of Birdbox itself
 
+### Directly on your machine
+
+_This mode uses sqlite for the DB and stores uploaded media on your machine_
+
 * Install the `just` taskrunner (Docs [here](https://github.com/casey/just); spoiler: `brew install just`)
 * Check out the repo
 * `cd` path/to/birdbox
@@ -28,11 +32,48 @@ LICENSE: [Mozilla Public License Version 2.0](LICENSE)
 
 Main Wagtail admin/editor docs are at https://guide.wagtail.org/en-latest/
 
-**Docker setup details**: TO COME
+
+### On your machine, via Docker
+
+We expect most active development to happen directly on 'bare metal' but it's possible to build  and use Docker containers to run Birdbox locally, avoiding the virtualenv and local dependency steps.
+
+Dockerized Birdbox uses a separate Postgres container for its database, not sqlite, so does not (currently) support the exporting and importing of local state.
+
+* Install the `just` taskrunner (Docs [here](https://github.com/casey/just); spoiler: `brew install just`)
+* Have Docker desktop and Docker Compose installed
+* Check out the repo
+* `cd` path/to/birdbox
+* Build the needed containers: `docker-compose build assets app`
+* Run the app container: `docker-compose up app` then go to http://localhost:8080 -- note that at the moment you'll start with the default, empty, Wagtail site
+
+To run commands in the docker containers, there are a couple of convenience helpers:
+
+* `just docker-preflight` - the same preflighting steps as for local, just run in Docker
+* `just docker-shell` - run a bash shell in an already-running Docker container
+* `just docker-manage-py SOME_COMMAND` - run Django's manage.py script in the already-running docker container, with SOME_COMMAND passed as extra args. e.g. `just docker-manage-py makemigrations`
+
+To that end, if you're setting up a new Docker build locally, you'll want to do the following just
+to get Wagtail running, but with no content. This is the equivalent of `just preflight`:
+
+```
+just docker-preflight
+just docker-manage-py createsuperuser
+just docker-manage-py bootstrap_footer
+```
+
+#### Cloud storage with local Docker build
+
+When using Docker locally, it's possible to configure birdbox to use cloud storage, as we do on a deployed site.
+
+To do this, copy ./docker/envfiles/local.env.example as local.env and add the relevant env vars. The link in the example file to Django-storages documentation shows what to set and also links to how to get the GCS credentials. For local use of Docker with GCS, you'll need to put those credentiuals somewhere that the Docker container can reach them - that's what the local-credentials directory is for: copy the relevant JSON credentials into there and update the  `GOOGLE_APPLICATION_CREDENTIALS` var in `local.env`` file to match.
+
+Once that's done, it should Just Work.
+
 
 ## Deployment instructions
 
 TO COME
+
 ## Real-world use instructions
 
 (i.e. making a new site using Birdbox as a template project)
