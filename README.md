@@ -70,6 +70,18 @@ To do this, copy ./docker/envfiles/local.env.example as local.env and add the re
 Once that's done, it should Just Work.
 
 
+## SSO setup
+
+Full instructions to come, but if you want to use SSO for a deployed Birdbox site, you'll need to ask the IAM team to
+provision a new project for the appropriate domain and provide credentails for the Django app, which should be passed
+as the env vars `OIDC_RP_CLIENT_ID` and `OIDC_RP_CLIENT_SECRET` and ensure `USE_SSO_AUTH` is set to True in settings.
+
+Birdbox in SSO mode will not support 'drive by' user creation even if they have an @mozilla.com identity. Only users
+who already exist in the Wagtail admin as a User will be allowed to log in. To get around this bootstrapping problem,
+we support the idea of an environment-driven setting `BIRDBOX_ADMIN_USER_EMAILS` which will nominate which user
+account(s) to bootstrap if they don't already exist when SSO is attempted. See the example local env var files.
+
+
 ## Deployment instructions
 
 TO COME
