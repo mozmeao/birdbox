@@ -93,6 +93,7 @@ CMD ["./bin/run-tests.sh"]
 
 COPY requirements/* ./requirements/
 COPY ./pyproject.toml ./
+RUN pip install --require-hashes --no-cache-dir -r requirements/dev.txt
 RUN pip install --require-hashes --no-cache-dir -r requirements/test.txt
 
 RUN bin/run-sync-all.sh

@@ -19,6 +19,14 @@ from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import ignore_logger
 from wagtail.embeds.oembed_providers import vimeo, youtube
 
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()  # take environment variables from .env.
+except ImportError:
+    # dotenv is not available - e.g. in production mode
+    pass
+
 config = ConfigManager.basic_config()
 
 APP_NAME = "birdbox"

@@ -34,6 +34,7 @@ docker-manage-py *ARGS:
 
 install-local-python-deps:
 	pip install -r requirements/production.txt
+	pip install -r requirements/dev.txt
 	pip install -r requirements/test.txt
 
 docker-preflight:
