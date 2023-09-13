@@ -162,7 +162,7 @@ GS_PROJECT_ID = config("GS_PROJECT_ID", default="", parser=str)
 if GS_BUCKET_NAME and GS_PROJECT_ID:
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     GS_DEFAULT_ACL = "publicRead"
-    GS_FILE_OVERWRITE = True
+    GS_FILE_OVERWRITE = False
 
 
 # Password validation, if users are signing in with passwords - see OIDC setup, below, too
