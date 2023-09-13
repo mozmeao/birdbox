@@ -13,6 +13,7 @@ COPY docker/bin/apt-install.sh /usr/local/bin/
 RUN apt-install.sh \
     build-essential \
     libpq-dev \
+    libffi-dev \
     libjpeg62-turbo-dev \
     zlib1g-dev \
     libwebp-dev
