@@ -4,3 +4,10 @@
 
 @use '~@mozilla-protocol/core/protocol/css/includes/lib' as * with ($image-path: '/static/protocol/img');
 @import '~@mozilla-protocol/core/protocol/css/components/footer';
+
+.mzp-c-footer-links-social {
+    a.mastodon {
+        background-image: url("/static/protocol/img/icons/social/mastodon/white.svg");
+        background-size: 16px 16px;
+    }
+}
