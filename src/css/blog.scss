@@ -3,14 +3,9 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 // custom CSS for the Blog pages
-
-
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
-
 @import '~@mozilla-protocol/core/protocol/css/components/article';
-
 @import '~@mozilla-protocol/core/protocol/css/components/split';
-
 @import 'pre-protocol/pagination.scss';
 
 
@@ -29,7 +24,6 @@
     padding: 3px $spacing-sm;
     text-transform: uppercase;
 }
-
 
 .blogpost figure.header-image {
     margin-bottom: $spacing-lg;
