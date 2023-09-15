@@ -151,7 +151,7 @@ const NewsletterForm = {
     const email = form.querySelector('input[type="email"]').value;
 
     e.preventDefault();
-    e.stopPropagation();
+    // e.stopPropagation();  // Disabled to allow analytics to capture form event
 
     // Disable form fields until POST has completed.
     FormUtils.disableFormFields(form);
