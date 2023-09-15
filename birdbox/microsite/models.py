@@ -381,7 +381,8 @@ class BlogPage(BaseProtocolPage):
                     required=False,
                 ),
             ),
-        ]
+        ],
+        use_json_field=True,
     )
     date = DateField("Post date")
     authors = ParentalManyToManyField("auth.User", blank=True)
