@@ -172,7 +172,6 @@
             "value": {
               "icon": "mastodon",
               "url": "https://mozilla.social/@Mozilla",
-              "rel": "me",
               "data_label": "Mastodon (@mozilla)"
             }
           },
