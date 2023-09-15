@@ -83,4 +83,4 @@ def gather_field_errors(form):
 
 @register.simple_tag
 def should_use_sso_auth():
-    return settings.USE_SSO_AUTH is True
+    return settings.USE_SSO_AUTH

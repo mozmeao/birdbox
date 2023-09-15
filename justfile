@@ -95,7 +95,7 @@ help:
 	@echo "  import-local-data                - import LOCAL sqlite DB and media from elsewhere. Not for Docker"
 	@echo "  docker-preflight                 - install essentials in the Docker container before running"
 	@echo "  preflight                        - install essentials before running. Not for Docker"
-	@echo "  run-local                        - run the site locally using webpack, watching and recompilin CSS and JS"
+	@echo "  run-local                        - run the site locally using webpack, watching and recompiling CSS and JS"
 	@echo "  makemigrations                   - make new Django migrations if needed. Not for Docker"
 	@echo "  manage-py                        - run manage.py SOME_COMMAND on your onw machine"
 	@echo "  migrate                          - apply Django migrations if needed. Not for Docker"
