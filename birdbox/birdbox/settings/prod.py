@@ -9,5 +9,6 @@ from .base import config
 
 DEBUG = False
 
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", parser=ListOf(str))
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", parser=ListOf(str))
 SECRET_KEY = config("SECRET_KEY", parser=str)
