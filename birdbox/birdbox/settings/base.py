@@ -143,14 +143,7 @@ else:
 GS_BUCKET_NAME = config("GS_BUCKET_NAME", default="", parser=str)
 GS_PROJECT_ID = config("GS_PROJECT_ID", default="", parser=str)
 
-# This is the path to a JSON file of credentials for the service account
-# associated with y
-GOOGLE_APPLICATION_CREDENTIALS = config(
-    "GOOGLE_APPLICATION_CREDENTIALS",
-    default="",
-    parser=str,
-)
-if GS_BUCKET_NAME and GS_PROJECT_ID and GOOGLE_APPLICATION_CREDENTIALS:
+if GS_BUCKET_NAME and GS_PROJECT_ID:
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     GS_DEFAULT_ACL = "publicRead"
     GS_FILE_OVERWRITE = True
