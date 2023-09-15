@@ -2,7 +2,7 @@ certifi>=2023.7.22
 dj-database-url==2.1.0
 django-mozilla-product-details>=1.0.3
 django-storages[google]==1.14
-Django>=4.1.11
+Django>=4.2.5
 django-redis==5.3.0
 everett>=3.2.0
 gevent==23.9.0.post1
@@ -12,6 +12,8 @@ Pillow==9.5.0
 psycopg2-binary==2.9.7  # NB: 3.x not currently supported until Django 4.2 is in use
 requests>=2.31.0
 sentry-sdk>=1.25.1,<2
-wagtail==4.2.4  # Always use an LTS Wagtail, 5.2 is due in November 2023
-wagtailstreamforms==4.0.5
+wagtail>=5.1.*<5.2  # Wagtail 5.2 LTS is due in November 2023
+Willow[heif]<1.7,>=1.6
+# Using a fork until there's formal 5.x support in the released package
+https://github.com/mozmeao/wagtailstreamforms/archive/refs/tags/wagtail-5-support.tar.gz#egg=wagtailstreamforms
 whitenoise==6.*

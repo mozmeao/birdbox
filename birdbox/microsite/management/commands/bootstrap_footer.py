@@ -13,7 +13,7 @@ from django.db.transaction import atomic
 
 from wagtail.blocks import ListBlock
 from wagtail.blocks.list_block import ListValue
-from wagtail.core.rich_text import RichText
+from wagtail.rich_text import RichText
 
 from microsite.blocks import FooterSocialLinkBlock, LabelledLinkBlock
 from microsite.models import Footer
