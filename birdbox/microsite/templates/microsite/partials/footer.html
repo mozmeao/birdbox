@@ -71,8 +71,8 @@
           {% comment %} {{social_link_group.title}} is available here, for future use {% endcomment %}
           {% for social_link in social_link_group.value.links %}
           <li>
-              <a class="{{social_link.icon}}" href="{{social_link.url}}">
-                <span>{{social_link.data_label}}</span>
+              <a class="{{social_link.icon}}" href="{{social_link.url}}"{% if social_link.rel %} rel='{{social_link.rel}}'{% endif %}>
+                  <span>{{social_link.data_label}}</span>
               </a>
           </li>
           {% endfor %}
