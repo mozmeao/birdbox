@@ -5,6 +5,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from django.utils.module_loading import import_string
 
 # Disabled until we need Search
 # from search import views as search_views
@@ -13,6 +14,9 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from microsite import urls as microsite_urls
+
+handler500 = "common.views.server_error_view"
+handler404 = "common.views.page_not_found_view"
 
 urlpatterns = [
     path("django-admin/", admin.site.urls),
@@ -33,6 +37,13 @@ if settings.DEFAULT_FILE_STORAGE == "django.core.files.storage.FileSystemStorage
         re_path(r"^media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
     ]
     # Note that statics are handled via Whitenoise's middleware
+
+if settings.DEBUG:
+    urlpatterns += (
+        path("404/", import_string(handler404)),
+        path("500/", import_string(handler500)),
+    )
+
 
 urlpatterns = urlpatterns + [
     # For anything not caught by a more specific rule above, hand over to
