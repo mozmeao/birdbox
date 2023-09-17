@@ -24,3 +24,10 @@ jobs:
           DJANGO_SETTINGS_MODULE=birdbox.settings.test
           BASKET_NEWSLETTER_DATA_DO_SYNC=false
           pytest birdbox
+  docker-build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+      - name: Ensure docker containers build
+        run: docker build .
