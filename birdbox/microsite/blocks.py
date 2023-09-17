@@ -500,18 +500,19 @@ class BiographyBlock(wagtail_blocks.StructBlock):
     name = wagtail_blocks.CharBlock(
         max_length=100,
     )
+    bio = wagtail_blocks.RichTextBlock(
+        features=settings.RICHTEXT_FEATURES__BIO,
+    )
     meta_info = wagtail_blocks.CharBlock(
         max_length=50,
         required=False,
-    )
-    image = AccessibleImageBlock(
-        required=False,
+        help_text="Supplementary contextual info, this person's dept or project",
     )
     website = wagtail_blocks.URLBlock(
         required=False,
     )
-    bio = wagtail_blocks.RichTextBlock(
-        features=settings.RICHTEXT_FEATURES__BIO,
+    image = AccessibleImageBlock(
+        required=False,
     )
 
 
@@ -538,7 +539,7 @@ class BiographyGridBlock(wagtail_blocks.StructBlock):
     )
     people = wagtail_blocks.ListBlock(
         BiographyBlock(),
-        collapsed=True,
+        collapsed=False,
     )
 
 
