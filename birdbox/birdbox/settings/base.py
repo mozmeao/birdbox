@@ -16,7 +16,7 @@ from django.utils.log import DEFAULT_LOGGING
 
 import dj_database_url
 import sentry_sdk
-from everett.manager import ConfigManager, ListOf
+from everett.manager import ConfigManager
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import ignore_logger
 from wagtail.embeds.oembed_providers import vimeo, youtube
@@ -418,15 +418,6 @@ OIDC_OP_USER_ENDPOINT = "https://auth.mozilla.auth0.com/userinfo"
 OIDC_OP_DOMAIN = "auth.mozilla.auth0.com"
 OIDC_OP_JWKS_ENDPOINT = "https://auth.mozilla.auth0.com/.well-known/jwks.json"
 
-# Email addresses of the user(s) who should automatically be considered Admins
-# See common.auth.BirdboxOIDCAuthenticationBackend
-BIRDBOX_ADMIN_USER_EMAILS = config(
-    "BIRDBOX_ADMIN_USER_EMAILS",
-    default="",
-    parser=ListOf(str),
-)
-BIRDBOX_ADMIN_EMAIL_DOMAIN = "mozilla.com"
-
 # If True (which should only be for local work in your .env), then show
 # username and password fields when signing up, not the SSO button
 USE_SSO_AUTH = config("USE_SSO_AUTH", default="True", parser=bool)
@@ -434,7 +425,7 @@ USE_SSO_AUTH = config("USE_SSO_AUTH", default="True", parser=bool)
 if USE_SSO_AUTH:
     AUTHENTICATION_BACKENDS = (
         # Deliberately OIDC or no entry by default
-        "common.auth.BirdboxOIDCAuthenticationBackend",
+        "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
     )
 else:
     AUTHENTICATION_BACKENDS = (

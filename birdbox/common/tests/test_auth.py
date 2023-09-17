@@ -2,17 +2,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-from unittest import mock
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.exceptions import SuspiciousOperation
 from django.test import TestCase, override_settings
 from django.urls import reverse
-
-import pytest
-
-from common.auth import BirdboxOIDCAuthenticationBackend
 
 
 class LoginTestBase(TestCase):
@@ -96,7 +90,7 @@ class ConventionalLoginDeniedTest(LoginTestBase):
         assert settings.USE_SSO_AUTH is True
         self.assertEqual(
             settings.AUTHENTICATION_BACKENDS,
-            ("common.auth.BirdboxOIDCAuthenticationBackend",),
+            ("mozilla_django_oidc.auth.OIDCAuthenticationBackend",),
         )
 
 
@@ -141,81 +135,3 @@ class ConventionalLoginAllowedTest(LoginTestBase):
                 self.assertEqual(response.status_code, 200)
                 self.assertNotContains(response, b"Sign in")
                 self.assertTemplateUsed(response, expected_template)
-
-
-class BirdboxOIDCAuthenticationBackendTests(TestCase):
-    """Testing the customisation of the OIDC backend"""
-
-    @mock.patch(
-        "common.auth.BirdboxOIDCAuthenticationBackend._check_for_and_create_admin_users",
-    )
-    @mock.patch("mozilla_django_oidc.auth.OIDCAuthenticationBackend.get_or_create_user")
-    def test_get_or_create_user_calls_bootstrapping(
-        self,
-        mock_superclass_get_or_create_user,
-        mock_check_for_and_create_admin_users,
-    ):
-        backend = BirdboxOIDCAuthenticationBackend()
-
-        backend.get_or_create_user(
-            "accesstoken",
-            "id_token",
-            {},
-        )
-        mock_check_for_and_create_admin_users.assert_called_once_with()
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize(
-    "admin_email_string",
-    (
-        "test1@mozilla.com",
-        "test1@mozilla.com,anotheradmin@mozilla.com",
-        "",
-    ),
-)
-def test__check_for_and_create_admin_users__happy_paths(
-    admin_email_string,
-):
-    admin_emails = admin_email_string.split(",") if admin_email_string else []
-
-    assert User.objects.count() == 0
-
-    with mock.patch(
-        "mozilla_django_oidc.auth.OIDCAuthenticationBackend.get_or_create_user",
-    ) as mock_superclass_get_or_create_user:
-        with override_settings(BIRDBOX_ADMIN_USER_EMAILS=admin_emails):
-            backend = BirdboxOIDCAuthenticationBackend()
-            backend.get_or_create_user("accesstoken", "id_token", {})
-
-    admin_users = User.objects.filter(email__in=admin_emails)
-    assert admin_users.count() == len(admin_emails)
-    assert mock_superclass_get_or_create_user.call_count == 1
-
-    for user in admin_users:
-        assert user.has_usable_password() is False
-
-
-@mock.patch(
-    "mozilla_django_oidc.auth.OIDCAuthenticationBackend.get_or_create_user",
-)
-@pytest.mark.django_db
-@pytest.mark.parametrize(
-    "admin_email_string",
-    (
-        "test1@example.com",
-        "test1@mozilla.com,badactor@example.com",
-    ),
-)
-def test__check_for_and_create_admin_users__suspicious_email_caught(
-    mock_superclass_get_or_create_user,
-    admin_email_string,
-):
-    admin_emails = admin_email_string.split(",")
-
-    assert User.objects.count() == 0
-    with override_settings(BIRDBOX_ADMIN_USER_EMAILS=admin_emails):
-        backend = BirdboxOIDCAuthenticationBackend()
-
-        with pytest.raises(SuspiciousOperation):
-            backend.get_or_create_user("accesstoken", "id_token", {})
