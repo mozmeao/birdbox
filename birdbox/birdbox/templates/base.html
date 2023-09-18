@@ -48,7 +48,8 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         {% block extra_head %}{% endblock extra_head %}
 
     </head>
-
+    {% block analytics %}
+    {% endblock analytics %}
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 

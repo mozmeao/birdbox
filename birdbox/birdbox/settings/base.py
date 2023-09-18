@@ -97,6 +97,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "wagtail.contrib.settings.context_processors.settings",
+                "microsite.context_processors.google_tag",
             ],
         },
     },
@@ -368,3 +369,6 @@ BLOG_PAGINATION_PAGE_SIZE = config(
     default="6",
     parser=int,
 )
+
+# For analytics
+GOOGLE_TAG_ID = config("GOOGLE_TAG_ID", default="", parser=str)
