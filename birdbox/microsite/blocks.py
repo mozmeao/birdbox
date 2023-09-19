@@ -463,9 +463,10 @@ class NewsletterFormBlock(wagtail_blocks.StructBlock):
         default="Thanks!",
         max_length=50,
     )
-    sucess_message = wagtail_blocks.CharBlock(
+    success_message = wagtail_blocks.CharBlock(
         default=(
-            "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. "
+            "If you haven’t previously confirmed a subscription to a "
+            "Mozilla-related newsletter you may have to do so. "
             "Please check your inbox or your spam filter for an email from us."
         ),
         max_length=200,
