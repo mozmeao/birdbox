@@ -685,7 +685,7 @@ class MicrositeSettings(BaseGenericSetting):
 
 
 @register_snippet
-class NewsletterStandardMessages(LockableMixin, Model):
+class FormStandardMessages(LockableMixin, Model):
     # TODO: Support L10N via wagtail-localize
     "Singleton-like snippet where we hold common messages, ready for L10N"
 

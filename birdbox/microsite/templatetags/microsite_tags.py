@@ -14,7 +14,7 @@ from wagtail.models import Site
 from common.utils import find_streamfield_blocks_by_types, get_freshest_newsletter_data
 
 from ..blocks import ArticleBlock, HeroBlock
-from ..models import Footer, MicrositeSettings, NewsletterStandardMessages, Page
+from ..models import Footer, FormStandardMessages, MicrositeSettings, Page
 
 register = Library()
 
@@ -133,8 +133,12 @@ def newsletter_form_fieldset(context, newsletter_slugs: List[str]) -> Dict:
         "countries": sorted(country_choices, key=lambda x: x[1]),
         "languages": sorted(language_choices, key=lambda x: x[1]),
         "newsletters": sorted(newsletter_choices, key=lambda x: x[1]),
-        "standard_messages": NewsletterStandardMessages.objects.first(),
     }
+
+
+@register.simple_tag
+def get_form_standard_messages():
+    return FormStandardMessages.objects.first()
 
 
 @register.simple_tag
