@@ -92,9 +92,8 @@ class MEICOContactForm(ContactFormBase):
         self.email_subject = "MIECO Interest Form"
         self.recipient_email = settings.CONTACT_FORM_RECIPIENT_EMAIL["meico"]
 
-        self.root_css_class = "TODO"
-
-        self.form_type = "meico-form"  # used to set a key class for behaviour
+        # self.root_css_class is not needed for this form
+        self.form_type = "mieco-form"  # used to set a key class for behaviour
 
 
 class BuildersChallengeForm(ContactFormBase):
@@ -103,11 +102,7 @@ class BuildersChallengeForm(ContactFormBase):
         choices=(
             (
                 "mozilla-technology",
-                _(
-                    "I’m also interested in hearing about topics like AI "
-                    "and machine learning, the metaverse, extended reality "
-                    "(XR) and the future of the web. "
-                ),
+                _("Topics like AI and machine learning, the metaverse, extended reality (XR) and the future of the web."),
             ),
         ),
         widget=forms.CheckboxSelectMultiple(),

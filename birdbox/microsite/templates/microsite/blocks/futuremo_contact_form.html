@@ -100,8 +100,10 @@
           <div class="mzp-c-field description">
             <label for="description">{{contact_form.fields.description.label}}</label>
             <textarea placeholder="{{contact_form.fields.description.label}}" rows="5" cols="38" name="description" id="description" maxlength="750"></textarea>
+            {% if contact_form.fields.website %}
             <label for="website" class="">{{contact_form.fields.website.label}}</label>
             <input type="text" id="website" name="website" placeholder="ex: mozilla.org">
+            {% endif %}
           </div>
           {% endif %}
 
