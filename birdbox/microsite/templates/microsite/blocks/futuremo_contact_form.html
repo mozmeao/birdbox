@@ -1,0 +1,132 @@
+
+{% load birdbox_tags microsite_tags %}
+
+{% load microsite_tags %}
+
+{% comment %}
+  block.value is the value of the actual structblock
+  but in block.get_context() (which is called automatically)
+  we poke block.value.form_type to get the class and turn it
+  into a form instance, which is added to the general context
+  as contact_form
+
+{% endcomment %}
+
+{% get_form_standard_messages as form_standard_messages %}
+
+<div id="newsletter-section" class="mzp-l-content {{contact_form.root_css_class}}">
+
+  <aside class="mzp-c-newsletter">
+    <div>
+      {% if value.accompanying_image %}
+      <div class="mzp-c-newsletter-image">
+        {% with value.accompanying_image as image_block %}
+          {% include "common/partials/accessible_image.html" with image_block=image_block %}
+        {% endwith %}
+      </div>
+      {% else %}
+      <h3 class="mzp-c-newsletter-title">{{ block.value.title }}</h3>
+      <p class="mzp-c-newsletter-tagline">{{ block.value.tagline}}</p>
+      {% endif %}
+    </div>
+
+    <form
+      action="{{ contact_form.get_action_url }}"
+      class="mzp-c-newsletter-form {{contact_form.form_type}}"
+      id="newsletter-form"
+      method="post"
+      name="newsletter-form"
+      novalidate>
+
+      {% csrf_token %}
+
+      <fieldset class="mzp-c-newsletter-content">
+        <div class="mzp-c-form-errors hidden" id="newsletter-errors">
+          <ul class="mzp-u-list-styled">
+              <li class="error-email-invalid hidden">
+                  {{form_standard_messages.form_error_email_invalid}}
+              </li>
+              <li class="error-select-country hidden">
+                  {{form_standard_messages.form_error_select_country}}
+              </li>
+              <li class="error-select-language hidden">
+                  {{form_standard_messages.select_language}}
+              </li>
+              <li class="error-newsletter-checkbox hidden">
+                  {{form_standard_messages.form_error_newsletter_checkbox}}
+              </li>
+              <li class="error-privacy-policy hidden">
+                  {{form_standard_messages.form_error_privacy_policy}}
+              </li>
+              <li class="error-try-again-later hidden">
+                  {{form_standard_messages.form_error_try_again_later}}
+              </li>
+          </ul>
+        </div>
+
+        {% if value.accompanying_image %}
+        <header class="mzp-c-newsletter-header">
+          <h3 class="mzp-c-newsletter-title">{{ block.value.title }}</h3>
+          <p class="mzp-c-newsletter-tagline">{{ block.value.tagline}}</p>
+        </header>
+        {% endif %}
+
+        <div>
+          <label for="email">
+            {{form_standard_messages.form_label_your_email_address}}
+          </label>
+          <input type="email" class="mzp-js-email-field" id="email" name="email" placeholder="name@example.com" required aria-required="true">
+        </div>
+
+        <div id="newsletter-details" class="mzp-c-newsletter-details">
+          <div>
+            <label for="name">{{contact_form.fields.name.label}}</label>
+            <input type="text" class="name" id="name" name="name" required aria-required="true">
+          </div>
+
+          <fieldset class="mzp-u-inline">
+            <label>{{contact_form.fields.interests.label}}</label>
+            <p>
+              {% for choice_pair in contact_form.fields.interests.choices %}
+              <label for="{{choice_pair.0}}" class="mzp-u-inline">
+                <input type="checkbox" name="interests" value="{{choice_pair.0}}" id="{{choice_pair.0}}">
+                {{choice_pair.1}}
+              </label>
+              {% endfor %}
+            </p>
+          </fieldset>
+
+          {% if contact_form.fields.description %}
+          <div class="mzp-c-field description">
+            <label for="description">{{contact_form.fields.description.label}}</label>
+            <textarea placeholder="{{contact_form.fields.description.label}}" rows="5" cols="38" name="description" id="description" maxlength="750"></textarea>
+            <label for="website" class="">{{contact_form.fields.website.label}}</label>
+            <input type="text" id="website" name="website" placeholder="ex: mozilla.org">
+          </div>
+          {% endif %}
+
+          <p>
+            <label for="privacy" class="mzp-u-inline">
+              <input type="checkbox" id="privacy" name="privacy" required aria-required="true">
+              {{form_standard_messages.form_label_privacy|safe}}
+            </label>
+          </p>
+        </div>
+
+        <p class="mzp-c-form-submit">
+          <button id="newsletter-submit" type="submit" class="mzp-c-button">{{ block.value.submit_button_text }}</button>
+          {% if block.value.aftermatter_text %}
+          <span class="mzp-c-fieldnote">{{block.value.aftermatter_text}}</span>
+          {% endif %}
+        </p>
+      </fieldset>
+
+    </form>
+
+    <div id="newsletter-thanks" class="mzp-c-newsletter-thanks hidden">
+      <h3>{{block.value.success_title}}</h3>
+      <p>{{block.value.success_message}}</p>
+    </div>
+
+  </aside>
+</div>

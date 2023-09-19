@@ -389,3 +389,21 @@ BLOG_PAGINATION_PAGE_SIZE = config(
 
 # For analytics
 GOOGLE_TAG_ID = config("GOOGLE_TAG_ID", default="", parser=str)
+
+CONTACT_FORM_RECIPIENT_EMAIL = {
+    "default": config(
+        "CONTACT_FORM_RECIPIENT_EMAIL__DEFAULT",
+        default="",
+        parser=str,
+    ),
+    "innovations": config(
+        "CONTACT_FORM_RECIPIENT_EMAIL__INNOVATIONS",
+        default="innovations@mozilla.com",
+        parser=str,
+    ),
+    "meico": config(
+        "CONTACT_FORM_RECIPIENT_EMAIL__MEICO",
+        default="meico@mozilla.com",
+        parser=str,
+    ),
+}

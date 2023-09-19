@@ -3,11 +3,11 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 """Custom Wagtail blocks that map to Protocol components, intended for use in a StreamField"""
-
 from django import forms
 from django.conf import settings
 from django.db.models import TextChoices
 from django.templatetags.static import static
+from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 
 from wagtail import blocks as wagtail_blocks
@@ -17,6 +17,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from birdbox.protocol_links import get_docs_link
 from common.blocks import AccessibleImageBlock, ColorBlock
 from common.utils import get_freshest_newsletter_options
+from microsite.forms import CONTACT_FORM_CHOICES
 
 
 class AspectRatios(TextChoices):
@@ -657,3 +658,68 @@ class ExpandingDetailsBlock(wagtail_blocks.StructBlock):
         collapsed=False,
         help_text="Each Details Block will be rendered as an expandable section",
     )
+
+
+class ContactFormBlock(wagtail_blocks.StructBlock):
+    # A contact form is CURRENTLY a very heavily modified version of
+    # the newsletter form, due to the need to backport and existing site
+    # into Birdbox, which overrode the newsletter behaviour
+    class Meta:
+        # For now, the Contact form is VERY opinionated and does what
+        # we needed for Future.m.o - we need to make a generic alternative
+        template = "microsite/blocks/futuremo_contact_form.html"
+        icon = "mail"
+
+    @property
+    def frontend_media(self):
+        return forms.Media(
+            css={
+                "all": [
+                    static("css/protocol-newsletter-form.css"),
+                    static("css/birdbox-contact-form.css"),
+                ]
+            },
+            js=[static("js/futuremo-contact-form-js.js")],
+        )
+
+    form_type = wagtail_blocks.ChoiceBlock(
+        choices=CONTACT_FORM_CHOICES,
+        help_text="Note: the recipient address for the form is defined in code, not in the CMS",
+    )
+    title = wagtail_blocks.CharBlock(
+        max_length=120,
+    )
+    tagline = wagtail_blocks.TextBlock(
+        max_length=500,
+    )
+    submit_button_text = wagtail_blocks.CharBlock(
+        default="Submit",
+        max_length=120,
+    )
+    aftermatter_text = wagtail_blocks.CharBlock(
+        default="We will only send you Mozilla-related information",
+        required=False,
+        max_length=120,
+    )
+    success_title = wagtail_blocks.CharBlock(
+        default="Thanks!",
+        max_length=120,
+    )
+    success_message = wagtail_blocks.CharBlock(
+        default=(
+            "If you haven’t previously confirmed a subscription to a "
+            "Mozilla-related newsletter you may have to do so. "
+            "Please check your inbox or your spam filter for an email from us."
+        ),
+        max_length=200,
+    )
+
+    def get_context(self, value, parent_context=None):
+        context = parent_context or {}
+        form_class = import_string(value.get("form_type"))
+        context.update(
+            {
+                "contact_form": form_class(),
+            }
+        )
+        return context

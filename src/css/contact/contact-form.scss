@@ -1,0 +1,48 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+@import '~@mozilla-protocol/core/protocol/css/includes/lib';
+
+.c-innovation-newsletter {
+
+    h3 {
+        @include text-title-md;
+    }
+
+    label[for="email"] {
+        @include visually-hidden;
+    }
+
+    // default state - (will only show if user selects "collaborate" radio btn
+    .description {
+        display: none;
+    }
+
+    .mzp-c-newsletter-thanks {
+        padding-top: 0;
+    }
+
+}
+
+
+.mzp-c-newsletter {
+    .mzp-c-newsletter-form {
+        padding-top: 0 !important;
+
+        .mzp-c-button{
+            margin-bottom: $spacing-lg;
+
+        }
+
+        .mzp-c-newsletter-details input[type="text"],
+        .mzp-c-newsletter-details textarea {
+            width: 100%;
+        }
+    }
+    .mzp-c-newsletter-thanks {
+        padding-top: 0 !important;
+    }
+
+}
+
