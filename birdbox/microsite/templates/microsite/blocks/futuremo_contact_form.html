@@ -18,9 +18,9 @@
 
   <aside class="mzp-c-newsletter">
     <div>
-      {% if value.accompanying_image %}
+      {% if block.value.accompanying_image.image %}
       <div class="mzp-c-newsletter-image">
-        {% with value.accompanying_image as image_block %}
+        {% with block.value.accompanying_image as image_block %}
           {% include "common/partials/accessible_image.html" with image_block=image_block %}
         {% endwith %}
       </div>
@@ -32,7 +32,7 @@
 
     <form
       action="{{ contact_form.get_action_url }}"
-      class="mzp-c-newsletter-form {{contact_form.form_type}}"
+      class="mzp-c-newsletter-form {{contact_form.form_type}} {% if not block.value.accompanying_image %}no-image{% endif %}"
       id="newsletter-form"
       method="post"
       name="newsletter-form"
@@ -64,7 +64,7 @@
           </ul>
         </div>
 
-        {% if value.accompanying_image %}
+        {% if block.value.accompanying_image.image %}
         <header class="mzp-c-newsletter-header">
           <h3 class="mzp-c-newsletter-title">{{ block.value.title }}</h3>
           <p class="mzp-c-newsletter-tagline">{{ block.value.tagline}}</p>

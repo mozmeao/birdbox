@@ -28,8 +28,17 @@
 
 .mzp-c-newsletter {
     .mzp-c-newsletter-form {
-        padding-top: 0 !important;
+        &.no-image {
+            padding-top: 0 !important;
+        }
+        @media #{$mq-md} {
+            padding-top: 0 !important;
 
+        }
+        @media #{$mq-xl} {
+            padding-top: $spacing-md !important;
+
+        }
         .mzp-c-button{
             margin-bottom: $spacing-lg;
 

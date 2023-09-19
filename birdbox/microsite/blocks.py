@@ -713,6 +713,10 @@ class ContactFormBlock(wagtail_blocks.StructBlock):
         ),
         max_length=200,
     )
+    accompanying_image = AccessibleImageBlock(
+        required=False,
+        help_text="NB: Needs to match background colour (for now - working on a no-image variation)",
+    )
 
     def get_context(self, value, parent_context=None):
         context = parent_context or {}
