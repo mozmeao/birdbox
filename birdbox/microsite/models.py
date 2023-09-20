@@ -636,18 +636,28 @@ class BrandChoices(TextChoices):
     FIREFOX_BRAND = "firefox", "Firefox theme"
 
 
+class NavThemeChoices(TextChoices):
+    THEME_LIGHT = "mzp-t-light", "Light theme"
+    THEME_DARK = "mzp-t-dark", "Dark theme"
+
+
 @register_setting(icon="globe", order=1)
 class MicrositeSettings(BaseGenericSetting):
     site_theme = CharField(
         max_length=64,
         choices=BrandChoices.choices,
         default=BrandChoices.MOZORG_BRAND,
-        help_text="Choose the design theme for this site. Changes will be immediately applied - there is no preview",
+        help_text="Choose the design theme (typography, colours) for this site. Changes will be immediately applied - there is no preview",
     )
-
     navigation_enabled = BooleanField(
         default=True,
         verbose_name="Show nav bar on site?",
+    )
+    navigation_theme = CharField(
+        max_length=64,
+        choices=NavThemeChoices.choices,
+        default=NavThemeChoices.THEME_LIGHT,
+        help_text="Choose the colour theme of the navigation. Changes will be immediately applied - there is no preview",
     )
     navigation_generate_nav_from_page_tree = BooleanField(
         default=True,
@@ -675,6 +685,7 @@ class MicrositeSettings(BaseGenericSetting):
         MultiFieldPanel(
             [
                 FieldPanel("navigation_enabled"),
+                FieldPanel("navigation_theme"),
                 FieldPanel("navigation_generate_nav_from_page_tree"),
                 MultiFieldPanel(
                     [

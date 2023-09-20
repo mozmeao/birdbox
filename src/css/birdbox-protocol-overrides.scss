@@ -53,33 +53,6 @@ figure {
     }
 }
 
-
-// Nav bar tweaks compared to default protocol
-
-.mzp-c-navigation {
-   box-shadow: 0 0 1px 1px rgba(29, 17, 51, .04), 0 0 3px 2px rgba(9, 32, 77, .12), 0 0 2px -3px rgba(29, 17, 51, .12);
-
-   a.mzp-c-button {
-        @include hidden;
-
-        @media #{$mq-md} {
-            display: block;
-        }
-    }
-}
-
-
-.mzp-c-navigation .c-menu-item .c-menu-item-title {
-    font-size: 1rem;
-    line-height: 1.5;
-
-    @media #{$mq-md} {
-        font-size: 0.875rem;
-        line-height: 1.1;
-        text-decoration: none !important;
-    }
-}
-
 .mzp-c-notification-bar {
     margin-bottom: $spacing-lg;
 }

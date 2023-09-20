@@ -30,6 +30,7 @@ def navigation(context) -> Dict:
 
     context = {
         "show_nav": microsite_settings.navigation_enabled,
+        "nav_theme_class": microsite_settings.navigation_theme,
         "nav_links": [],
         "cta_label": "",
         "cta_url": "",

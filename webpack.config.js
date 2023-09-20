@@ -24,15 +24,13 @@ module.exports = {
         "protocol-mozilla-theme": "./src/css/protocol/mozilla.scss",
         "protocol-firefox-theme": "./src/css/protocol/firefox.scss",
 
-        // page/feature-specific CSSS
+        // page/feature-specific CSS
         "birdbox-blog": "./src/css/blog.scss",
 
         // layouts
         "protocol-columns": "./src/css/protocol/layouts/columns.scss",
 
         // individual components
-        "protocol-navigation-css":
-            "./src/css/protocol/components/navigation.scss",
         "protocol-navigation-js": "./src/js/protocol/components/navigation.js",
         "protocol-footer-css": "./src/css/protocol/components/footer.scss",
         "protocol-footer-js": "./src/js/protocol/components/footer.js",
@@ -46,6 +44,7 @@ module.exports = {
         "protocol-callout": "./src/css/protocol/components/callout.scss",
 
         // custom CSS
+        "birdbox-navigation": "./src/css/navigation.scss",
         "birdbox-hero": "./src/css/hero.scss",
         "birdbox-captioned-image": "./src/css/captioned-image.scss",
         "birdbox-contact-form": "./src/css/contact/contact-form.scss",
