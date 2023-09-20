@@ -1,11 +1,12 @@
-{% extends "base.html" %}
+{% extends "microsite/base.html" %}
 
 {% block title %}Page not found{% endblock %}
 
 {% block body_class %}template-404{% endblock %}
 
 {% block content %}
-<h1>Page not found</h1>
-
-<h2>Sorry, this page could not be found.</h2>
+<div class="mzp-l-content mzp-t-content-lg">
+  <h1>Page not found</h1>
+  <p>Sorry, we couldn’t find the page you requested.</p>
+</div>
 {% endblock %}
