@@ -1,7 +1,7 @@
 {% load microsite_tags wagtailimages_tags %}
 
 {% if show_nav %}
-<div class="c-navigation {% get_layout_class_from_page %} {% comment %} mzp-is-sticky{% endcomment %}">
+<div class="c-navigation {{nav_theme_class}} {% get_layout_class_from_page %} {% comment %} mzp-is-sticky{% endcomment %}">
     <div class="c-navigation-l-content">
         <div class="c-navigation-container">
             {% if nav_links %}
@@ -61,7 +61,7 @@
                 </div>
               {% if cta_label and cta_url %}
                 <div class="c-navigation-shoulder">
-                  <a href="{{cta_url}}" class="mzp-c-button {% get_layout_class_from_page %}">
+                  <a href="{{cta_url}}" class="mzp-c-button {{nav_theme_class}} {% get_layout_class_from_page %}">
                     {{cta_label}}
                   </a>
                 </div>
