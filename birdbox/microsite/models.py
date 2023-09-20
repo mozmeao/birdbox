@@ -50,6 +50,7 @@ from .blocks import (
     FooterSocialLinksGroupBlock,
     HeroBlock,
     NewsletterFormBlock,
+    SectionHeadingBlock,
     SplitBlock,
     VideoEmbedBlock,
 )
@@ -161,6 +162,15 @@ class GeneralPurposePage(BaseProtocolPage):
                     label_format="Split: {title}",
                     required=False,
                     help_text=mark_safe(f'{get_docs_link("split")}  Not all options supported'),
+                ),
+            ),
+            (
+                "section_heading",
+                SectionHeadingBlock(
+                    label="Section heading",
+                    label_format="Section heading: {text}",
+                    required=False,
+                    help_text=get_docs_link("section-heading"),
                 ),
             ),
             (
