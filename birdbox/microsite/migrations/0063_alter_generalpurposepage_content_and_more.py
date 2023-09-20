@@ -36,8 +36,8 @@ class Migration(migrations.Migration):
                                         help_text="Up to 75 characters. Will be the H1 of the page it's used in", max_length=75, required=True
                                     ),
                                 ),
-                                ("subheading", wagtail.blocks.CharBlock(help_text="Up to 150 characters", max_length=150, required=True)),
-                                ("standfirst", wagtail.blocks.TextBlock(help_text="Up to 400 characters", max_length=400, required=True)),
+                                ("subheading", wagtail.blocks.CharBlock(help_text="Up to 150 characters", max_length=150, required=False)),
+                                ("standfirst", wagtail.blocks.TextBlock(help_text="Up to 400 characters", max_length=400, required=False)),
                                 (
                                     "background_image",
                                     wagtail.images.blocks.ImageChooserBlock(
@@ -1167,8 +1167,8 @@ class Migration(migrations.Migration):
                                         help_text="Up to 75 characters. Will be the H1 of the page it's used in", max_length=75, required=True
                                     ),
                                 ),
-                                ("subheading", wagtail.blocks.CharBlock(help_text="Up to 150 characters", max_length=150, required=True)),
-                                ("standfirst", wagtail.blocks.TextBlock(help_text="Up to 400 characters", max_length=400, required=True)),
+                                ("subheading", wagtail.blocks.CharBlock(help_text="Up to 150 characters", max_length=150, required=False)),
+                                ("standfirst", wagtail.blocks.TextBlock(help_text="Up to 400 characters", max_length=400, required=False)),
                                 (
                                     "background_image",
                                     wagtail.images.blocks.ImageChooserBlock(

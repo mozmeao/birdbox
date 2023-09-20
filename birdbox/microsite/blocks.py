@@ -608,12 +608,12 @@ class HeroBlock(wagtail_blocks.StructBlock):
     )
     subheading = wagtail_blocks.CharBlock(
         max_length=150,
-        required=True,
+        required=False,
         help_text="Up to 150 characters",
     )
     standfirst = wagtail_blocks.TextBlock(
         max_length=400,
-        required=True,
+        required=False,
         help_text="Up to 400 characters",
     )
     background_image = ImageChooserBlock(
