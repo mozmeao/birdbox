@@ -26,8 +26,6 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BIRDBOX_BASE_DIR = os.path.dirname(PROJECT_DIR)
 ROOT_DIR = Path(__file__).resolve().parents[3]
 
-config = ConfigManager.basic_config()
-
 
 def path_from_root(*args):
     return abspath(str(ROOT_DIR.joinpath(*args)))
@@ -180,6 +178,25 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+# Email
+EMAIL_HOST = config("EMAIL_HOST", default="localhost")
+EMAIL_PORT = config("EMAIL_PORT", default="25", parser=int)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default="false", parser=bool)
+EMAIL_SUBJECT_PREFIX = config("EMAIL_SUBJECT_PREFIX", default="")
+
+DEFAULT_FROM_EMAIL = config(
+    "DEFAULT_FROM_EMAIL",
+    default="mozilla.com <noreply@mozilla.com>",
+)
+
+if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
+    default_email_backend = "django.core.mail.backends.smtp.EmailBackend"
+else:
+    default_email_backend = "django.core.mail.backends.console.EmailBackend"
 
 
 # Static files (CSS, JavaScript, Images)
@@ -372,3 +389,21 @@ BLOG_PAGINATION_PAGE_SIZE = config(
 
 # For analytics
 GOOGLE_TAG_ID = config("GOOGLE_TAG_ID", default="", parser=str)
+
+CONTACT_FORM_RECIPIENT_EMAIL = {
+    "default": config(
+        "CONTACT_FORM_RECIPIENT_EMAIL__DEFAULT",
+        default="",
+        parser=str,
+    ),
+    "innovations": config(
+        "CONTACT_FORM_RECIPIENT_EMAIL__INNOVATIONS",
+        default="innovations@mozilla.com",
+        parser=str,
+    ),
+    "meico": config(
+        "CONTACT_FORM_RECIPIENT_EMAIL__MEICO",
+        default="meico@mozilla.com",
+        parser=str,
+    ),
+}

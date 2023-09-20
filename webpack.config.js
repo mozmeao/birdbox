@@ -48,7 +48,10 @@ module.exports = {
         // custom CSS
         "birdbox-hero": "./src/css/hero.scss",
         "birdbox-captioned-image": "./src/css/captioned-image.scss",
-        "birdbox-hero": "./src/css/hero.scss",
+        "birdbox-contact-form": "./src/css/contact/contact-form.scss",
+
+        // custom JS
+        "futuremo-contact-form-js": "./src/js/contact/futuremo-contact-form.js",
     },
     output: {
         filename: "js/[name].js",

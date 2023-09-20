@@ -1,0 +1,10 @@
+The following was submitted via the website:
+
+Name: {{ data.name }}
+E-mail: {{ data.email }}
+
+{% if data.interests %}
+Interests: {% for interest in data.interests %}{{interest}}{% if not forloop.last %}; {% endif %}{% endfor %}
+{% endif %}
+Message:
+{{ data.description|default:"No message provided" }}

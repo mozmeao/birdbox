@@ -1,30 +1,33 @@
+{% load microsite_tags %}
+{% get_form_standard_messages as newsletter_form_standard_messages %}
+
 <fieldset class="mzp-c-newsletter-content">
   <div class="mzp-c-form-errors hidden" id="newsletter-errors">
     <ul class="mzp-u-list-styled">
         <li class="error-email-invalid hidden">
-            {{standard_messages.form_error_email_invalid}}
+            {{newsletter_form_standard_messages.form_error_email_invalid}}
         </li>
         <li class="error-select-country hidden">
-            {{standard_messages.form_error_select_country}}
+            {{newsletter_form_standard_messages.form_error_select_country}}
         </li>
         <li class="error-select-language hidden">
-            {{standard_messages.select_language}}
+            {{newsletter_form_standard_messages.select_language}}
         </li>
         <li class="error-newsletter-checkbox hidden">
-            {{standard_messages.form_error_newsletter_checkbox}}
+            {{newsletter_form_standard_messages.form_error_newsletter_checkbox}}
         </li>
         <li class="error-privacy-policy hidden">
-            {{standard_messages.form_error_privacy_policy}}
+            {{newsletter_form_standard_messages.form_error_privacy_policy}}
         </li>
         <li class="error-try-again-later hidden">
-            {{standard_messages.form_error_try_again_later}}
+            {{newsletter_form_standard_messages.form_error_try_again_later}}
         </li>
     </ul>
-</div>
+  </div>
 
   <div>
     <label for="email">
-      {{standard_messages.form_label_your_email_address}}
+      {{newsletter_form_standard_messages.form_label_your_email_address}}
     </label>
     <input type="email" class="mzp-js-email-field" id="email" name="email" placeholder="name@example.com" required aria-required="true">
   </div>
@@ -33,14 +36,14 @@
 
     <input type="hidden" name="source_url" value="{{ request.build_absolute_uri }}">
 
-    <label for="country">{{standard_messages.form_label_country}}</label>
+    <label for="country">{{newsletter_form_standard_messages.form_label_country}}</label>
     <select name="country" id="id_country">
       {% for country_data in countries  %}
       <option value="{{country_data.0}}">{{country_data.1}}</option>
       {% endfor %}
     </select>
 
-    <label for="language">{{standard_messages.form_label_language}}</label>
+    <label for="language">{{newsletter_form_standard_messages.form_label_language}}</label>
     <select name="language" id="id_lang">
       {% for language_data in languages  %}
       <option value="{{language_data.0}}">{{language_data.1}}</option>
@@ -48,7 +51,7 @@
     </select>
 
     <fieldset class="mzp-u-inline">
-      <label>{{standard_messages.form_label_info_sought}}</label>
+      <label>{{newsletter_form_standard_messages.form_label_info_sought}}</label>
       <p>
         {% for newsletter_data in newsletters %}
         <label for="id_newsletters_{{forloop.counter.0}}" class="mzp-u-inline">
@@ -60,7 +63,7 @@
     </fieldset>
 
     <fieldset class="mzp-u-inline">
-      <legend>{{standard_messages.form_label_format}}</legend>
+      <legend>{{newsletter_form_standard_messages.form_label_format}}</legend>
       <p>
         <label for="format-html" class="mzp-u-inline">
           <input type="radio" id="format-html" name="format" value="H" checked> HTML
@@ -74,15 +77,15 @@
     <p>
       <label for="privacy" class="mzp-u-inline">
         <input type="checkbox" id="privacy" name="privacy" required aria-required="true">
-        {{standard_messages.form_label_privacy|safe}}
+        {{newsletter_form_standard_messages.form_label_privacy|safe}}
       </label>
     </p>
   </div>
 
   <p class="mzp-c-form-submit">
     <button type="submit" class="mzp-c-button" id="newsletter-submit">
-      {{standard_messages.form_label_submit_label}}
+      {{newsletter_form_standard_messages.form_label_submit_label}}
     </button>
-    <span class="mzp-c-fieldnote">{{standard_messages.form_label_submit_note}}</span>
+    <span class="mzp-c-fieldnote">{{newsletter_form_standard_messages.form_label_submit_note}}</span>
   </p>
 </fieldset>
