@@ -42,6 +42,8 @@ module.exports = {
             "./src/css/protocol/components/newsletter.scss",
         "protocol-video": "./src/css/protocol/components/video.scss",
         "protocol-callout": "./src/css/protocol/components/callout.scss",
+        "protocol-section-heading":
+            "./src/css/protocol/components/section-heading.scss",
 
         // custom CSS
         "birdbox-navigation": "./src/css/navigation.scss",

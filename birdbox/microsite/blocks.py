@@ -195,6 +195,21 @@ class CardLayoutBlock(wagtail_blocks.StructBlock):
     )
 
 
+class SectionHeadingBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/section_heading.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(css={"all": [static("css/protocol-section-heading.css")]})
+
+    text = wagtail_blocks.TextBlock(
+        max_length=120,
+        required=True,
+    )
+
+
 class SplitBlock(wagtail_blocks.StructBlock):
     class Meta:
         template = "microsite/blocks/split.html"
