@@ -4,16 +4,49 @@
 
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
-.hero-text-wrapper {
-    max-width: 55%;
-    // background: linear-gradient(
-    //     90deg,
-    //     rgba(0, 0, 0, 0.50) 0%,
-    //     rgba(0, 0, 0, 0.50) 80%,
-    //     rgba(0, 0, 0, 0) 100%
-    // );
+.hero-section {
 
-    h1 {
-        font-weight: normal;
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 100%;
+
+    @media #{$mq-md} {
+        background-size: 50%;
+    }
+
+    // When it's small give it a tint panel with a soft edge
+    &.mzp-t-dark .hero-text-wrapper,
+    &.mzp-t-light .hero-text-wrapper {
+        padding: 0 $spacing-sm;
+        margin: 0 calc(-1 * $spacing-sm);
+    }
+    &.mzp-t-dark .hero-text-wrapper {
+        background-color: rgba($color: #000000, $alpha: 0.7);
+        box-shadow: 1px 2px 3px rgba($color: #000000, $alpha: 0.7);
+    }
+    &.mzp-t-light .hero-text-wrapper {
+        background-color: rgba($color: #FFFFFF, $alpha: 0.7);
+        box-shadow: 1px 2px 3px rgba($color: #FFFFFF, $alpha: 0.7);
+    }
+
+    &.mzp-t-light .hero-text-wrapper,
+    &.mzp-t-dark .hero-text-wrapper {
+        // above medium breakpoint, no tint panel
+        @media #{$mq-md} {
+            background: none;
+            padding: 0;
+            margin: 0;
+            box-shadow: none;
+        }
+    }
+
+    .hero-text-wrapper {
+        @media #{$mq-md} {
+            max-width: 55%;
+        }
+        h2 {
+            @include text-title-sm;
+            font-weight: normal;
+        }
     }
 }

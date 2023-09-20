@@ -4,8 +4,8 @@
   class="{{block.value.theme}} hero-section"
   style="background-color: {{block.value.background_color}};
   {% if block.value.background_image %}
-    {% image block.value.background_image width-1600 as bg_image %}
-        background: no-repeat url('{{bg_image.url}}')
+    {% image block.value.background_image width-1000 as bg_image %}
+        background-image: url('{{bg_image.url}}')
   {% endif %}"
 >
   <div class="{% get_layout_class_from_page %}">
