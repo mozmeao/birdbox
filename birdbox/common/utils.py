@@ -50,8 +50,10 @@ def get_frontend_media(page: Page) -> List[Media]:
         return gathered_media
 
     for sf in streamfields:
-        for block in sf.stream_block.child_blocks.values():
-            gathered_frontend_media.extend(_get_media_for_blocks(block))
+        block_types_with_data = set([x["type"] for x in sf.raw_data])
+        for block_type, block in sf.stream_block.child_blocks.items():
+            if block_type in block_types_with_data:
+                gathered_frontend_media.extend(_get_media_for_blocks(block))
 
     return gathered_frontend_media
 

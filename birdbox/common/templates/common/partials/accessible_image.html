@@ -10,4 +10,4 @@
 {% get_alt_text_for_accessible_image_block image_block as image_alt_text %}
 {# Note that we render the image at its original, uploaded size, rather than resample #}
 
-{% image image_block.image original class=image_class|default:'mzp-c-card-image' alt=image_alt_text width=image_block.width height=image_block.height %}
+{% image image_block.image original class=image_class|default:'mzp-c-card-image' alt=image_alt_text %}

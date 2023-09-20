@@ -43,6 +43,7 @@ from .blocks import (
     CardLayoutBlock,
     ColumnBlock,
     CompactCalloutBlock,
+    ContactFormBlock,
     ExpandingDetailsBlock,
     FooterAfterMatterLinksBlock,
     FooterColumnBlock,
@@ -227,10 +228,18 @@ class GeneralPurposePage(BaseProtocolPage):
                     help_text=get_docs_link("compact-callout"),
                 ),
             ),
+            (
+                "contact_form",
+                ContactFormBlock(
+                    required=False,
+                    label_format="Contact form: {title}",
+                ),
+            ),
         ],
         block_counts={
             "hero": {"max_num": 1},
             "newsletter_form": {"max_num": 1},
+            "contact_form": {"max_num": 1},
         },
         use_json_field=True,
         collapsed=True,
@@ -685,7 +694,7 @@ class MicrositeSettings(BaseGenericSetting):
 
 
 @register_snippet
-class NewsletterStandardMessages(LockableMixin, Model):
+class FormStandardMessages(LockableMixin, Model):
     # TODO: Support L10N via wagtail-localize
     "Singleton-like snippet where we hold common messages, ready for L10N"
 
