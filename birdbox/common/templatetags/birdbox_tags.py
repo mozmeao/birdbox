@@ -24,9 +24,10 @@ def frontend_media_for_page(context, page) -> Dict[str, List[str]]:
     css_files = []
     js_files = []
 
-    for media_obj in get_frontend_media(page.specific):
-        css_files.extend(set([x for x in media_obj.render_css()]))
-        js_files.extend(set([x for x in media_obj.render_js()]))
+    if hasattr(page, "specific"):
+        for media_obj in get_frontend_media(page.specific):
+            css_files.extend(set([x for x in media_obj.render_css()]))
+            js_files.extend(set([x for x in media_obj.render_js()]))
 
     # See if we need to gather footer media too
     footer = Footer.load(request_or_site=request)
