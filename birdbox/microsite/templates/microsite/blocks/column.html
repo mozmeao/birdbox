@@ -1,7 +1,14 @@
 {# https://protocol.mozilla.org/components/detail/columns--overview.html #}
 
-{% load wagtailcore_tags %}
-<div class="{{block.value.column_layout}}">
+{% load wagtailcore_tags microsite_tags %}
+
+{% if block.value.title %}
+<div class="mzp-l-content {{block.value.theme}}">
+  <h2>{{block.value.title}}</h2>
+</div>
+{% endif %}
+<div class="{{block.value.column_layout}} {{block.value.theme}}">
+
   {% for block in block.value.content %}
     {% include_block block %}
   {% endfor %}
