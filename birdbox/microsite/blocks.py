@@ -44,6 +44,10 @@ class CardLayoutOptions(TextChoices):
 class SplitBlockVariants(TextChoices):
     SPLIT_BLOCK_STANDARD = "", "Standard"
     SPLIT_BLOCK_REVERSED = "mzp-l-split-reversed", "Reversed"
+    SPLIT_BLOCK_NARROW_BODY = "mzp-l-split-body-narrow", "Narrow body"
+    SPLIT_BLOCK_NARROW_BODY_REVERSED = "mzp-l-split-body-narrow mzp-l-split-reversed", "Narrow body, reversed"
+    SPLIT_BLOCK_WIDE_BODY = "mzp-l-split-body-wide", "Wide body"
+    SPLIT_BLOCK_WIDE_BODY_REVERSED = "mzp-l-split-body-wide mzp-l-split-reversed", "Wide body, reversed"
     SPLIT_BLOCK_DARK_BACKGROUND = "mzp-t-dark mzp-t-background-secondary", "Dark Background"
 
 
@@ -83,6 +87,18 @@ class ColumnOptions(TextChoices):
 class ThemeOptions(TextChoices):
     THEME_LIGHT = "mzp-t-light", "Light theme"
     THEME_DARK = "mzp-t-dark", "Dark theme"
+
+
+class SectionHeadingSizeOptions(TextChoices):
+    SECTION_HEADING_SIZE_H2 = "h2", "Heading Level 2"
+    SECTION_HEADING_SIZE_H3 = "h3", "Heading Level 3"
+    SECTION_HEADING_SIZE_H4 = "h4", "Heading Level 4"
+
+
+class SectionHeadingAlignmentOptions(TextChoices):
+    SECTION_HEADING_ALIGNMENT_CENTER = "", "Center"
+    SECTION_HEADING_ALIGNMENT_LEFT = "mzp-c-section-heading-left", "Left"
+    SECTION_HEADING_ALIGNMENT_RIGHT = "mzp-c-section-heading-right", "Right"
 
 
 class LinkStructValue(wagtail_blocks.StructValue):
@@ -203,6 +219,22 @@ class SectionHeadingBlock(wagtail_blocks.StructBlock):
     def frontend_media(self):
         "Custom property that lets us selectively include CSS"
         return forms.Media(css={"all": [static("css/protocol-section-heading.css")]})
+
+    header_size = wagtail_blocks.ChoiceBlock(
+        choices=SectionHeadingSizeOptions.choices,
+        default=SectionHeadingSizeOptions.SECTION_HEADING_SIZE_H2,
+        help_text=mark_safe(
+            "Remember to respect best practices around heirarchy of header size: "
+            "<a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#usage_notes'>See MDN</a>"
+        ),
+    )
+
+    alignment = wagtail_blocks.ChoiceBlock(
+        choices=SectionHeadingAlignmentOptions.choices,
+        default=SectionHeadingAlignmentOptions.SECTION_HEADING_ALIGNMENT_CENTER,
+        blank=True,
+        required=False,  # to allow for default/empty/centered option
+    )
 
     text = wagtail_blocks.TextBlock(
         max_length=120,
