@@ -389,8 +389,17 @@ class PictoBlock(wagtail_blocks.StructBlock):
     )
 
 
+class PictoWithLinkBlock(PictoBlock):
+    link = LabelledLinkBlock(
+        required=False,
+    )
+
+
 class ColumnContentBlock(wagtail_blocks.StreamBlock):
     picto = PictoBlock(
+        required=False,
+    )
+    picto_with_link = PictoWithLinkBlock(
         required=False,
     )
 
@@ -417,10 +426,20 @@ class ColumnBlock(wagtail_blocks.StructBlock):
             },
         )
 
+    title = wagtail_blocks.CharBlock(
+        required=False,
+        max_length=100,
+    )
+
     column_layout = wagtail_blocks.ChoiceBlock(
         choices=ColumnOptions.choices,
         default=ColumnOptions.COLUMN_LAYOUT_TWO_COLUMN,
         required=True,
+    )
+
+    theme = wagtail_blocks.ChoiceBlock(
+        choices=ThemeOptions.choices,
+        default=ThemeOptions.THEME_LIGHT,
     )
 
     content = ColumnContentBlock(
