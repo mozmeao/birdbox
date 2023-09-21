@@ -94,10 +94,12 @@ class SectionHeadingLevelOptions(TextChoices):
     SECTION_HEADING_LEVEL_H3 = "h3", "Heading Level 3"
     SECTION_HEADING_LEVEL_H4 = "h4", "Heading Level 4"
 
+
 class SectionHeadingSizeOptions(TextChoices):
     SECTION_HEADING_SIZE_LG = "", "Large"
     SECTION_HEADING_SIZE_MD = "mzp-u-title-md", "Medium"
     SECTION_HEADING_SIZE_SM = "mzp-u-title-sm", "Small"
+
 
 class SectionHeadingAlignmentOptions(TextChoices):
     SECTION_HEADING_ALIGNMENT_DEFAULT = "", "Default"
@@ -235,9 +237,7 @@ class SectionHeadingBlock(wagtail_blocks.StructBlock):
     heading_size = wagtail_blocks.ChoiceBlock(
         choices=SectionHeadingSizeOptions.choices,
         default=SectionHeadingSizeOptions.SECTION_HEADING_SIZE_LG,
-        help_text=mark_safe(
-            "Sets the display size of the heading independent of the heading level (h2, h3, or h4)."
-        ),
+        help_text=mark_safe("Sets the display size of the heading independent of the heading level (h2, h3, or h4)."),
         blank=True,
         required=False,  # to allow for default/empty/large option
     )

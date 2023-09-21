@@ -144,7 +144,10 @@ class Migration(migrations.Migration):
                                     "alignment",
                                     wagtail.blocks.ChoiceBlock(
                                         blank=True,
-                                        choices=[("", "Default"), ("t-align-center", "Center"),],
+                                        choices=[
+                                            ("", "Default"),
+                                            ("t-align-center", "Center"),
+                                        ],
                                         required=False,
                                     ),
                                 ),
