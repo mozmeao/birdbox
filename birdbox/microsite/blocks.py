@@ -608,12 +608,12 @@ class HeroBlock(wagtail_blocks.StructBlock):
     )
     subheading = wagtail_blocks.CharBlock(
         max_length=150,
-        required=True,
+        required=False,
         help_text="Up to 150 characters",
     )
     standfirst = wagtail_blocks.TextBlock(
         max_length=400,
-        required=True,
+        required=False,
         help_text="Up to 400 characters",
     )
     background_image = ImageChooserBlock(
@@ -627,7 +627,8 @@ class HeroBlock(wagtail_blocks.StructBlock):
     theme = wagtail_blocks.ChoiceBlock(
         choices=ThemeOptions.choices,
         required=True,
-        default=ThemeOptions.THEME_LIGHT,
+        default=ThemeOptions.THEME_DARK,
+        help_text="The dark theme works best with a dark background color selected, the light theme needs a light one.",
     )
 
 

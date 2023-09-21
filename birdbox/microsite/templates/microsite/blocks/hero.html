@@ -1,18 +1,54 @@
 {% load microsite_tags wagtailimages_tags %}
 
+<style type="text/css">
+  :root {
+    --hero-background-color: {{block.value.background_color}}b2;
+  }
+
+  .hero-section.mzp-t-dark .hero-text-wrapper,
+  .hero-section.mzp-t-light .hero-text-wrapper {
+    margin: -8px -16px;
+    padding: 8px 16px;
+  }
+
+  .hero-section.mzp-t-dark .hero-text-wrapper {
+    background-color: var(--hero-background-color, #000000b2);
+    box-shadow: 0 0 3px var(--hero-background-color, #000000b2);
+  }
+
+  .hero-section.mzp-t-light .hero-text-wrapper {
+    background-color: var(--hero-background-color, #ffffffb2);
+    box-shadow: 0 0 3px var(--hero-background-color, #ffffffb2);
+  }
+
+  @media (min-width: 768px) {
+    .hero-section.mzp-t-dark .hero-text-wrapper,
+    .hero-section.mzp-t-light .hero-text-wrapper {
+      background-color: transparent;
+      box-shadow: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+</style>
+
 <section
   class="{{block.value.theme}} hero-section"
   style="background-color: {{block.value.background_color}};
   {% if block.value.background_image %}
-    {% image block.value.background_image width-1600 as bg_image %}
-        background: no-repeat url('{{bg_image.url}}')
+    {% image block.value.background_image width-1000 as bg_image %}
+        background-image: url('{{bg_image.url}}')
   {% endif %}"
 >
   <div class="{% get_layout_class_from_page %}">
       <div class="hero-text-wrapper">
           <h1>{{block.value.main_heading}}</h1>
+        {% if block.value.subheading %}
           <h2>{{block.value.subheading}}</h2>
+        {% endif %}
+        {% if block.value.standfirst %}
           <p>{{block.value.standfirst|linebreaksbr}}</p>
+        {% endif %}
       </div>
   </div>
 </section>

@@ -4,16 +4,23 @@
 
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
-.hero-text-wrapper {
-    max-width: 55%;
-    // background: linear-gradient(
-    //     90deg,
-    //     rgba(0, 0, 0, 0.50) 0%,
-    //     rgba(0, 0, 0, 0.50) 80%,
-    //     rgba(0, 0, 0, 0) 100%
-    // );
+.hero-section {
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 100%;
 
-    h1 {
-        font-weight: normal;
+    @media #{$mq-md} {
+        background-size: 50%;
+    }
+
+    .hero-text-wrapper {
+        @media #{$mq-md} {
+            max-width: 55%;
+        }
+
+        h2 {
+            @include text-title-sm;
+            font-weight: normal;
+        }
     }
 }
