@@ -50,5 +50,11 @@
           <p>{{block.value.standfirst|linebreaksbr}}</p>
         {% endif %}
       </div>
+      {% if block.value.call_to_action.url %}
+        <a href="{{block.value.call_to_action.url}}" class="mzp-c-button {{block.value.theme}}">
+          {{block.value.call_to_action.label}}
+        </a>
+      {% endif %}
   </div>
+
 </section>

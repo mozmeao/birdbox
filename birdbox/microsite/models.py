@@ -141,6 +141,104 @@ class StructuralPage(BaseProtocolPage):
         return redirect(self.get_parent().get_full_url())
 
 
+class HomePage(BaseProtocolPage):
+    """General homepage template"""
+
+    # title comes from the base Page class
+    content = StreamField(
+        [
+            (
+                "article",
+                ArticleBlock(
+                    label="Article block",
+                    label_format="Article: {header}",
+                    required=False,
+                    help_text=get_docs_link("article"),
+                ),
+            ),
+            (
+                "columns",
+                ColumnBlock(
+                    label="Column block",
+                    label_format="Column block: {column_layout}",
+                    required=False,
+                    help_text=mark_safe(f'Column layout wrapper: {get_docs_link("columns")}. Has Picto sub-components: {get_docs_link("picto")}'),
+                ),
+            ),
+            (
+                "compact_callout",
+                CompactCalloutBlock(
+                    required=False,
+                    label_format="Compact callout: {headline}",
+                    help_text=get_docs_link("compact-callout"),
+                ),
+            ),
+            (
+                "contact_form",
+                ContactFormBlock(
+                    required=False,
+                    label_format="Contact form: {title}",
+                    help_text="This form is cannot be used the same time as a Newsletter form. It is also very specific to Future.m.o",
+                ),
+            ),
+            (
+                "hero",
+                HeroBlock(
+                    required=False,
+                    label_format="Hero: {main_heading}",
+                    help_text="Intended for use at top of the page. Works well with an SVG background image and appropriate color",
+                ),
+            ),
+            (
+                "section_heading",
+                SectionHeadingBlock(
+                    label="Section heading",
+                    label_format="Section heading: {text}",
+                    required=False,
+                ),
+            ),
+            (
+                "split",
+                SplitBlock(
+                    label="Split content",
+                    label_format="Split: {title}",
+                    required=False,
+                    help_text=mark_safe(f'Flexible short text + image component. {get_docs_link("split")} Not all options supported'),
+                ),
+            ),
+            (
+                "video",
+                VideoEmbedBlock(
+                    label="Video embed",
+                    label_format="Video embed: {video}",
+                    required=False,
+                    icon="media",
+                ),
+            ),
+        ],
+        block_counts={
+            "contact_form": {"max_num": 1},
+            "hero": {"max_num": 1},
+        },
+        use_json_field=True,
+        collapsed=True,
+    )
+
+    content_panels = BaseProtocolPage.content_panels + [
+        FieldPanel("content"),
+    ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        title_field = self._meta.get_field("title")
+
+        title_field.help_text = (
+            "The page title as you'd like it to be seen by the public. "
+            "(However, this will not be displayed in the page if a block is "
+            "added that has its own H1-level heading field, such as a Hero)"
+        )
+
+
 class GeneralPurposePage(BaseProtocolPage):
     """General-purpose page with most of the components available in it."""
 
@@ -153,6 +251,15 @@ class GeneralPurposePage(BaseProtocolPage):
                     required=False,
                     label_format="Hero: {main_heading}",
                     help_text="Not the core Protocol component",
+                ),
+            ),
+            (
+                "article",
+                ArticleBlock(
+                    label="Article block",
+                    label_format="Article: {header}",
+                    required=False,
+                    help_text=get_docs_link("article"),
                 ),
             ),
             (
@@ -197,6 +304,7 @@ class GeneralPurposePage(BaseProtocolPage):
                     label="Newsletter signup form",
                     label_format="Newsletter: {title}",
                     required=False,
+                    help_text="This form is cannot be used the same time as a Contact form",
                 ),
             ),
             (
@@ -243,6 +351,7 @@ class GeneralPurposePage(BaseProtocolPage):
                 ContactFormBlock(
                     required=False,
                     label_format="Contact form: {title}",
+                    help_text="This form is cannot be used the same time as a Newsletter form. It is also very specific to Future.m.o",
                 ),
             ),
         ],
@@ -858,6 +967,7 @@ class ProtocolTestPage(BaseProtocolPage):
                     label="Newsletter signup form",
                     label_format="Newsletter: {title}",
                     required=False,
+                    help_text="Cannot be used in the same page as a Contact form - one will break",
                 ),
             ),
             (
@@ -913,6 +1023,14 @@ class ProtocolTestPage(BaseProtocolPage):
                     required=False,
                     label_format="Expandable details: {preamble}",
                     help_text=get_docs_link("details"),
+                ),
+            ),
+            (
+                "contact_form",
+                ContactFormBlock(
+                    required=False,
+                    label_format="Contact form: {title}",
+                    help_text="This form is cannot be used the same time as a Newsletter form. It is also very specific to Future.m.o",
                 ),
             ),
         ],

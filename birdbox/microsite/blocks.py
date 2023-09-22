@@ -134,6 +134,7 @@ class LinkBlock(wagtail_blocks.StructBlock):
 class LabelledLinkBlock(LinkBlock):
     label = wagtail_blocks.CharBlock(
         max_length=100,
+        required=False,
     )
 
 
@@ -693,6 +694,10 @@ class HeroBlock(wagtail_blocks.StructBlock):
         required=True,
         default=ThemeOptions.THEME_DARK,
         help_text="The dark theme works best with a dark background color selected, the light theme needs a light one.",
+    )
+    call_to_action = LabelledLinkBlock(
+        required=False,
+        help_text="Link for an optional button at the base of the hero",
     )
 
 
