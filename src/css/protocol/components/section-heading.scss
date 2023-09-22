@@ -3,32 +3,23 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
-
 @import '~@mozilla-protocol/core/protocol/css/components/section-heading';
 
-
-h3.mzp-c-section-heading {
-    @include text-title-md;
-    padding-top: $spacing-md;
-    padding-bottom: $spacing-md;
-}
-
-h4.mzp-c-section-heading {
-    @include text-title-sm;
-    padding-top: $spacing-sm;
-    padding-bottom: $spacing-sm;
-}
-
 .mzp-c-section-heading {
-    &.mzp-c-section-heading-right {
+    max-width: $content-max;
+    padding: var(--v-grid-xs) var(--h-grid-xs);
+    text-align: start;
 
-        // TODO: add in media queries to control the right-side margin on md and sm
-        margin-right: 0;
-        text-align: right;
+    @media #{$mq-md} {
+        padding: var(--v-grid-md) var(--h-grid-md);
     }
-    &.mzp-c-section-heading-left {
-        // TODO: add in media queries to control the left-side margin on md and sm
-        margin-left: 0;
-        text-align: left;
+
+    @media #{$mq-xl} {
+        padding: var(--v-grid-md) var(--h-grid-xl);
+    }
+
+    &.t-align-center {
+        max-width: $content-lg;
+        text-align: center;
     }
 }

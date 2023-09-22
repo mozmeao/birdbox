@@ -144,7 +144,7 @@ class Migration(migrations.Migration):
                                     "alignment",
                                     wagtail.blocks.ChoiceBlock(
                                         blank=True,
-                                        choices=[("", "Center"), ("mzp-c-section-heading-left", "Left"), ("mzp-c-section-heading-right", "Right")],
+                                        choices=[("", "Default"), ("t-align-center", "Center"),],
                                         required=False,
                                     ),
                                 ),

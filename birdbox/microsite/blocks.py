@@ -96,9 +96,8 @@ class SectionHeadingSizeOptions(TextChoices):
 
 
 class SectionHeadingAlignmentOptions(TextChoices):
-    SECTION_HEADING_ALIGNMENT_CENTER = "", "Center"
-    SECTION_HEADING_ALIGNMENT_LEFT = "mzp-c-section-heading-left", "Left"
-    SECTION_HEADING_ALIGNMENT_RIGHT = "mzp-c-section-heading-right", "Right"
+    SECTION_HEADING_ALIGNMENT_DEFAULT = "", "Default"
+    SECTION_HEADING_ALIGNMENT_CENTER = "t-align-center", "Center"
 
 
 class LinkStructValue(wagtail_blocks.StructValue):
