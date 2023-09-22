@@ -473,13 +473,10 @@ class ArticleBlock(wagtail_blocks.StructBlock):
             css={"all": [static("css/protocol-article.css")]},
         )
 
-    header = wagtail_blocks.CharBlock(
-        max_length=250,
-        help_text="Rendered as a H1, replacing the title of the page",
-    )
     intro_para = wagtail_blocks.CharBlock(
         max_length=1000,
-        help_text="Rendered as a single styled paragraph element  (<p>). 2000 chars max, but less is better.",
+        help_text="Rendered as a single styled paragraph element. 2000 chars max, but less is better.",
+        required=False,
     )
     body = wagtail_blocks.RichTextBlock(
         features=settings.RICHTEXT_FEATURES__ARTICLE,
