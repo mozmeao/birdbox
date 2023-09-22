@@ -89,11 +89,15 @@ class ThemeOptions(TextChoices):
     THEME_DARK = "mzp-t-dark", "Dark theme"
 
 
-class SectionHeadingSizeOptions(TextChoices):
-    SECTION_HEADING_SIZE_H2 = "h2", "Heading Level 2"
-    SECTION_HEADING_SIZE_H3 = "h3", "Heading Level 3"
-    SECTION_HEADING_SIZE_H4 = "h4", "Heading Level 4"
+class SectionHeadingLevelOptions(TextChoices):
+    SECTION_HEADING_LEVEL_H2 = "h2", "Heading Level 2"
+    SECTION_HEADING_LEVEL_H3 = "h3", "Heading Level 3"
+    SECTION_HEADING_LEVEL_H4 = "h4", "Heading Level 4"
 
+class SectionHeadingSizeOptions(TextChoices):
+    SECTION_HEADING_SIZE_LG = "", "Large"
+    SECTION_HEADING_SIZE_MD = "mzp-u-title-md", "Medium"
+    SECTION_HEADING_SIZE_SM = "mzp-u-title-sm", "Small"
 
 class SectionHeadingAlignmentOptions(TextChoices):
     SECTION_HEADING_ALIGNMENT_DEFAULT = "", "Default"
@@ -219,13 +223,23 @@ class SectionHeadingBlock(wagtail_blocks.StructBlock):
         "Custom property that lets us selectively include CSS"
         return forms.Media(css={"all": [static("css/protocol-section-heading.css")]})
 
-    header_size = wagtail_blocks.ChoiceBlock(
-        choices=SectionHeadingSizeOptions.choices,
-        default=SectionHeadingSizeOptions.SECTION_HEADING_SIZE_H2,
+    heading_level = wagtail_blocks.ChoiceBlock(
+        choices=SectionHeadingLevelOptions.choices,
+        default=SectionHeadingLevelOptions.SECTION_HEADING_LEVEL_H2,
         help_text=mark_safe(
-            "Remember to respect best practices around heirarchy of header size: "
-            "<a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#usage_notes'>See MDN</a>"
+            "Remember to respect best practices around hierarchy of heading level: "
+            "<a href='https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#usage_notes'>See MDN</a>"
         ),
+    )
+
+    heading_size = wagtail_blocks.ChoiceBlock(
+        choices=SectionHeadingSizeOptions.choices,
+        default=SectionHeadingSizeOptions.SECTION_HEADING_SIZE_LG,
+        help_text=mark_safe(
+            "Sets the display size of the heading independent of the heading level (h2, h3, or h4)."
+        ),
+        blank=True,
+        required=False,  # to allow for default/empty/large option
     )
 
     alignment = wagtail_blocks.ChoiceBlock(
