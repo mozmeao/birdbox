@@ -28,4 +28,15 @@
             @include text-title-lg;
         }
     }
+
+    &.hero-section-centered {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        .hero-text-wrapper{
+            max-width: 100%;
+            margin: auto;
+            text-align: center;
+        }
+    }
 }

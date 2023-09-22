@@ -106,6 +106,11 @@ class SectionHeadingAlignmentOptions(TextChoices):
     SECTION_HEADING_ALIGNMENT_CENTER = "t-align-center", "Center"
 
 
+class HeroLayoutOptions(TextChoices):
+    HERO_LAYOUT_DEFAULT = "hero-section-default", "Default layout"
+    HERO_LAYOUT_CENTERED = "hero-section-centered", "Centered layout"
+
+
 class LinkStructValue(wagtail_blocks.StructValue):
     def url(self):
         external_url = self.get("external_url")
@@ -689,6 +694,10 @@ class HeroBlock(wagtail_blocks.StructBlock):
         required=False,
         help_text="Optional but recommended - needs to be something that will fill well",
     )
+    call_to_action = LabelledLinkBlock(
+        required=False,
+        help_text="Link for an optional button at the base of the hero",
+    )
     background_color = ColorBlock(
         required=True,
         help_text="For a solid block of colour, matched to the background image",
@@ -699,9 +708,10 @@ class HeroBlock(wagtail_blocks.StructBlock):
         default=ThemeOptions.THEME_DARK,
         help_text="The dark theme works best with a dark background color selected, the light theme needs a light one.",
     )
-    call_to_action = LabelledLinkBlock(
-        required=False,
-        help_text="Link for an optional button at the base of the hero",
+    layout = wagtail_blocks.ChoiceBlock(
+        choices=HeroLayoutOptions.choices,
+        required=True,
+        default=HeroLayoutOptions.HERO_LAYOUT_DEFAULT,
     )
 
 
