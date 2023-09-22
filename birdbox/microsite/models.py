@@ -42,6 +42,7 @@ from birdbox.protocol_links import get_docs_link
 from .blocks import (
     ArticleBlock,
     BiographyGridBlock,
+    CalloutBlock,
     CaptionedImageBlock,
     CardLayoutBlock,
     ColumnBlock,
@@ -1031,6 +1032,14 @@ class ProtocolTestPage(BaseProtocolPage):
                 BiographyGridBlock(
                     label_format="Biography grid: {title}",
                     required=False,
+                ),
+            ),
+            (
+                "callout",
+                CalloutBlock(
+                    required=False,
+                    label_format="Compact callout: {headline}",
+                    help_text=get_docs_link("callout"),
                 ),
             ),
             (

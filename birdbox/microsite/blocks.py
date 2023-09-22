@@ -622,24 +622,21 @@ class BiographyGridBlock(wagtail_blocks.StructBlock):
     )
 
 
-class CompactCalloutBlock(wagtail_blocks.StructBlock):
-    class Meta:
-        template = "microsite/blocks/compact_callout.html"
-
+class CalloutBlockBase(wagtail_blocks.StructBlock):
     @property
     def frontend_media(self):
         "Custom property that lets us selectively include CSS"
         return forms.Media(css={"all": [static("css/protocol-callout.css")]})
 
     headline = wagtail_blocks.CharBlock(
-        max_length=50,
+        max_length=100,
         required=True,
-        help_text="Around 50 chars",
+        help_text="Around 50 chars ideally. Max 100",
     )
     body = wagtail_blocks.TextBlock(
-        max_length=180,
+        max_length=300,
         required=True,
-        help_text="Around 150 chars",
+        help_text="Around 150 chars ideally. Max 300",
     )
     cta = CTAButtonBlock(
         required=True,
@@ -649,6 +646,16 @@ class CompactCalloutBlock(wagtail_blocks.StructBlock):
         required=True,
         default=ThemeOptions.THEME_LIGHT,
     )
+
+
+class CalloutBlock(CalloutBlockBase):
+    class Meta:
+        template = "microsite/blocks/callout.html"
+
+
+class CompactCalloutBlock(CalloutBlockBase):
+    class Meta:
+        template = "microsite/blocks/compact_callout.html"
 
 
 class HeroBlock(wagtail_blocks.StructBlock):
