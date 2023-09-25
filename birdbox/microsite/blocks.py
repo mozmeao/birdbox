@@ -11,6 +11,7 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 
 from wagtail import blocks as wagtail_blocks
+from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 
@@ -109,6 +110,11 @@ class SectionHeadingAlignmentOptions(TextChoices):
 class HeroLayoutOptions(TextChoices):
     HERO_LAYOUT_DEFAULT = "hero-section-default", "Default layout"
     HERO_LAYOUT_CENTERED = "hero-section-centered", "Centered layout"
+
+
+class TableWidthOptions(TextChoices):
+    TABLE_WIDTH_DEFAULT = "bb-table-width-default", "Default width"
+    TABLE_WIDTH_FULL = "bb-table-width-full", "Full width"
 
 
 class LinkStructValue(wagtail_blocks.StructValue):
@@ -826,3 +832,59 @@ class ContactFormBlock(wagtail_blocks.StructBlock):
             }
         )
         return context
+
+
+class HeadedTableBlock(wagtail_blocks.StructBlock):
+
+    """IMPORTANT: if you include this block in a StreamField and the streamfield
+    is set to collapsed=True, the table will not be visible to edit unless the
+    browser window is resized slightly. This is ticketed at
+    https://github.com/wagtail/wagtail/issues/8611 but help-text should be added
+    to make it clear for the end user until the bug is fixed.
+    """
+
+    class Meta:
+        template = "microsite/blocks/headed_table.html"
+        icon = "table"
+
+    @property
+    def frontend_media(self):
+        return forms.Media(
+            css={"all": [static("css/birdbox-headed-table.css")]},
+        )
+
+    title = wagtail_blocks.CharBlock(
+        max_length=50,
+        required=False,
+    )
+    intro = wagtail_blocks.RichTextBlock(
+        required=False,
+        features=settings.RICHTEXT_FEATURES__SIMPLE,
+    )
+
+    table = TableBlock(
+        table_options={
+            "contextMenu": [
+                "row_above",
+                "row_below",
+                "---------",
+                "col_left",
+                "col_right",
+                "---------",
+                "remove_row",
+                "remove_col",
+                "---------",
+                "undo",
+                "redo",
+                "---------",
+                "copy",
+                "cut",
+                "---------",
+                "alignment",
+            ],
+        }
+    )
+    table_width = wagtail_blocks.ChoiceBlock(
+        choices=TableWidthOptions.choices,
+        default=TableWidthOptions.TABLE_WIDTH_DEFAULT,
+    )

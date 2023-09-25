@@ -1,0 +1,15 @@
+{% load wagtailcore_tags microsite_tags wagtailimages_tags %}
+
+<div class="{% get_layout_class_from_page %} mzp-u-data-table bb-headed-table-block {{block.value.table_width}}">
+  {% if block.value.title %}
+  <h2>
+    {{block.value.title}}
+  </h2>
+  {% endif %}
+  {% if block.value.intro %}
+  <div>
+    {{block.value.intro|richtext}}
+  </div>
+  {% endif %}
+  {% include_block block.value.bound_blocks.table %}
+</div>

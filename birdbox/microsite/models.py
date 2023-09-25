@@ -52,6 +52,7 @@ from .blocks import (
     FooterAfterMatterLinksBlock,
     FooterColumnBlock,
     FooterSocialLinksGroupBlock,
+    HeadedTableBlock,
     HeroBlock,
     NewsletterFormBlock,
     SectionHeadingBlock,
@@ -500,7 +501,7 @@ class FAQPage(BaseProtocolPage):
         title_field.help_text = (
             "The page title as you'd like it to be seen by the public. "
             "(However, this will not be displayed in the page if a block is "
-            "added that has its own H1-level heading field, such the Article)"
+            "added that has its own H1-level heading field, such as the Hero)"
         )
 
 
@@ -982,7 +983,7 @@ class ProtocolTestPage(BaseProtocolPage):
                     label="Column block",
                     label_format="Column block: {column_layout}",
                     required=False,
-                    help_text=mark_safe(f'Column layout wrapper. {get_docs_link("columns")}. Has sub-components. {get_docs_link("picto")}'),
+                    help_text=mark_safe(f'Column layout wrapper. {get_docs_link("columns")}. Has sub-components, eg: {get_docs_link("picto")}'),
                 ),
             ),
             (
@@ -1072,6 +1073,19 @@ class ProtocolTestPage(BaseProtocolPage):
                     required=False,
                     label_format="Contact form: {title}",
                     help_text="This form is cannot be used the same time as a Newsletter form. It is also very specific to Future.m.o",
+                ),
+            ),
+            (
+                "table",
+                HeadedTableBlock(
+                    required=False,
+                    label_format="Table: {title}",
+                    help_text=mark_safe(
+                        "Right-click on the table to add/remove cells and control content alignment.<br><br>"
+                        "IMPORTANT: If you do not see the table of data when you expand this section, "
+                        "please resize your browser window to make it appear. Apologies for the inconvenience. "
+                        "<a href='https://github.com/wagtail/wagtail/issues/8611'>The bug is known to the Wagtail Project</a>. ",
+                    ),
                 ),
             ),
         ],
