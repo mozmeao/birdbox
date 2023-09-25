@@ -427,6 +427,9 @@ class ColumnContentBlock(wagtail_blocks.StreamBlock):
     picto_with_link = PictoWithLinkBlock(
         required=False,
     )
+    text = wagtail_blocks.RichTextBlock(
+        features=settings.RICHTEXT_FEATURES__LIMITED,
+    )
 
 
 class ColumnBlock(wagtail_blocks.StructBlock):
@@ -464,7 +467,14 @@ class ColumnBlock(wagtail_blocks.StructBlock):
 
     theme = wagtail_blocks.ChoiceBlock(
         choices=ThemeOptions.choices,
-        default=ThemeOptions.THEME_LIGHT,
+        default=ThemeOptions.THEME_DARK,
+    )
+
+    background_color = ColorBlock(
+        required=True,
+        help_text=(
+            "For a solid block of colour, matched to the background image. Use with a light/dark theme as appropriate, to ensure text is visible."
+        ),
     )
 
     content = ColumnContentBlock(

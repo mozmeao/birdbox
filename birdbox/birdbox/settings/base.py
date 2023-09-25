@@ -313,6 +313,19 @@ RICHTEXT_FEATURES__FULL = [
     "ul",
 ]
 
+RICHTEXT_FEATURES__LIMITED = [
+    # Order here is the order used in the editor UI
+    "h3",
+    "h4",
+    "bold",
+    "italic",
+    "strikethrough",
+    "link",
+    "ol",
+    "ul",
+]
+
+
 RICHTEXT_FEATURES__SIMPLE = [
     "bold",
     "italic",
