@@ -90,16 +90,16 @@ class ThemeOptions(TextChoices):
     THEME_DARK = "mzp-t-dark", "Dark theme"
 
 
-class SectionHeadingLevelOptions(TextChoices):
-    SECTION_HEADING_LEVEL_H2 = "h2", "Heading Level 2"
-    SECTION_HEADING_LEVEL_H3 = "h3", "Heading Level 3"
-    SECTION_HEADING_LEVEL_H4 = "h4", "Heading Level 4"
+class HeadingLevelOptions(TextChoices):
+    HEADING_LEVEL_H2 = "h2", "Heading Level 2"
+    HEADING_LEVEL_H3 = "h3", "Heading Level 3"
+    HEADING_LEVEL_H4 = "h4", "Heading Level 4"
 
 
-class SectionHeadingSizeOptions(TextChoices):
-    SECTION_HEADING_SIZE_LG = "", "Large"
-    SECTION_HEADING_SIZE_MD = "mzp-u-title-md", "Medium"
-    SECTION_HEADING_SIZE_SM = "mzp-u-title-sm", "Small"
+class HeadingSizeOptions(TextChoices):
+    HEADING_SIZE_LG = "", "Large"
+    HEADING_SIZE_MD = "mzp-u-title-md", "Medium"
+    HEADING_SIZE_SM = "mzp-u-title-sm", "Small"
 
 
 class SectionHeadingAlignmentOptions(TextChoices):
@@ -165,11 +165,6 @@ class CardBlock(wagtail_blocks.StructBlock):
         "Custom property that lets us selectively include CSS"
         return forms.Media(css={"all": [static("css/protocol-card.css")]})
 
-    size = wagtail_blocks.ChoiceBlock(
-        choices=CardSizes.choices,
-        default=CardSizes.SMALL,
-        required=False,  # so that we can set SMALL, which is actually an empty string
-    )
     title = wagtail_blocks.CharBlock(
         required=True,
         max_length=60,
@@ -191,6 +186,11 @@ class CardBlock(wagtail_blocks.StructBlock):
         help_text="Meta info at the base of the card",
     )
     link = LinkBlock()
+    size = wagtail_blocks.ChoiceBlock(
+        choices=CardSizes.choices,
+        default=CardSizes.SMALL,
+        required=False,  # so that we can set SMALL, which is actually an empty string
+    )
     image_aspect_ratio = wagtail_blocks.ChoiceBlock(
         choices=AspectRatios.choices,
         default=AspectRatios.ASPECT_3_2,
@@ -238,8 +238,8 @@ class SectionHeadingBlock(wagtail_blocks.StructBlock):
         return forms.Media(css={"all": [static("css/protocol-section-heading.css")]})
 
     heading_level = wagtail_blocks.ChoiceBlock(
-        choices=SectionHeadingLevelOptions.choices,
-        default=SectionHeadingLevelOptions.SECTION_HEADING_LEVEL_H2,
+        choices=HeadingLevelOptions.choices,
+        default=HeadingLevelOptions.HEADING_LEVEL_H2,
         help_text=mark_safe(
             "Remember to respect best practices around hierarchy of heading level: "
             "<a href='https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#usage_notes'>See MDN</a>"
@@ -247,8 +247,8 @@ class SectionHeadingBlock(wagtail_blocks.StructBlock):
     )
 
     heading_size = wagtail_blocks.ChoiceBlock(
-        choices=SectionHeadingSizeOptions.choices,
-        default=SectionHeadingSizeOptions.SECTION_HEADING_SIZE_LG,
+        choices=HeadingSizeOptions.choices,
+        default=HeadingSizeOptions.HEADING_SIZE_LG,
         help_text=mark_safe("Sets the display size of the heading independent of the heading level (h2, h3, or h4)."),
         blank=True,
         required=False,  # to allow for default/empty/large option
@@ -627,6 +627,21 @@ class BiographyGridBlock(wagtail_blocks.StructBlock):
     title = wagtail_blocks.CharBlock(
         max_length=150,
         required=False,
+    )
+    heading_level = wagtail_blocks.ChoiceBlock(
+        choices=HeadingLevelOptions.choices,
+        default=HeadingLevelOptions.HEADING_LEVEL_H2,
+        help_text=mark_safe(
+            "Remember to respect best practices around hierarchy of heading level: "
+            "<a href='https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#usage_notes'>See MDN</a>"
+        ),
+    )
+    heading_size = wagtail_blocks.ChoiceBlock(
+        choices=HeadingSizeOptions.choices,
+        default=HeadingSizeOptions.HEADING_SIZE_LG,
+        help_text=mark_safe("Sets the display size of the heading independent of the heading level (h2, h3, or h4)."),
+        blank=True,
+        required=False,  # to allow for default/empty/large option
     )
     standfirst = wagtail_blocks.TextBlock(
         max_length=500,

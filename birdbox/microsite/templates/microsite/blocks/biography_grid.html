@@ -4,7 +4,9 @@
 
   <div class="{% get_layout_class_from_page %}">
     {% if block.value.title %}
-      <h2>{{block.value.title}}</h2>
+      <{{block.value.heading_level}} class="{{block.value.heading_size}}">
+        {{block.value.title}}
+      </{{block.value.heading_level}}>
     {% endif %}
     {% if block.value.standfirst %}
       <p>{{block.value.standfirst}}</p>
