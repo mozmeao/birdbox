@@ -504,6 +504,13 @@ class ColumnBlock(wagtail_blocks.StructBlock):
         default=ThemeOptions.THEME_DARK,
     )
 
+    background_color = ColorBlock(
+        required=True,
+        help_text=(
+            "For a solid block of colour, matched to the background image. Use with a light/dark theme as appropriate, to ensure text is visible."
+        ),
+    )
+
     content = ColumnContentBlock(
         help_text="Only blocks that can fit/flow well in a multi-column layout are allowed here - e.g. Picto",
     )
