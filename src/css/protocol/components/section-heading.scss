@@ -2,4 +2,50 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+@import '~@mozilla-protocol/core/protocol/css/includes/lib';
 @import '~@mozilla-protocol/core/protocol/css/components/section-heading';
+
+.mzp-c-section-heading {
+    max-width: $content-max;
+    padding: $layout-sm $layout-xs;
+    text-align: start;
+
+    @media #{$mq-md} {
+        padding: $layout-md $layout-lg;
+    }
+
+    @media #{$mq-xl} {
+        padding: $layout-lg 80px;
+    }
+
+    &.t-align-center {
+        max-width: $content-lg;
+        text-align: center;
+    }
+
+    &.mzp-u-title-md {
+        @include text-title-sm;
+        padding: $layout-xs $layout-xs;
+
+        @media #{$mq-md} {
+            padding: $layout-sm $layout-lg;
+        }
+
+        @media #{$mq-xl} {
+            padding: $layout-md 80px;
+        }
+    }
+
+    &.mzp-u-title-sm {
+        @include text-title-xs;
+        padding: $layout-2xs $layout-xs;
+
+        @media #{$mq-md} {
+            padding: $layout-xs $layout-lg;
+        }
+
+        @media #{$mq-xl} {
+            padding: $layout-sm 80px;
+        }
+    }
+}

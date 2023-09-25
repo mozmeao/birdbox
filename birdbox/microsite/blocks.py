@@ -44,6 +44,10 @@ class CardLayoutOptions(TextChoices):
 class SplitBlockVariants(TextChoices):
     SPLIT_BLOCK_STANDARD = "", "Standard"
     SPLIT_BLOCK_REVERSED = "mzp-l-split-reversed", "Reversed"
+    SPLIT_BLOCK_NARROW_BODY = "mzp-l-split-body-narrow", "Narrow body"
+    SPLIT_BLOCK_NARROW_BODY_REVERSED = "mzp-l-split-body-narrow mzp-l-split-reversed", "Narrow body, reversed"
+    SPLIT_BLOCK_WIDE_BODY = "mzp-l-split-body-wide", "Wide body"
+    SPLIT_BLOCK_WIDE_BODY_REVERSED = "mzp-l-split-body-wide mzp-l-split-reversed", "Wide body, reversed"
     SPLIT_BLOCK_DARK_BACKGROUND = "mzp-t-dark mzp-t-background-secondary", "Dark Background"
 
 
@@ -83,6 +87,21 @@ class ColumnOptions(TextChoices):
 class ThemeOptions(TextChoices):
     THEME_LIGHT = "mzp-t-light", "Light theme"
     THEME_DARK = "mzp-t-dark", "Dark theme"
+
+
+class SectionHeadingLevelOptions(TextChoices):
+    SECTION_HEADING_LEVEL_H2 = "h2", "Heading Level 2"
+    SECTION_HEADING_LEVEL_H3 = "h3", "Heading Level 3"
+    SECTION_HEADING_LEVEL_H4 = "h4", "Heading Level 4"
+
+class SectionHeadingSizeOptions(TextChoices):
+    SECTION_HEADING_SIZE_LG = "", "Large"
+    SECTION_HEADING_SIZE_MD = "mzp-u-title-md", "Medium"
+    SECTION_HEADING_SIZE_SM = "mzp-u-title-sm", "Small"
+
+class SectionHeadingAlignmentOptions(TextChoices):
+    SECTION_HEADING_ALIGNMENT_DEFAULT = "", "Default"
+    SECTION_HEADING_ALIGNMENT_CENTER = "t-align-center", "Center"
 
 
 class LinkStructValue(wagtail_blocks.StructValue):
@@ -203,6 +222,32 @@ class SectionHeadingBlock(wagtail_blocks.StructBlock):
     def frontend_media(self):
         "Custom property that lets us selectively include CSS"
         return forms.Media(css={"all": [static("css/protocol-section-heading.css")]})
+
+    heading_level = wagtail_blocks.ChoiceBlock(
+        choices=SectionHeadingLevelOptions.choices,
+        default=SectionHeadingLevelOptions.SECTION_HEADING_LEVEL_H2,
+        help_text=mark_safe(
+            "Remember to respect best practices around hierarchy of heading level: "
+            "<a href='https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#usage_notes'>See MDN</a>"
+        ),
+    )
+
+    heading_size = wagtail_blocks.ChoiceBlock(
+        choices=SectionHeadingSizeOptions.choices,
+        default=SectionHeadingSizeOptions.SECTION_HEADING_SIZE_LG,
+        help_text=mark_safe(
+            "Sets the display size of the heading independent of the heading level (h2, h3, or h4)."
+        ),
+        blank=True,
+        required=False,  # to allow for default/empty/large option
+    )
+
+    alignment = wagtail_blocks.ChoiceBlock(
+        choices=SectionHeadingAlignmentOptions.choices,
+        default=SectionHeadingAlignmentOptions.SECTION_HEADING_ALIGNMENT_CENTER,
+        blank=True,
+        required=False,  # to allow for default/empty/centered option
+    )
 
     text = wagtail_blocks.TextBlock(
         max_length=120,
