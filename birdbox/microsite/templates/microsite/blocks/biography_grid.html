@@ -1,7 +1,6 @@
 {% load microsite_tags wagtailcore_tags %}
 
-<div class="{{block.value.theme}}">
-
+<div class="bb-bio-grid {{block.value.theme}}">
   <div class="{% get_layout_class_from_page %}">
     {% if block.value.title %}
       <{{block.value.heading_level}} class="{{block.value.heading_size}}">

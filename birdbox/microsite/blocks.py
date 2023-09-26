@@ -619,10 +619,7 @@ class BiographyBlock(wagtail_blocks.StructBlock):
         template = "microsite/blocks/biography.html"
         icon = "user"
 
-    @property
-    def frontend_media(self):
-        "Custom property that lets us selectively include CSS"
-        return forms.Media(css={"all": [static("css/protocol-card.css")]})
+    # Frontend_media comes from the parent block that uses this block
 
     name = wagtail_blocks.CharBlock(
         max_length=100,
@@ -648,8 +645,17 @@ class BiographyGridBlock(wagtail_blocks.StructBlock):
         template = "microsite/blocks/biography_grid.html"
         icon = "group"
 
-    # frontend_media comes from the individual blocks
-    # used in this grid
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={
+                "all": [
+                    static("css/protocol-card.css"),
+                    static("css/birdbox-biography-grid.css"),
+                ]
+            }
+        )
 
     title = wagtail_blocks.CharBlock(
         max_length=150,
