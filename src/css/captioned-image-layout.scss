@@ -4,16 +4,14 @@
 
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
-.bb-captioned-image {
-    margin: $spacing-lg 0;
-    text-align: center;
+.bb-captioned-image-layout {
 
-    img {
-        display: block;
-        margin: 0 auto $spacing-md;
+    h2 {
+        text-align: center;
     }
 
-    figcaption cite {
-        display: block;
+    .bb-captioned-image {
+        padding: $spacing-md;
     }
+    // TODO: vertically align the images in the card layout
 }

@@ -166,12 +166,12 @@ class CardBlock(wagtail_blocks.StructBlock):
         return forms.Media(css={"all": [static("css/protocol-card.css")]})
 
     title = wagtail_blocks.CharBlock(
-        required=True,
+        required=False,
         max_length=60,
         help_text="Card title with about 30-40 characters",
     )
     description = wagtail_blocks.TextBlock(
-        required=True,
+        required=False,
         max_length=170,
         help_text="A description of about 150 characters. Usually we only have room for one or two sentences.",
     )
@@ -821,6 +821,7 @@ class ContactFormBlock(wagtail_blocks.StructBlock):
     )
     tagline = wagtail_blocks.TextBlock(
         max_length=500,
+        required=False,
     )
     submit_button_text = wagtail_blocks.CharBlock(
         default="Submit",
@@ -912,4 +913,38 @@ class HeadedTableBlock(wagtail_blocks.StructBlock):
     table_width = wagtail_blocks.ChoiceBlock(
         choices=TableWidthOptions.choices,
         default=TableWidthOptions.TABLE_WIDTH_DEFAULT,
+    )
+
+
+class CaptionedImageLayoutBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/captioned_image_layout.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={
+                "all": [
+                    static("css/birdbox-captioned-image.css"),
+                    static("css/birdbox-captioned-image-layout.css"),
+                    static("css/protocol-card.css"),
+                ]
+            }
+        )
+
+    title = wagtail_blocks.CharBlock(
+        max_length=100,
+        rquired=False,
+    )
+
+    layout = wagtail_blocks.ChoiceBlock(
+        choices=CardLayoutOptions.choices,
+        default=CardLayoutOptions.CARD_LAYOUT_3,
+    )
+
+    cards = wagtail_blocks.ListBlock(
+        CaptionedImageBlock(),
+        help_text=get_docs_link("card-layout"),
+        collapsed=True,
     )

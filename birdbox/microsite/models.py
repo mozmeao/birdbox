@@ -44,6 +44,7 @@ from .blocks import (
     BiographyGridBlock,
     CalloutBlock,
     CaptionedImageBlock,
+    CaptionedImageLayoutBlock,
     CardLayoutBlock,
     ColumnBlock,
     CompactCalloutBlock,
@@ -1086,6 +1087,12 @@ class ProtocolTestPage(BaseProtocolPage):
                         "please resize your browser window to make it appear. Apologies for the inconvenience. "
                         "<a href='https://github.com/wagtail/wagtail/issues/8611'>The bug is known to the Wagtail Project</a>. ",
                     ),
+                ),
+            ),
+            (
+                "captioned_image_layout",
+                CaptionedImageLayoutBlock(
+                    required=False,
                 ),
             ),
         ],

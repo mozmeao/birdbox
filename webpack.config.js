@@ -49,6 +49,8 @@ module.exports = {
         "birdbox-navigation": "./src/css/navigation.scss",
         "birdbox-hero": "./src/css/hero.scss",
         "birdbox-captioned-image": "./src/css/captioned-image.scss",
+        "birdbox-captioned-image-layout":
+            "./src/css/captioned-image-layout.scss",
         "birdbox-contact-form": "./src/css/contact/contact-form.scss",
         "birdbox-headed-table": "./src/css/headed-table.scss",
 
