@@ -5,5 +5,15 @@
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
 .c-captioned-image {
-    margin-bottom: $spacing-xl;
+    margin: $spacing-lg 0;
+    text-align: center;
+
+    img {
+        display: block;
+        margin: 0 auto $spacing-md;
+    }
+
+    figcaption cite {
+        display: block;
+    }
 }
