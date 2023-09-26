@@ -102,7 +102,7 @@ class HeadingSizeOptions(TextChoices):
     HEADING_SIZE_SM = "mzp-u-title-sm", "Small"
 
 
-class SectionHeadingAlignmentOptions(TextChoices):
+class HeadingAlignmentOptions(TextChoices):
     SECTION_HEADING_ALIGNMENT_DEFAULT = "", "Default"
     SECTION_HEADING_ALIGNMENT_CENTER = "t-align-center", "Center"
 
@@ -255,8 +255,8 @@ class SectionHeadingBlock(wagtail_blocks.StructBlock):
     )
 
     alignment = wagtail_blocks.ChoiceBlock(
-        choices=SectionHeadingAlignmentOptions.choices,
-        default=SectionHeadingAlignmentOptions.SECTION_HEADING_ALIGNMENT_CENTER,
+        choices=HeadingAlignmentOptions.choices,
+        default=HeadingAlignmentOptions.SECTION_HEADING_ALIGNMENT_CENTER,
         blank=True,
         required=False,  # to allow for default/empty/centered option
     )
@@ -520,6 +520,32 @@ class ArticleBlock(wagtail_blocks.StructBlock):
         return forms.Media(
             css={"all": [static("css/protocol-article.css")]},
         )
+
+    title = wagtail_blocks.CharBlock(
+        max_length=150,
+        required=False,
+    )
+    heading_level = wagtail_blocks.ChoiceBlock(
+        choices=HeadingLevelOptions.choices,
+        default=HeadingLevelOptions.HEADING_LEVEL_H2,
+        help_text=mark_safe(
+            "Remember to respect best practices around hierarchy of heading level: "
+            "<a href='https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#usage_notes'>See MDN</a>"
+        ),
+    )
+    heading_size = wagtail_blocks.ChoiceBlock(
+        choices=HeadingSizeOptions.choices,
+        default=HeadingSizeOptions.HEADING_SIZE_LG,
+        help_text=mark_safe("Sets the display size of the heading independent of the heading level (h2, h3, or h4)."),
+        blank=True,
+        required=False,  # to allow for default/empty/large option
+    )
+    alignment = wagtail_blocks.ChoiceBlock(
+        choices=HeadingAlignmentOptions.choices,
+        default=HeadingAlignmentOptions.SECTION_HEADING_ALIGNMENT_CENTER,
+        blank=True,
+        required=False,  # to allow for default/empty/centered option
+    )
 
     intro_para = wagtail_blocks.CharBlock(
         max_length=1000,

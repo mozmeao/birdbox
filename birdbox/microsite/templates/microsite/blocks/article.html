@@ -8,9 +8,17 @@
   which we'll get from a setting on the page this Article block belongs to
   {% endcomment %}
   <article class="mzp-c-article">
+    {% if block.value.title %}
+
+    <{{block.value.heading_level}} class="{{block.value.alignment}} {{block.value.heading_size}}">
+    {{block.value.title}}
+    </{{block.value.heading_level}}>
+
+    {% endif %}
+
+
     {% if block.value.intro_para %}
-    <p class="mzp-c-article-intro">{{block.value.intro_para}}
-    </p>
+    <p class="mzp-c-article-intro">{{block.value.intro_para}}</p>
     {% endif %}
     {% if block.value.body %}
     {{block.value.body|richtext}}

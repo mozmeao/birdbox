@@ -288,7 +288,7 @@ class InnovationsContentPage(BaseProtocolPage):
                 "article",
                 ArticleBlock(
                     label="Article block",
-                    label_format="Article: {header}",
+                    label_format="Article: {title}",
                     required=False,
                     help_text=get_docs_link("article"),
                 ),
