@@ -94,10 +94,12 @@ class SectionHeadingLevelOptions(TextChoices):
     SECTION_HEADING_LEVEL_H3 = "h3", "Heading Level 3"
     SECTION_HEADING_LEVEL_H4 = "h4", "Heading Level 4"
 
+
 class SectionHeadingSizeOptions(TextChoices):
     SECTION_HEADING_SIZE_LG = "", "Large"
     SECTION_HEADING_SIZE_MD = "mzp-u-title-md", "Medium"
     SECTION_HEADING_SIZE_SM = "mzp-u-title-sm", "Small"
+
 
 class SectionHeadingAlignmentOptions(TextChoices):
     SECTION_HEADING_ALIGNMENT_DEFAULT = "", "Default"
@@ -132,6 +134,7 @@ class LinkBlock(wagtail_blocks.StructBlock):
 class LabelledLinkBlock(LinkBlock):
     label = wagtail_blocks.CharBlock(
         max_length=100,
+        required=False,
     )
 
 
@@ -235,9 +238,7 @@ class SectionHeadingBlock(wagtail_blocks.StructBlock):
     heading_size = wagtail_blocks.ChoiceBlock(
         choices=SectionHeadingSizeOptions.choices,
         default=SectionHeadingSizeOptions.SECTION_HEADING_SIZE_LG,
-        help_text=mark_safe(
-            "Sets the display size of the heading independent of the heading level (h2, h3, or h4)."
-        ),
+        help_text=mark_safe("Sets the display size of the heading independent of the heading level (h2, h3, or h4)."),
         blank=True,
         required=False,  # to allow for default/empty/large option
     )
@@ -402,8 +403,17 @@ class PictoBlock(wagtail_blocks.StructBlock):
     )
 
 
+class PictoWithLinkBlock(PictoBlock):
+    link = LabelledLinkBlock(
+        required=False,
+    )
+
+
 class ColumnContentBlock(wagtail_blocks.StreamBlock):
     picto = PictoBlock(
+        required=False,
+    )
+    picto_with_link = PictoWithLinkBlock(
         required=False,
     )
 
@@ -430,10 +440,20 @@ class ColumnBlock(wagtail_blocks.StructBlock):
             },
         )
 
+    title = wagtail_blocks.CharBlock(
+        required=False,
+        max_length=100,
+    )
+
     column_layout = wagtail_blocks.ChoiceBlock(
         choices=ColumnOptions.choices,
         default=ColumnOptions.COLUMN_LAYOUT_TWO_COLUMN,
         required=True,
+    )
+
+    theme = wagtail_blocks.ChoiceBlock(
+        choices=ThemeOptions.choices,
+        default=ThemeOptions.THEME_LIGHT,
     )
 
     content = ColumnContentBlock(
@@ -453,13 +473,10 @@ class ArticleBlock(wagtail_blocks.StructBlock):
             css={"all": [static("css/protocol-article.css")]},
         )
 
-    header = wagtail_blocks.CharBlock(
-        max_length=250,
-        help_text="Rendered as a H1, replacing the title of the page",
-    )
     intro_para = wagtail_blocks.CharBlock(
         max_length=1000,
-        help_text="Rendered as a single styled paragraph element  (<p>). 2000 chars max, but less is better.",
+        help_text="Rendered as a single styled paragraph element. 2000 chars max, but less is better.",
+        required=False,
     )
     body = wagtail_blocks.RichTextBlock(
         features=settings.RICHTEXT_FEATURES__ARTICLE,
@@ -674,6 +691,10 @@ class HeroBlock(wagtail_blocks.StructBlock):
         required=True,
         default=ThemeOptions.THEME_DARK,
         help_text="The dark theme works best with a dark background color selected, the light theme needs a light one.",
+    )
+    call_to_action = LabelledLinkBlock(
+        required=False,
+        help_text="Link for an optional button at the base of the hero",
     )
 
 

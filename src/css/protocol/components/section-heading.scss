@@ -48,4 +48,9 @@
             padding: $layout-sm 80px;
         }
     }
+
+    & + .mzp-l-content,
+    & + .mzp-c-split {
+        padding-top: 0;
+    }
 }

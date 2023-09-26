@@ -4,21 +4,27 @@
 <div class="{{block.value.layout}}">
 {% endif %}
 
-<section class="mzp-c-picto">
-  <div class="mzp-c-picto-image">
-    {% with block.value.image as image_block %}
-    {% include "common/partials/accessible_image.html" with image_block=image_block %}
-    {% endwith %}
-  </div>
-  {% if block.value.heading %}
-  <h3 class="mzp-c-picto-heading">{{block.value.heading}}</h3>
-  {% endif %}
-  {% if block.value.body %}
-  <div class="mzp-c-picto-body">
-      <p>{{block.value.body}}</p>
-  </div>
-  {% endif %}
-</section>
+  <section class="mzp-c-picto">
+    <div class="mzp-c-picto-image">
+      {% with block.value.image as image_block %}
+      {% include "common/partials/accessible_image.html" with image_block=image_block %}
+      {% endwith %}
+    </div>
+    {% if block.value.heading %}
+    <h3 class="mzp-c-picto-heading">{{block.value.heading}}</h3>
+    {% endif %}
+    {% if block.value.body %}
+    <div class="mzp-c-picto-body">
+        <p>{{block.value.body}}</p>
+    </div>
+    {% endif %}
+
+    {# Used by PictoWithLinkBlock which shares this template #}
+    {% if block.value.link.url %}
+    <a href="{{block.value.link.url}}">{{block.value.link.label}}</a>
+    {% endif %}
+
+  </section>
 
 {% if block.value.layout %}
 </div>
