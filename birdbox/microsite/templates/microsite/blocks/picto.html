@@ -1,31 +1,34 @@
 {# https://protocol.mozilla.org/components/detail/picto--default.html #}
 
-{% if block.value.layout %}
-<div class="{{block.value.layout}}">
+{% with value=block.value|default:block %}
+
+{% if value.layout %}
+<div class="{{value.layout}}">
 {% endif %}
 
   <section class="mzp-c-picto">
     <div class="mzp-c-picto-image">
-      {% with block.value.image as image_block %}
+      {% with value.image as image_block %}
       {% include "common/partials/accessible_image.html" with image_block=image_block %}
       {% endwith %}
     </div>
-    {% if block.value.heading %}
-    <h3 class="mzp-c-picto-heading">{{block.value.heading}}</h3>
+    {% if value.heading %}
+    <h3 class="mzp-c-picto-heading">{{value.heading}}</h3>
     {% endif %}
-    {% if block.value.body %}
+    {% if value.body %}
     <div class="mzp-c-picto-body">
-        <p>{{block.value.body}}</p>
+        <p>{{value.body}}</p>
     </div>
     {% endif %}
 
     {# Used by PictoWithLinkBlock which shares this template #}
-    {% if block.value.link.url %}
-    <a href="{{block.value.link.url}}">{{block.value.link.label}}</a>
+    {% if value.link.url %}
+    <a href="{{value.link.url}}">{{value.link.label}}</a>
     {% endif %}
 
   </section>
 
-{% if block.value.layout %}
+{% if value.layout %}
 </div>
 {% endif %}
+{% endwith %}

@@ -53,6 +53,7 @@ module.exports = {
             "./src/css/captioned-image-layout.scss",
         "birdbox-contact-form": "./src/css/contact/contact-form.scss",
         "birdbox-headed-table": "./src/css/headed-table.scss",
+        "birdbox-picto-stack": "./src/css/picto-stack.scss",
 
         // custom JS
         "futuremo-contact-form-js": "./src/js/contact/futuremo-contact-form.js",

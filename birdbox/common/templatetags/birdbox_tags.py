@@ -63,7 +63,7 @@ def get_alt_text_for_accessible_image_block(block_data):
     Wagtail also uses by default"""
 
     retval = ""
-    if not block_data.get("decorative_only"):
+    if block_data and not block_data.get("decorative_only"):
         retval = block_data.get("alt_text")
         if not retval:
             retval = getattr(block_data.get("image"), "title", "")

@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}
+
+<div class="bb-c-picto-stack">
+  {% if block.value.title %}
+    <h3 class="title">{{block.value.title}}</h3>
+  {% endif %}
+  {% for block in block.value.pictos %}
+  <div class="mzp-c-card-extra-small">
+  {% include "microsite/blocks/picto.html" %}
+  </div>
+  {% endfor %}
+</div>

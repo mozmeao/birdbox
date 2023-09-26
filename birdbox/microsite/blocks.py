@@ -420,7 +420,35 @@ class PictoWithLinkBlock(PictoBlock):
     )
 
 
+class StackOfPictosBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/stack_of_pictos.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={
+                "all": [
+                    static("css/birdbox-picto-stack.css"),
+                ]
+            },
+        )
+
+    title = wagtail_blocks.CharBlock(
+        required=False,
+        max_length=100,
+    )
+    pictos = wagtail_blocks.ListBlock(
+        PictoBlock(),
+        collapsed=False,
+    )
+
+
 class ColumnContentBlock(wagtail_blocks.StreamBlock):
+    stack_of_pictos = StackOfPictosBlock(
+        required=False,
+    )
     picto = PictoBlock(
         required=False,
     )
@@ -450,6 +478,7 @@ class ColumnBlock(wagtail_blocks.StructBlock):
                 "all": [
                     static("css/protocol-columns.css"),
                     static("css/protocol-picto.css"),
+                    static("css/birdbox-picto-stack.css"),
                 ]
             },
         )
@@ -465,16 +494,14 @@ class ColumnBlock(wagtail_blocks.StructBlock):
         required=True,
     )
 
+    background_color = ColorBlock(
+        required=True,
+        help_text="For a solid block of colour. Use with a light/dark theme as appropriate, to ensure text is visible.",
+    )
+
     theme = wagtail_blocks.ChoiceBlock(
         choices=ThemeOptions.choices,
         default=ThemeOptions.THEME_DARK,
-    )
-
-    background_color = ColorBlock(
-        required=True,
-        help_text=(
-            "For a solid block of colour, matched to the background image. Use with a light/dark theme as appropriate, to ensure text is visible."
-        ),
     )
 
     content = ColumnContentBlock(
