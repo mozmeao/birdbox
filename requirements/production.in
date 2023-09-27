@@ -3,6 +3,7 @@ dj-database-url==2.1.0
 django-mozilla-product-details>=1.0.3
 django-storages[google]==1.14
 Django>=4.2.5
+django-ratelimit==4.1.0
 django-redis==5.3.0
 django-jsonview==2.0.0
 everett>=3.2.0

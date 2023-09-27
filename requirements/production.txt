@@ -148,6 +148,10 @@ django-permissionedforms==0.1 \
     --hash=sha256:4340bb20c4477fffb13b4cc5cccf9f1b1010b64f79956c291c72d2ad2ed243f8 \
     --hash=sha256:d341a961a27cc77fde8cc42141c6ab55cc1f0cb886963cc2d6967b9674fa47d6
     # via wagtail
+django-ratelimit==4.1.0 \
+    --hash=sha256:555943b283045b917ad59f196829530d63be2a39adb72788d985b90c81ba808b \
+    --hash=sha256:d047a31cf94d83ef1465d7543ca66c6fc16695559b5f8d814d1b51df15110b92
+    # via -r requirements/production.in
 django-redis==5.3.0 \
     --hash=sha256:2d8660d39f586c41c9907d5395693c477434141690fd7eca9d32376af00b0aac \
     --hash=sha256:8bc5793ec06b28ea802aad85ec437e7646511d4e571e07ccad19cfed8b9ddd44

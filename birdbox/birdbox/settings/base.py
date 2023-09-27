@@ -75,6 +75,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    # set_remote_addr_from_forwarded_for must come before rate_limiter
+    "common.middleware.set_remote_addr_from_forwarded_for",
+    "common.middleware.rate_limiter",
+    "django_ratelimit.middleware.RatelimitMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
@@ -352,6 +356,25 @@ if SENTRY_DSN:
         integrations=[DjangoIntegration()],
     )
 
+# Rate limiting using django-ratelimit
+
+RATELIMIT_ENABLE = config(
+    "RATELIMIT_ENABLE",
+    default="True",
+    parser=bool,
+)
+RATELIMIT_USE_CACHE = config(
+    "RATELIMIT_USE_CACHE",
+    default="default",
+    parser=str,
+)
+RATELIMIT_VIEW = "common.views.rate_limited"
+RATELIMIT_DEFAULT_LIMIT = config(
+    "RATELIMIT_DEFAULT_LIMIT",
+    default="25/m",
+    parser=str,
+)
+
 
 # Mozillaverse settings
 
@@ -390,6 +413,8 @@ BLOG_PAGINATION_PAGE_SIZE = config(
 # For analytics
 GOOGLE_TAG_ID = config("GOOGLE_TAG_ID", default="", parser=str)
 
+
+# For Mozilla Innovations contact form ONLY
 CONTACT_FORM_RECIPIENT_EMAIL = {
     "default": config(
         "CONTACT_FORM_RECIPIENT_EMAIL__DEFAULT",
