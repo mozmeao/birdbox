@@ -37,7 +37,7 @@
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.87.0",
     "webpack-cli": "^5.1.4",
-    "webpack-remove-empty-scripts": "^1.0.3"
+    "webpack-remove-empty-scripts": "^1.0.4"
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
