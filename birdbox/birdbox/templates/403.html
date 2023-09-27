@@ -1,0 +1,18 @@
+{% extends "microsite/base.html" %}
+
+{% block title %}Access Denied{% endblock %}
+
+{% block body_class %}template-403{% endblock %}
+
+{% block content %}
+<div class="mzp-l-content mzp-t-content-lg">
+  <h1>Access denied</h1>
+  <p>
+    You tried to access a page that is off limits.
+  </p>
+  <p>
+    <a href="/">Head back to the home page.</a>
+  </p>
+</div>
+{% endblock %}
+

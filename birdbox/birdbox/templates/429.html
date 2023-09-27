@@ -1,0 +1,19 @@
+{% extends "microsite/base.html" %}
+
+{% block title %}Rate limited{% endblock %}
+
+{% block body_class %}template-429{% endblock %}
+
+{% block content %}
+<div class="mzp-l-content mzp-t-content-lg">
+  <h1>Please, take it easy</h1>
+  <h2>Your request has been denied</h2>
+  <p>
+    We've noticed your IP address has been making too many requests in a short space of time.
+  </p>
+  <p>
+    You can try again in about a minute.
+  </p>
+</div>
+{% endblock %}
+
