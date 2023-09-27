@@ -28,7 +28,7 @@ RUN pip install --require-hashes --no-cache-dir -r requirements/production.txt
 ########
 # assets builder and webpack dev server
 #
-FROM node:18-slim AS assets
+FROM node:19-slim AS assets
 
 ENV PATH=/app/node_modules/.bin:$PATH
 WORKDIR /app
