@@ -6,18 +6,19 @@
 {% block content %}
 
 <div class="{% get_layout_class_from_page %}">
-  <h1>{{page.title}}</h1>
+  <article class="bb-c-article">
+    <h1 class="bb-c-article-title">{{page.title}}</h1>
 
-  {% if page.introduction %}
-  <div class="mzp-c-article-intro">
-    {{ page.introduction|richtext }}
-  </div>
-  {% endif %}
+    {% if page.introduction %}
+    <div class="bb-c-article-intro">
+      {{ page.introduction|richtext }}
+    </div>
+    {% endif %}
 
-  {% for block in page.content %}
-    {% include_block block %}
-  {% endfor %}
-
+    {% for block in page.content %}
+      {% include_block block %}
+    {% endfor %}
+  </article>
 </div>
 
 {% endblock content %}

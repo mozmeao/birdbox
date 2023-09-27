@@ -606,7 +606,7 @@ class LongformArticlePage(BaseProtocolPage):
     def frontend_media(self):
         # The intro para needs the Article CSS
         return forms.Media(
-            css={"all": [static("css/protocol-article.css")]},
+            css={"all": [static("css/birdbox-article.css")]},
         )
 
 
