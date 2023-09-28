@@ -16,20 +16,17 @@ from django.utils.log import DEFAULT_LOGGING
 
 import dj_database_url
 import sentry_sdk
-from everett.manager import ConfigManager
+from everett.manager import ConfigEnvFileEnv, ConfigManager, ConfigOSEnv
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import ignore_logger
 from wagtail.embeds.oembed_providers import vimeo, youtube
 
-try:
-    from dotenv import load_dotenv
-
-    load_dotenv()  # take environment variables from .env.
-except ImportError:
-    # dotenv is not available - e.g. in production mode
-    pass
-
-config = ConfigManager.basic_config()
+config = ConfigManager(
+    [
+        ConfigOSEnv(),
+        ConfigEnvFileEnv(".env"),
+    ]
+)
 
 APP_NAME = "birdbox"
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
