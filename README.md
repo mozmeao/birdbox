@@ -77,10 +77,7 @@ Full instructions to come, but if you want to use SSO for a deployed Birdbox sit
 provision a new project for the appropriate domain and provide credentails for the Django app, which should be passed
 as the env vars `OIDC_RP_CLIENT_ID` and `OIDC_RP_CLIENT_SECRET` and ensure `USE_SSO_AUTH` is set to True in settings.
 
-Birdbox in SSO mode will not support 'drive by' user creation even if they have an @mozilla.com identity. Only users
-who already exist in the Wagtail admin as a User will be allowed to log in. To get around this bootstrapping problem,
-we support the idea of an environment-driven setting `BIRDBOX_ADMIN_USER_EMAILS` which will nominate which user
-account(s) to bootstrap if they don't already exist when SSO is attempted. See the example local env var files.
+Birdbox in SSO mode will not support 'drive by' user creation even if they have an @mozilla.com identity. Only users who already exist in the Wagtail admin as a User will be allowed to log in. This is done by shelling in to a fresh setup and using `python birdbox/manage.py createsuperuser`
 
 
 ## Deployment instructions
