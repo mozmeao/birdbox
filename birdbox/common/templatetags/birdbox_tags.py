@@ -4,6 +4,7 @@
 
 from typing import Dict, List
 
+from django.conf import settings
 from django.template import Library
 from django.template.loader import render_to_string
 
@@ -78,3 +79,8 @@ def gather_field_errors(form):
             errors.append(f"{field.label}: {combined_errors}")
 
     return errors
+
+
+@register.simple_tag
+def should_use_sso_auth():
+    return settings.USE_SSO_AUTH

@@ -12,14 +12,21 @@ import sys
 from os.path import abspath
 from pathlib import Path
 
+from django.utils.log import DEFAULT_LOGGING
+
 import dj_database_url
 import sentry_sdk
-from everett.manager import ConfigManager
+from everett.manager import ConfigEnvFileEnv, ConfigManager, ConfigOSEnv
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import ignore_logger
 from wagtail.embeds.oembed_providers import vimeo, youtube
 
-config = ConfigManager.basic_config()
+config = ConfigManager(
+    [
+        ConfigOSEnv(),
+        ConfigEnvFileEnv(".env"),
+    ]
+)
 
 APP_NAME = "birdbox"
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -59,6 +66,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "mozilla_django_oidc",  # needs to be loaded after django.contrib.auth
     "product_details",
     "wagtailstreamforms",  # Has to come ahead of any custom apps that might extend it
     "generic_chooser",  # Needed by wagtailstreamforms - see https://github.com/labd/wagtailstreamforms/issues/216
@@ -74,6 +82,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    # In case someone has their Auth0 revoked while logged in, revalidate it:
+    "mozilla_django_oidc.middleware.SessionRefresh",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     # set_remote_addr_from_forwarded_for must come before rate_limiter
     "common.middleware.set_remote_addr_from_forwarded_for",
@@ -149,9 +159,10 @@ GS_PROJECT_ID = config("GS_PROJECT_ID", default="", parser=str)
 if GS_BUCKET_NAME and GS_PROJECT_ID:
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     GS_DEFAULT_ACL = "publicRead"
-    GS_FILE_OVERWRITE = True
+    GS_FILE_OVERWRITE = False
 
-# Password validation
+
+# Password validation, if users are signing in with passwords - see OIDC setup, below, too
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -374,6 +385,70 @@ RATELIMIT_DEFAULT_LIMIT = config(
     default="25/m",
     parser=str,
 )
+
+
+# Authentication with Mozilla OpenID Connect / Auth0
+
+LOGIN_ERROR_URL = "/admin/"
+LOGIN_REDIRECT_URL_FAILURE = "/admin/"
+LOGIN_REDIRECT_URL = "/admin/"
+LOGOUT_REDIRECT_URL = "/admin/"
+
+OIDC_RP_SIGN_ALGO = "RS256"
+
+# How frequently do we check with the provider that the user still exists
+# and is authorised? It's 15 mins by default.
+OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS = config(
+    "OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS",
+    default="900",  # 15 mins, same as project default
+    parser=int,
+)
+
+OIDC_CREATE_USER = False  # We don't want drive-by signups
+
+OIDC_RP_CLIENT_ID = config("OIDC_RP_CLIENT_ID", default="", parser=str)
+OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET", default="", parser=str)
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = "https://auth.mozilla.auth0.com/authorize"
+OIDC_OP_TOKEN_ENDPOINT = "https://auth.mozilla.auth0.com/oauth/token"
+OIDC_OP_USER_ENDPOINT = "https://auth.mozilla.auth0.com/userinfo"
+OIDC_OP_DOMAIN = "auth.mozilla.auth0.com"
+OIDC_OP_JWKS_ENDPOINT = "https://auth.mozilla.auth0.com/.well-known/jwks.json"
+
+# If True (which should only be for local work in your .env), then show
+# username and password fields when signing up, not the SSO button
+USE_SSO_AUTH = config("USE_SSO_AUTH", default="True", parser=bool)
+
+if USE_SSO_AUTH:
+    AUTHENTICATION_BACKENDS = (
+        # Deliberately OIDC or no entry by default
+        "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
+    )
+else:
+    AUTHENTICATION_BACKENDS = (
+        # Regular username + password auth
+        "django.contrib.auth.backends.ModelBackend",
+    )
+
+# Note that AUTHENTICATION_BACKENDS is overridden in tests, so take care
+# to check/amend those if you add additional auth backends
+
+# Extra Wagtail config to disable password usage (SSO should be the only route)
+# https://docs.wagtail.org/en/v4.2.4/reference/settings.html#wagtail-password-management-enabled
+# Don't let users change or reset their password
+if USE_SSO_AUTH:
+    WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
+    WAGTAIL_PASSWORD_RESET_ENABLED = False
+
+    # Don't require a password when creating a user,
+    # and blank password means cannot log in unless SSO
+    WAGTAILUSERS_PASSWORD_ENABLED = False
+
+# EXTRA LOGGING
+DEFAULT_LOGGING["loggers"]["mozilla_django_oidc"] = {
+    "handlers": ["console"],
+    "level": "INFO",
+}
 
 
 # Mozillaverse settings

@@ -10,6 +10,7 @@ everett>=3.2.0
 gevent>=23.9.1
 gunicorn==21.2.0
 honcho==1.1.0
+mozilla-django-oidc==3.0.0
 Pillow==10.0.1
 psycopg2-binary==2.9.7  # NB: 3.x not currently supported until Django 4.2 is in use
 requests>=2.31.0

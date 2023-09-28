@@ -14,13 +14,14 @@ LICENSE: [Mozilla Public License Version 2.0](LICENSE)
 
 _This mode uses sqlite for the DB and stores uploaded media on your machine_
 
+
 * Install the `just` taskrunner (Docs [here](https://github.com/casey/just); spoiler: `brew install just`)
 * Check out the repo
 * `cd` path/to/birdbox
-* Create then activate a virtual environment (`pyenv` + `pyenv-virtualenv` is recommended, but not required - see [Bedrock docs](https://bedrock.readthedocs.io/en/latest/install.html#local-installation) for installation details)
+* Create then activate a virtual environment (`pyenv` + `pyenv-virtualenv` is recommended, but not required - see [Bedrock docs](https://bedrock.readthedocs.io/en/latest/install.html#local-installation) for installation details). Python 3.11+ is required, which you can install with `pyenv install 3.11.3``
 
     ```
-    pyenv virtualenv 3.10 birdbox
+    pyenv virtualenv 3.11.3 birdbox
     pyenv activate birdbox
     ```
 
@@ -68,6 +69,15 @@ When using Docker locally, it's possible to configure birdbox to use cloud stora
 To do this, copy ./docker/envfiles/local.env.example as local.env and add the relevant env vars. The link in the example file to Django-storages documentation shows what to set and also links to how to get the GCS credentials. For local use of Docker with GCS, you'll need to put those credentiuals somewhere that the Docker container can reach them - that's what the local-credentials directory is for: copy the relevant JSON credentials into there and update the  `GOOGLE_APPLICATION_CREDENTIALS` var in `local.env`` file to match.
 
 Once that's done, it should Just Work.
+
+
+## SSO setup
+
+Full instructions to come, but if you want to use SSO for a deployed Birdbox site, you'll need to ask the IAM team to
+provision a new project for the appropriate domain and provide credentails for the Django app, which should be passed
+as the env vars `OIDC_RP_CLIENT_ID` and `OIDC_RP_CLIENT_SECRET` and ensure `USE_SSO_AUTH` is set to True in settings.
+
+Birdbox in SSO mode will not support 'drive by' user creation even if they have an @mozilla.com identity. Only users who already exist in the Wagtail admin as a User will be allowed to log in. This is done by shelling in to a fresh setup and using `python birdbox/manage.py createsuperuser`
 
 
 ## Deployment instructions
