@@ -28,7 +28,7 @@ _This mode uses sqlite for the DB and stores uploaded media on your machine_
 * `just preflight` to install Python and JS dependencies, run migrations (against a simple SQLite DB for local dev), create a cache table
 * To make an admin user `just createsuperuser`
 * To run the local webpack bundler + django runserver: `just run-local` or `npm start` (both do the same thing)
-* Go to http://localhost:8080 for the default Wagtail site, and http://localhost:8080/admin/ for the CMS UI
+* Go to http://localhost:8000 for the default Wagtail site, and http://localhost:8000/admin/ for the CMS UI
 * Ideally you will now load in set of sample pages - see Local development tips, below
 
 Main Wagtail admin/editor docs are at https://guide.wagtail.org/en-latest/
