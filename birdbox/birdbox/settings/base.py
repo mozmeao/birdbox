@@ -388,6 +388,12 @@ RATELIMIT_DEFAULT_LIMIT = config(
     parser=str,
 )
 
+# django-watchman
+WATCHMAN_DISABLE_APM = True
+WATCHMAN_CHECKS = (
+    "watchman.checks.caches",
+    "watchman.checks.databases",
+)
 
 # Authentication with Mozilla OpenID Connect / Auth0
 
