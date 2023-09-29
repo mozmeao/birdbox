@@ -33,6 +33,8 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BIRDBOX_BASE_DIR = os.path.dirname(PROJECT_DIR)
 ROOT_DIR = Path(__file__).resolve().parents[3]
 
+DEBUG = config("DEBUG", default="False", parser=bool)
+
 
 def path_from_root(*args):
     return abspath(str(ROOT_DIR.joinpath(*args)))
