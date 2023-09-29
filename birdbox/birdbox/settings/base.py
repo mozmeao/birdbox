@@ -395,6 +395,17 @@ WATCHMAN_CHECKS = (
     "watchman.checks.databases",
 )
 
+# SSL config. Note that SECURE_PROXY_SSL_HEADER has a bearing on SSO redirect URIs
+DISABLE_SSL = config("DISABLE_SSL", default=str(DEBUG), parser=bool)  # so default: "False"
+SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=str(not DISABLE_SSL), parser=bool)  # so default: "True"
+if config("USE_SECURE_PROXY_HEADER", default=str(SECURE_SSL_REDIRECT), parser=bool):
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+SECURE_REDIRECT_EXEMPT = [
+    r"^healthz/$",
+    r"^readiness/$",
+]
+
 # Authentication with Mozilla OpenID Connect / Auth0
 
 LOGIN_ERROR_URL = "/admin/"
