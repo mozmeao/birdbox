@@ -16,6 +16,7 @@ from django_ratelimit.exceptions import Ratelimited
 from wagtail import urls as wagtail_urls
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
+from watchman import views as watchman_views
 
 from common.views import rate_limited
 from microsite import urls as microsite_urls
@@ -36,6 +37,8 @@ urlpatterns = [
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
+    path("healthz/", watchman_views.ping, name="watchman.ping"),
+    path("readiness/", watchman_views.status, name="watchman.status"),
     path("", include(microsite_urls)),
     # Disabled until we need Search
     # path("search/", search_views.search, name="search"),
