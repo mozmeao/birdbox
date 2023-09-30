@@ -418,7 +418,7 @@ SESSION_COOKIE_SECURE = True
 X_FRAME_OPTIONS = "DENY"
 
 # Set header Strict-Transport-Security header
-SECURE_HSTS_SECONDS = int(os.environ.get("SECURE_HSTS_SECONDS", 3600))
+SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default="3600", parser=int)
 # Start with an hour, move to a year once we're settled.
 # Set to 0 via env to disable BEFORE deployment (!)
 
