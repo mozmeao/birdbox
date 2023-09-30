@@ -4,7 +4,7 @@
 
 from django.conf import settings
 from django.contrib import admin
-from django.http import HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden
 from django.urls import include, path
 from django.utils.module_loading import import_string
 from django.views.defaults import permission_denied
@@ -40,6 +40,13 @@ urlpatterns = [
     path("healthz/", watchman_views.ping, name="watchman.ping"),
     path("readiness/", watchman_views.status, name="watchman.status"),
     path("", include(microsite_urls)),
+    path(
+        "robots.txt",
+        lambda r: HttpResponse(
+            f"User-agent: *\n{'Allow' if settings.ENGAGE_ROBOTS else 'Disallow'}: /",
+            content_type="text/plain",
+        ),
+    ),
     # Disabled until we need Search
     # path("search/", search_views.search, name="search"),
 ]
