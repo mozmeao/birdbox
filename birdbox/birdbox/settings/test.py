@@ -5,3 +5,5 @@
 from .development import *
 
 DEBUG = False
+DISABLE_SSL = True
+SECURE_SSL_REDIRECT = False
