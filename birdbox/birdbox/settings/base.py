@@ -384,7 +384,7 @@ RATELIMIT_USE_CACHE = config(
 RATELIMIT_VIEW = "common.views.rate_limited"
 RATELIMIT_DEFAULT_LIMIT = config(
     "RATELIMIT_DEFAULT_LIMIT",
-    default="25/m",
+    default="65/m",
     parser=str,
 )
 
