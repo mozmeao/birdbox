@@ -539,6 +539,96 @@ class GeneralPurposePage(BaseProtocolPage):
     ]
 
 
+class ProductLandingPage(BaseProtocolPage):
+    """General template for product landing pages"""
+
+    # title comes from the base Page class
+    content = StreamField(
+        [
+            (
+                "hero",
+                HeroBlock(
+                    required=False,
+                    label_format="Hero: {main_heading}",
+                    help_text="Intended for use at top of the page. Works well with an SVG background image and appropriate color",
+                ),
+            ),
+            (
+                "cards",
+                CardLayoutBlock(
+                    label="Card group",
+                    label_format="Card group",  # Can't add more detials to this 'collapsed'-mode label
+                    required=False,
+                    help_text=mark_safe(f'Layout wrapper for Cards. {get_docs_link("card-layout")}'),
+                ),
+            ),
+            (
+                "columns",
+                ColumnBlock(
+                    label="Column block",
+                    label_format="Column block: {column_layout}",
+                    required=False,
+                    help_text=mark_safe(f'Column layout wrapper: {get_docs_link("columns")}. Has Picto sub-components: {get_docs_link("picto")}'),
+                ),
+            ),
+            (
+                "callout",
+                CalloutBlock(
+                    required=False,
+                    label_format="Callout: {headline}",
+                    help_text=get_docs_link("callout"),
+                ),
+            ),
+            (
+                "compact_callout",
+                CompactCalloutBlock(
+                    required=False,
+                    label_format="Compact callout: {headline}",
+                    help_text=get_docs_link("compact-callout"),
+                ),
+            ),
+            (
+                "split",
+                SplitBlock(
+                    label="Split content",
+                    label_format="Split: {title}",
+                    required=False,
+                    help_text=mark_safe(f'Flexible short text + image component. {get_docs_link("split")} Not all options supported'),
+                ),
+            ),
+            (
+                "video",
+                VideoEmbedBlock(
+                    label="Video embed",
+                    label_format="Video embed: {video}",
+                    required=False,
+                    icon="media",
+                    help_text="In alpha - minimal/simple embedding at the moment. No in-page transcript support.",
+                ),
+            ),
+        ],
+        block_counts={
+            "hero": {"max_num": 1},
+        },
+        use_json_field=True,
+        collapsed=True,
+    )
+
+    content_panels = BaseProtocolPage.content_panels + [
+        FieldPanel("content"),
+    ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        title_field = self._meta.get_field("title")
+
+        title_field.help_text = (
+            "The page title as you'd like it to be seen by the public. "
+            "(Unless you use a Hero on the page, in which case we'll use "
+            "the title from that for the H1)"
+        )
+
+
 class LongformArticlePage(BaseProtocolPage):
     # title comes from base page
 
