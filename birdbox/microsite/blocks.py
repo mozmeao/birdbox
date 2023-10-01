@@ -58,6 +58,13 @@ class SplitBlockSizes(TextChoices):
     SPLIT_BLOCK_SIZE_EXTRA_LARGE = "mzp-t-content-xl", "Extra-large"
 
 
+class LayoutSizes(TextChoices):
+    LAYOUT_SIZE_NONE = "", "N/A"
+    LAYOUT_SIZE_MEDIUM = "mzp-t-content-md", "Medium"
+    LAYOUT_SIZE_LARGE = "mzp-t-content-lg", "Large"
+    LAYOUT_SIZE_EXTRA_LARGE = "mzp-t-content-xl", "Extra-large"
+
+
 class PictoLayoutOptions(TextChoices):
     PICTO_LAYOUT_STANDARD = "", "Standard"
     PICTO_LAYOUT_CENTERED = "mzp-t-picto-center", "Centered"
@@ -218,8 +225,16 @@ class CardLayoutBlock(wagtail_blocks.StructBlock):
         return forms.Media(css={"all": [static("css/protocol-card.css")]})
 
     layout = wagtail_blocks.ChoiceBlock(
+        label="Layout style",
         choices=CardLayoutOptions.choices,
         default=CardLayoutOptions.CARD_LAYOUT_3,
+    )
+
+    layout_size = wagtail_blocks.ChoiceBlock(
+        choices=LayoutSizes.choices,
+        default=LayoutSizes.LAYOUT_SIZE_NONE,
+        blank=True,
+        required=False,  # to allow for default/empty/large option
     )
 
     cards = wagtail_blocks.ListBlock(
