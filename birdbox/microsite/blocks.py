@@ -210,6 +210,7 @@ class CardBlock(wagtail_blocks.StructBlock):
 class CardLayoutBlock(wagtail_blocks.StructBlock):
     class Meta:
         template = "microsite/blocks/card_layout.html"
+        icon = "copy"
 
     @property
     def frontend_media(self):
@@ -231,6 +232,7 @@ class CardLayoutBlock(wagtail_blocks.StructBlock):
 class SectionHeadingBlock(wagtail_blocks.StructBlock):
     class Meta:
         template = "microsite/blocks/section_heading.html"
+        icon = "title"
 
     @property
     def frontend_media(self):
@@ -753,11 +755,13 @@ class CalloutBlockBase(wagtail_blocks.StructBlock):
 class CalloutBlock(CalloutBlockBase):
     class Meta:
         template = "microsite/blocks/callout.html"
+        icon = "comment"
 
 
 class CompactCalloutBlock(CalloutBlockBase):
     class Meta:
         template = "microsite/blocks/compact_callout.html"
+        icon = "comment"
 
 
 class HeroBlock(wagtail_blocks.StructBlock):
