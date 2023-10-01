@@ -540,8 +540,8 @@ class GeneralPurposePage(BaseProtocolPage):
     ]
 
 
-class ProductLandingPage(BaseProtocolPage):
-    """General template for product landing pages"""
+class ProductPage(BaseProtocolPage):
+    """General template for product listing and landing pages"""
 
     # title comes from the base Page class
     content = StreamField(
