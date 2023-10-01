@@ -845,7 +845,7 @@ class BlogPage(BaseProtocolPage):
 
     # Parent page / subpage type rules
     parent_page_types = ["BlogIndexPage"]
-    # subpage_types = []
+    subpage_types = []
 
     @property
     def frontend_media(self):
