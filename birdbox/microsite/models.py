@@ -423,16 +423,15 @@ class GeneralPurposePage(BaseProtocolPage):
     """General-purpose page with most of the components available in it."""
 
     # title comes from the base Page class
+
+    introduction = RichTextField(
+        features=settings.RICHTEXT_FEATURES__ARTICLE,
+        blank=True,
+        help_text="Optional intro for the page",
+    )
+
     content = StreamField(
         [
-            (
-                "hero",
-                HeroBlock(
-                    required=False,
-                    label_format="Hero: {main_heading}",
-                    help_text="Not the core Protocol component",
-                ),
-            ),
             (
                 "article",
                 ArticleBlock(
@@ -443,21 +442,10 @@ class GeneralPurposePage(BaseProtocolPage):
                 ),
             ),
             (
-                "split",
-                SplitBlock(
-                    label="Split content",
-                    label_format="Split: {title}",
+                "biography_grid",
+                BiographyGridBlock(
+                    label_format="Biography grid: {title}",
                     required=False,
-                    help_text=mark_safe(f'{get_docs_link("split")}  Not all options supported'),
-                ),
-            ),
-            (
-                "section_heading",
-                SectionHeadingBlock(
-                    label="Section heading",
-                    label_format="Section heading: {text}",
-                    required=False,
-                    help_text=get_docs_link("section-heading"),
                 ),
             ),
             (
@@ -470,6 +458,13 @@ class GeneralPurposePage(BaseProtocolPage):
                 ),
             ),
             (
+                "captioned_image",
+                CaptionedImageBlock(
+                    label_format="Captioned image: {image_caption}",
+                    required=False,
+                ),
+            ),
+            (
                 "columns",
                 ColumnBlock(
                     label="Column block",
@@ -479,43 +474,11 @@ class GeneralPurposePage(BaseProtocolPage):
                 ),
             ),
             (
-                "newsletter_form",
-                NewsletterFormBlock(
-                    label="Newsletter signup form",
-                    label_format="Newsletter: {title}",
+                "callout",
+                CalloutBlock(
                     required=False,
-                    help_text="This form is cannot be used the same time as a Contact form",
-                ),
-            ),
-            (
-                "custom_form",
-                WagtailFormBlock(
-                    label_format="Custom form",
-                    required=False,
-                    icon="radio-empty",
-                ),
-            ),
-            (
-                "video",
-                VideoEmbedBlock(
-                    label="Video embed",
-                    label_format="Video embed: {video}",
-                    required=False,
-                    icon="media",
-                ),
-            ),
-            (
-                "captioned_image",
-                CaptionedImageBlock(
-                    label_format="Captioned image: {image_caption}",
-                    required=False,
-                ),
-            ),
-            (
-                "biography_grid",
-                BiographyGridBlock(
-                    label_format="Biography grid: {title}",
-                    required=False,
+                    label_format="Callout (standard size): {headline}",
+                    help_text=get_docs_link("callout"),
                 ),
             ),
             (
@@ -527,36 +490,53 @@ class GeneralPurposePage(BaseProtocolPage):
                 ),
             ),
             (
-                "contact_form",
-                ContactFormBlock(
+                "newsletter_form",
+                NewsletterFormBlock(
+                    label="Newsletter signup form",
+                    label_format="Newsletter: {title}",
                     required=False,
-                    label_format="Contact form: {title}",
-                    help_text="This form is cannot be used the same time as a Newsletter form. It is also very specific to Future.m.o",
+                    help_text="General Mozilla newsletter signup form - no custom emailing, just signup via the Basket backend service",
+                ),
+            ),
+            (
+                "section_heading",
+                SectionHeadingBlock(
+                    label="Section heading",
+                    label_format="Section heading: {text}",
+                    required=False,
+                    help_text=get_docs_link("section-heading"),
+                ),
+            ),
+            (
+                "split",
+                SplitBlock(
+                    label="Split content",
+                    label_format="Split: {title}",
+                    required=False,
+                    help_text=mark_safe(f'{get_docs_link("split")}  Not all options supported'),
+                ),
+            ),
+            (
+                "video",
+                VideoEmbedBlock(
+                    label="Video embed",
+                    label_format="Video embed: {video}",
+                    required=False,
+                    icon="media",
                 ),
             ),
         ],
         block_counts={
-            "hero": {"max_num": 1},
             "newsletter_form": {"max_num": 1},
-            "contact_form": {"max_num": 1},
         },
         use_json_field=True,
         collapsed=True,
     )
 
     content_panels = BaseProtocolPage.content_panels + [
+        FieldPanel("introduction"),
         FieldPanel("content"),
     ]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        title_field = self._meta.get_field("title")
-
-        title_field.help_text = (
-            "The page title as you'd like it to be seen by the public. "
-            "(However, this will not be displayed in the page if a block is "
-            "added that has its own H1-level heading field, such as a Hero)"
-        )
 
 
 class LongformArticlePage(BaseProtocolPage):
