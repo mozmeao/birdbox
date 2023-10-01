@@ -420,7 +420,8 @@ class InnovationsContentPage(BaseProtocolPage):
 
 
 class GeneralPurposePage(BaseProtocolPage):
-    """General-purpose page with most of the components available in it."""
+    """General-purpose page with most of the components available in it
+    but certainly no Hero"""
 
     # title comes from the base Page class
 
