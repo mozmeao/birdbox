@@ -395,16 +395,36 @@ WATCHMAN_CHECKS = (
     "watchman.checks.databases",
 )
 
-# SSL config. Note that SECURE_PROXY_SSL_HEADER has a bearing on SSO redirect URIs
+# Security settings (see `manage.py check --deploy`)
+
 DISABLE_SSL = config("DISABLE_SSL", default=str(DEBUG), parser=bool)  # so default: "False"
-SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=str(not DISABLE_SSL), parser=bool)  # so default: "True"
+SECURE_SSL_REDIRECT = config(
+    "SECURE_SSL_REDIRECT",
+    default=str(not DISABLE_SSL),
+    parser=bool,
+)  # so default: "True"
 if config("USE_SECURE_PROXY_HEADER", default=str(SECURE_SSL_REDIRECT), parser=bool):
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
 SECURE_REDIRECT_EXEMPT = [
     r"^healthz/$",
     r"^readiness/$",
 ]
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SESSION_COOKIE_SECURE = True
+X_FRAME_OPTIONS = "DENY"
+
+# Set header Strict-Transport-Security header
+SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default="0", parser=int)
+# Configure via env var
+
+# We do NOT want to roll all subdomains into the same HSTS setting
+# > Only set this to True if you are certain that all subdomains of your domain should be served exclusively via SSL.
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+
 
 # Authentication with Mozilla OpenID Connect / Auth0
 
