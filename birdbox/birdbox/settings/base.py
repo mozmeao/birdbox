@@ -268,7 +268,7 @@ WAGTAILSEARCH_BACKENDS = {
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = config(
     "WAGTAILADMIN_BASE_URL",
-    default="http://future.mozilla.org",
+    default="http://birdbox.mozilla.org",
 )
 
 BASE_SITE_URL = config(
