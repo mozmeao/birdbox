@@ -418,9 +418,8 @@ SESSION_COOKIE_SECURE = True
 X_FRAME_OPTIONS = "DENY"
 
 # Set header Strict-Transport-Security header
-SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default="3600", parser=int)
-# Start with an hour, move to a year once we're settled.
-# Set to 0 via env to disable BEFORE deployment (!)
+SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default="0", parser=int)
+# Configure via env var
 
 # We do NOT want to roll all subdomains into the same HSTS setting
 # > Only set this to True if you are certain that all subdomains of your domain should be served exclusively via SSL.
