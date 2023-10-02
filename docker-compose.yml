@@ -93,6 +93,8 @@ services:
     env_file: ./docker/envfiles/prod.env
     environment:
       ALLOWED_HOSTS: "*"
+      CSRF_TRUSTED_ORIGINS: "*"
+      DISABLE_SSL: True
       DATABASE_URL: postgres://postgres:postgres@db/postgres
       EMAIL_BACKEND: "django.core.mail.backends.console.EmailBackend"
       REDIS_URL: redis://redis:6379
