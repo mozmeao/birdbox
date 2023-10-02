@@ -16,5 +16,5 @@ SECRET_KEY = config("SECRET_KEY", parser=str)
 ENGAGE_ROBOTS = config(
     "ENGAGE_ROBOTS",
     parser=bool,
-    default=BASE_SITE_URL in ALLOWED_HOSTS,
+    default=str(BASE_SITE_URL in ALLOWED_HOSTS),
 )
