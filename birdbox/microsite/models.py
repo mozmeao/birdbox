@@ -20,8 +20,11 @@ from django.db.models import (
 )
 from django.shortcuts import redirect
 from django.templatetags.static import static
+from django.utils.cache import add_never_cache_headers
+from django.utils.decorators import method_decorator
 from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
+from django.views.decorators.cache import never_cache
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -63,7 +66,36 @@ class ProtocolLayout(TextChoices):
     EXTRA_LARGE = "mzp-l-content mzp-t-content-xl", "Extra Large"
 
 
-class BaseProtocolPage(Page):
+@method_decorator(never_cache, name="serve_password_required_response")
+class CacheAwareAbstractBasePage(Page):
+    """
+    My default, Wagtail is unopinionated about cache-control headers,
+    so we need to be sure that pages with restrictions are not cached
+    anywhere in the chain.
+
+    This base class is based on this suggestion on the relevant Wagtail issue
+    https://github.com/wagtail/wagtail/issues/5072#issuecomment-949397013
+
+    It:
+
+    1) Overrides the default `serve()` method with cache-control settings
+    for pages with view restrictions.
+
+    2) Applies `never_cache` headers the `wagtail.Page` class's
+    `serve_password_required_response` method.
+    """
+
+    class Meta:
+        abstract = True
+
+    def serve(self, request, *args, **kwargs):
+        response = super().serve(request, *args, **kwargs)
+        if len(self.get_view_restrictions()):
+            add_never_cache_headers(response)
+        return response
+
+
+class BaseProtocolPage(CacheAwareAbstractBasePage):
     """Abstract wagtail.Page subclass that features fields we want on _all_ pages,
     in order to support Protocol - e.g. layout style.
 
