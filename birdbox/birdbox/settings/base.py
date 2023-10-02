@@ -268,8 +268,14 @@ WAGTAILSEARCH_BACKENDS = {
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = config(
     "WAGTAILADMIN_BASE_URL",
-    default="http://birdbox.mozilla.com",
+    default="http://birdbox.mozilla.org",
 )
+
+BASE_SITE_URL = config(
+    "BASE_SITE_URL",
+    default=WAGTAILADMIN_BASE_URL,
+)
+
 
 WAGTAILEMBEDS_FINDERS = [
     {
@@ -319,6 +325,10 @@ RICHTEXT_FEATURES__ARTICLE = RICHTEXT_FEATURES__FULL
 RICHTEXT_FEATURES__BLOGPAGE = RICHTEXT_FEATURES__FULL
 RICHTEXT_FEATURES__BIO = RICHTEXT_FEATURES__SIMPLE
 RICHTEXT_FEATURES__DETAIL = RICHTEXT_FEATURES__SIMPLE
+
+# Robots.txt - also see production.py for where we may allow it to be rendered
+
+ENGAGE_ROBOTS = config("ENGAGE_ROBOTS", parser=bool, default="False")
 
 # Logging
 
