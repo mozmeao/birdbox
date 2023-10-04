@@ -92,6 +92,16 @@ def get_layout_class_from_page(context) -> str:
     return ""
 
 
+@register.simple_tag(takes_context=True)
+def get_layout_modifier_from_page(context) -> str:
+    # Generates a modifier class from the page layout class
+    # - eg turns "mzp-l-content mzp-t-content-md" into "mzp-u-modifier-md"
+    page = context.get("page")
+    if page:
+        return page.specific.page_layout.replace("mzp-l-content ", "").replace("mzp-t-content", "mzp-u-modifier")
+    return ""
+
+
 def _get_language_name_for_locale(locale_code):
     adjusted_locale_code = {
         "en": "en-US",

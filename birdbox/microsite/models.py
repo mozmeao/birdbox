@@ -69,7 +69,7 @@ class ProtocolLayout(TextChoices):
 @method_decorator(never_cache, name="serve_password_required_response")
 class CacheAwareAbstractBasePage(Page):
     """
-    My default, Wagtail is unopinionated about cache-control headers,
+    By default, Wagtail is unopinionated about cache-control headers,
     so we need to be sure that pages with restrictions are not cached
     anywhere in the chain.
 

@@ -15,12 +15,17 @@
 
     .hero-text-wrapper {
         @media #{$mq-md} {
-            max-width: 55%;
+            max-width: 45%;
+        }
+
+        h1 {
+            @include text-title-xs;
+            font-weight: normal;
+            text-transform: uppercase;
         }
 
         h2 {
-            @include text-title-sm;
-            font-weight: normal;
+            @include text-title-lg;
         }
     }
 }

@@ -18,6 +18,22 @@
         padding: $layout-lg 80px;
     }
 
+    &.mzp-u-modifier-xl {
+        max-width: $content-xl;
+    }
+
+    &.mzp-u-modifier-lg {
+        max-width: $content-lg;
+    }
+
+    &.mzp-u-modifier-md {
+        max-width: $content-md;
+    }
+
+    &.mzp-u-modifier-sm {
+        max-width: $content-sm;
+    }
+
     &.t-align-center {
         max-width: $content-lg;
         text-align: center;
