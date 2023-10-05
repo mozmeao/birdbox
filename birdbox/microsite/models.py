@@ -301,6 +301,15 @@ class InnovationsContentPage(BaseProtocolPage):
                 ),
             ),
             (
+                "cards",
+                CardLayoutBlock(
+                    label="Card group",
+                    label_format="Card group",  # Can't add more detials to this 'collapsed'-mode label
+                    required=False,
+                    help_text=mark_safe(f'Layout wrapper for Cards. {get_docs_link("card-layout")}'),
+                ),
+            ),
+            (
                 "columns",
                 ColumnBlock(
                     label="Column block",
