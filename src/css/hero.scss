@@ -18,14 +18,14 @@
             max-width: 45%;
         }
 
-        h1 {
+        & .hero-title-teaser {
+            @include font-mozilla;
             @include text-title-xs;
+            display: block;
+            margin-bottom: $spacing-md;
             font-weight: normal;
             text-transform: uppercase;
-        }
-
-        h2 {
-            @include text-title-lg;
+            line-height: 1.2em;
         }
     }
 
