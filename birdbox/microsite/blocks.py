@@ -86,10 +86,10 @@ class SocialIconChoices(TextChoices):
 
 
 class ColumnOptions(TextChoices):
-    COLUMN_LAYOUT_ONE_COLUMN = "mzp-l-content", "One column"
-    COLUMN_LAYOUT_TWO_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-two", "Two column"
-    COLUMN_LAYOUT_THREE_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-three", "Three column"
-    COLUMN_LAYOUT_FOUR_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-four", "Four column"
+    COLUMN_LAYOUT_ONE_COLUMN = " ", "One column"
+    COLUMN_LAYOUT_TWO_COLUMN = "mzp-l-columns mzp-t-columns-two", "Two column"
+    COLUMN_LAYOUT_THREE_COLUMN = "mzp-l-columns mzp-t-columns-three", "Three column"
+    COLUMN_LAYOUT_FOUR_COLUMN = "mzp-l-columns mzp-t-columns-four", "Four column"
 
 
 class ThemeOptions(TextChoices):
@@ -503,6 +503,13 @@ class ColumnBlock(wagtail_blocks.StructBlock):
     title = wagtail_blocks.CharBlock(
         required=False,
         max_length=100,
+    )
+
+    layout_size = wagtail_blocks.ChoiceBlock(
+        choices=LayoutSizes.choices,
+        default=LayoutSizes.LAYOUT_SIZE_NONE,
+        blank=True,
+        required=False,  # to allow for default/empty/large option
     )
 
     column_layout = wagtail_blocks.ChoiceBlock(

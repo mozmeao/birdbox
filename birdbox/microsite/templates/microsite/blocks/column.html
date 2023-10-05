@@ -2,17 +2,17 @@
 
 {% load wagtailcore_tags microsite_tags %}
 
-<div class="bb-column-block {{block.value.theme}}" style="background-color: {{block.value.background_color}}">
+<section class="bb-column-block {{block.value.theme}}" style="background-color: {{block.value.background_color}}">
+  <div class="mzp-l-content {{ block.value.layout_size }}">
   {% if block.value.title %}
-  <div class="mzp-l-content bb-column-block-header">
-    <h2>{{block.value.title}}</h2>
-  </div>
+    <h2 class="bb-column-block-title">{{block.value.title}}</h2>
   {% endif %}
-  <div class="{{block.value.column_layout}} {{block.value.theme}}">
-    {% for block in block.value.content %}
-    <div>
-      {% include_block block %}
+    <div class="{{block.value.column_layout}} {{block.value.theme}}">
+      {% for block in block.value.content %}
+      <div>
+        {% include_block block %}
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
-</div>
+</section>
