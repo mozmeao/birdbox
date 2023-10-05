@@ -798,15 +798,15 @@ class HeroBlock(wagtail_blocks.StructBlock):
         "Custom property that lets us selectively include CSS"
         return forms.Media(css={"all": [static("css/birdbox-hero.css")]})
 
+    teaser = wagtail_blocks.CharBlock(
+        max_length=150,
+        required=False,
+        help_text="Up to 150 characters, appears above the main heading",
+    )
     main_heading = wagtail_blocks.CharBlock(
         max_length=75,
         required=True,
         help_text="Up to 75 characters. Will be the H1 of the page it's used in",
-    )
-    subheading = wagtail_blocks.CharBlock(
-        max_length=150,
-        required=False,
-        help_text="Up to 150 characters",
     )
     standfirst = wagtail_blocks.TextBlock(
         max_length=400,
