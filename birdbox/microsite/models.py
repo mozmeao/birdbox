@@ -420,19 +420,19 @@ class InnovationsContentPage(BaseProtocolPage):
 
 
 class GeneralPurposePage(BaseProtocolPage):
-    """General-purpose page with most of the components available in it."""
+    """General-purpose page with most of the components available in it
+    but certainly no Hero"""
 
     # title comes from the base Page class
+
+    introduction = RichTextField(
+        features=settings.RICHTEXT_FEATURES__ARTICLE,
+        blank=True,
+        help_text="Optional intro for the page",
+    )
+
     content = StreamField(
         [
-            (
-                "hero",
-                HeroBlock(
-                    required=False,
-                    label_format="Hero: {main_heading}",
-                    help_text="Not the core Protocol component",
-                ),
-            ),
             (
                 "article",
                 ArticleBlock(
@@ -440,6 +440,72 @@ class GeneralPurposePage(BaseProtocolPage):
                     label_format="Article: {header}",
                     required=False,
                     help_text=get_docs_link("article"),
+                ),
+            ),
+            (
+                "biography_grid",
+                BiographyGridBlock(
+                    label_format="Biography grid: {title}",
+                    required=False,
+                ),
+            ),
+            (
+                "cards",
+                CardLayoutBlock(
+                    label="Card group",
+                    label_format="Card group",  # Can't add more detials to this 'collapsed'-mode label
+                    required=False,
+                    help_text=mark_safe(f'Layout wrapper for Cards. {get_docs_link("card-layout")}'),
+                ),
+            ),
+            (
+                "captioned_image",
+                CaptionedImageBlock(
+                    label_format="Captioned image: {image_caption}",
+                    required=False,
+                ),
+            ),
+            (
+                "columns",
+                ColumnBlock(
+                    label="Column block",
+                    label_format="Column block: {column_layout}",
+                    required=False,
+                    help_text=mark_safe(f'Column layout wrapper. {get_docs_link("columns")}. Has sub-components. {get_docs_link("picto")}'),
+                ),
+            ),
+            (
+                "callout",
+                CalloutBlock(
+                    required=False,
+                    label_format="Callout (standard size): {headline}",
+                    help_text=get_docs_link("callout"),
+                ),
+            ),
+            (
+                "compact_callout",
+                CompactCalloutBlock(
+                    required=False,
+                    label_format="Compact callout: {headline}",
+                    help_text=get_docs_link("compact-callout"),
+                ),
+            ),
+            (
+                "newsletter_form",
+                NewsletterFormBlock(
+                    label="Newsletter signup form",
+                    label_format="Newsletter: {title}",
+                    required=False,
+                    help_text="General Mozilla newsletter signup form - no custom emailing, just signup via the Basket backend service",
+                ),
+            ),
+            (
+                "section_heading",
+                SectionHeadingBlock(
+                    label="Section heading",
+                    label_format="Section heading: {text}",
+                    required=False,
+                    help_text=get_docs_link("section-heading"),
                 ),
             ),
             (
@@ -452,12 +518,40 @@ class GeneralPurposePage(BaseProtocolPage):
                 ),
             ),
             (
-                "section_heading",
-                SectionHeadingBlock(
-                    label="Section heading",
-                    label_format="Section heading: {text}",
+                "video",
+                VideoEmbedBlock(
+                    label="Video embed",
+                    label_format="Video embed: {video}",
                     required=False,
-                    help_text=get_docs_link("section-heading"),
+                    icon="media",
+                ),
+            ),
+        ],
+        block_counts={
+            "newsletter_form": {"max_num": 1},
+        },
+        use_json_field=True,
+        collapsed=True,
+    )
+
+    content_panels = BaseProtocolPage.content_panels + [
+        FieldPanel("introduction"),
+        FieldPanel("content"),
+    ]
+
+
+class ProductPage(BaseProtocolPage):
+    """General template for product listing and landing pages"""
+
+    # title comes from the base Page class
+    content = StreamField(
+        [
+            (
+                "hero",
+                HeroBlock(
+                    required=False,
+                    label_format="Hero: {main_heading}",
+                    help_text="Intended for use at top of the page. Works well with an SVG background image and appropriate color",
                 ),
             ),
             (
@@ -475,47 +569,15 @@ class GeneralPurposePage(BaseProtocolPage):
                     label="Column block",
                     label_format="Column block: {column_layout}",
                     required=False,
-                    help_text=mark_safe(f'Column layout wrapper. {get_docs_link("columns")}. Has sub-components. {get_docs_link("picto")}'),
+                    help_text=mark_safe(f'Column layout wrapper: {get_docs_link("columns")}. Has Picto sub-components: {get_docs_link("picto")}'),
                 ),
             ),
             (
-                "newsletter_form",
-                NewsletterFormBlock(
-                    label="Newsletter signup form",
-                    label_format="Newsletter: {title}",
+                "callout",
+                CalloutBlock(
                     required=False,
-                    help_text="This form is cannot be used the same time as a Contact form",
-                ),
-            ),
-            (
-                "custom_form",
-                WagtailFormBlock(
-                    label_format="Custom form",
-                    required=False,
-                    icon="radio-empty",
-                ),
-            ),
-            (
-                "video",
-                VideoEmbedBlock(
-                    label="Video embed",
-                    label_format="Video embed: {video}",
-                    required=False,
-                    icon="media",
-                ),
-            ),
-            (
-                "captioned_image",
-                CaptionedImageBlock(
-                    label_format="Captioned image: {image_caption}",
-                    required=False,
-                ),
-            ),
-            (
-                "biography_grid",
-                BiographyGridBlock(
-                    label_format="Biography grid: {title}",
-                    required=False,
+                    label_format="Callout: {headline}",
+                    help_text=get_docs_link("callout"),
                 ),
             ),
             (
@@ -527,18 +589,27 @@ class GeneralPurposePage(BaseProtocolPage):
                 ),
             ),
             (
-                "contact_form",
-                ContactFormBlock(
+                "split",
+                SplitBlock(
+                    label="Split content",
+                    label_format="Split: {title}",
                     required=False,
-                    label_format="Contact form: {title}",
-                    help_text="This form is cannot be used the same time as a Newsletter form. It is also very specific to Future.m.o",
+                    help_text=mark_safe(f'Flexible short text + image component. {get_docs_link("split")} Not all options supported'),
+                ),
+            ),
+            (
+                "video",
+                VideoEmbedBlock(
+                    label="Video embed",
+                    label_format="Video embed: {video}",
+                    required=False,
+                    icon="media",
+                    help_text="In alpha - minimal/simple embedding at the moment. No in-page transcript support.",
                 ),
             ),
         ],
         block_counts={
             "hero": {"max_num": 1},
-            "newsletter_form": {"max_num": 1},
-            "contact_form": {"max_num": 1},
         },
         use_json_field=True,
         collapsed=True,
@@ -554,8 +625,8 @@ class GeneralPurposePage(BaseProtocolPage):
 
         title_field.help_text = (
             "The page title as you'd like it to be seen by the public. "
-            "(However, this will not be displayed in the page if a block is "
-            "added that has its own H1-level heading field, such as a Hero)"
+            "(Unless you use a Hero on the page, in which case we'll use "
+            "the title from that for the H1)"
         )
 
 
@@ -775,7 +846,7 @@ class BlogPage(BaseProtocolPage):
 
     # Parent page / subpage type rules
     parent_page_types = ["BlogIndexPage"]
-    # subpage_types = []
+    subpage_types = []
 
     @property
     def frontend_media(self):

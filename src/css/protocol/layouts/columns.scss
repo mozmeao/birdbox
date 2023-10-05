@@ -5,17 +5,7 @@
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 @import '~@mozilla-protocol/core/protocol/css/templates/multi-column';
 
-.bb-column-block {
-
-    h2 {
-        @include text-title-xs;
-    }
-
-    .mzp-l-columns {
-        padding-top: 0;
-    }
-
-    .bb-column-block-header  {
-        padding-bottom: $layout-md;
-    }
+.bb-column-block-title {
+    @include text-title-sm;
+    margin-bottom: $layout-md;
 }

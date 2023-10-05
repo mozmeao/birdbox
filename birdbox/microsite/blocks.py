@@ -58,6 +58,13 @@ class SplitBlockSizes(TextChoices):
     SPLIT_BLOCK_SIZE_EXTRA_LARGE = "mzp-t-content-xl", "Extra-large"
 
 
+class LayoutSizes(TextChoices):
+    LAYOUT_SIZE_NONE = "", "N/A"
+    LAYOUT_SIZE_MEDIUM = "mzp-t-content-md", "Medium"
+    LAYOUT_SIZE_LARGE = "mzp-t-content-lg", "Large"
+    LAYOUT_SIZE_EXTRA_LARGE = "mzp-t-content-xl", "Extra-large"
+
+
 class PictoLayoutOptions(TextChoices):
     PICTO_LAYOUT_STANDARD = "", "Standard"
     PICTO_LAYOUT_CENTERED = "mzp-t-picto-center", "Centered"
@@ -79,10 +86,10 @@ class SocialIconChoices(TextChoices):
 
 
 class ColumnOptions(TextChoices):
-    COLUMN_LAYOUT_ONE_COLUMN = "mzp-l-content", "One column"
-    COLUMN_LAYOUT_TWO_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-two", "Two column"
-    COLUMN_LAYOUT_THREE_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-three", "Three column"
-    COLUMN_LAYOUT_FOUR_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-four", "Four column"
+    COLUMN_LAYOUT_ONE_COLUMN = " ", "One column"
+    COLUMN_LAYOUT_TWO_COLUMN = "mzp-l-columns mzp-t-columns-two", "Two column"
+    COLUMN_LAYOUT_THREE_COLUMN = "mzp-l-columns mzp-t-columns-three", "Three column"
+    COLUMN_LAYOUT_FOUR_COLUMN = "mzp-l-columns mzp-t-columns-four", "Four column"
 
 
 class ThemeOptions(TextChoices):
@@ -210,6 +217,7 @@ class CardBlock(wagtail_blocks.StructBlock):
 class CardLayoutBlock(wagtail_blocks.StructBlock):
     class Meta:
         template = "microsite/blocks/card_layout.html"
+        icon = "copy"
 
     @property
     def frontend_media(self):
@@ -217,8 +225,16 @@ class CardLayoutBlock(wagtail_blocks.StructBlock):
         return forms.Media(css={"all": [static("css/protocol-card.css")]})
 
     layout = wagtail_blocks.ChoiceBlock(
+        label="Layout style",
         choices=CardLayoutOptions.choices,
         default=CardLayoutOptions.CARD_LAYOUT_3,
+    )
+
+    layout_size = wagtail_blocks.ChoiceBlock(
+        choices=LayoutSizes.choices,
+        default=LayoutSizes.LAYOUT_SIZE_NONE,
+        blank=True,
+        required=False,  # to allow for default/empty/large option
     )
 
     cards = wagtail_blocks.ListBlock(
@@ -231,6 +247,7 @@ class CardLayoutBlock(wagtail_blocks.StructBlock):
 class SectionHeadingBlock(wagtail_blocks.StructBlock):
     class Meta:
         template = "microsite/blocks/section_heading.html"
+        icon = "title"
 
     @property
     def frontend_media(self):
@@ -488,6 +505,13 @@ class ColumnBlock(wagtail_blocks.StructBlock):
         max_length=100,
     )
 
+    layout_size = wagtail_blocks.ChoiceBlock(
+        choices=LayoutSizes.choices,
+        default=LayoutSizes.LAYOUT_SIZE_NONE,
+        blank=True,
+        required=False,  # to allow for default/empty/large option
+    )
+
     column_layout = wagtail_blocks.ChoiceBlock(
         choices=ColumnOptions.choices,
         default=ColumnOptions.COLUMN_LAYOUT_TWO_COLUMN,
@@ -502,6 +526,13 @@ class ColumnBlock(wagtail_blocks.StructBlock):
     theme = wagtail_blocks.ChoiceBlock(
         choices=ThemeOptions.choices,
         default=ThemeOptions.THEME_DARK,
+    )
+
+    background_color = ColorBlock(
+        required=True,
+        help_text=(
+            "For a solid block of colour, matched to the background image. Use with a light/dark theme as appropriate, to ensure text is visible."
+        ),
     )
 
     content = ColumnContentBlock(
@@ -746,11 +777,13 @@ class CalloutBlockBase(wagtail_blocks.StructBlock):
 class CalloutBlock(CalloutBlockBase):
     class Meta:
         template = "microsite/blocks/callout.html"
+        icon = "comment"
 
 
 class CompactCalloutBlock(CalloutBlockBase):
     class Meta:
         template = "microsite/blocks/compact_callout.html"
+        icon = "comment"
 
 
 class HeroBlock(wagtail_blocks.StructBlock):
