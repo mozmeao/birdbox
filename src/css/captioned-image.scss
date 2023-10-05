@@ -5,6 +5,9 @@
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
 .bb-captioned-image {
+    align-items: center;
+    display: flex;
+    height: 150px;
     margin: $spacing-lg 0;
     text-align: center;
 
