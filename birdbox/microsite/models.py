@@ -42,7 +42,9 @@ from birdbox.protocol_links import get_docs_link
 from .blocks import (
     ArticleBlock,
     BiographyGridBlock,
+    CalloutBlock,
     CaptionedImageBlock,
+    CaptionedImageLayoutBlock,
     CardLayoutBlock,
     ColumnBlock,
     CompactCalloutBlock,
@@ -51,6 +53,7 @@ from .blocks import (
     FooterAfterMatterLinksBlock,
     FooterColumnBlock,
     FooterSocialLinksGroupBlock,
+    HeadedTableBlock,
     HeroBlock,
     NewsletterFormBlock,
     SectionHeadingBlock,
@@ -271,6 +274,151 @@ class HomePage(BaseProtocolPage):
         )
 
 
+class InnovationsContentPage(BaseProtocolPage):
+    """General template for pages within the Mozilla Innovations site
+    eg Builder's Challenge, MEICO
+
+    This Page type will not remain part of core Birdbox.
+    """
+
+    # title comes from the base Page class
+    content = StreamField(
+        [
+            (
+                "article",
+                ArticleBlock(
+                    label="Article block",
+                    label_format="Article: {title}",
+                    required=False,
+                    help_text=get_docs_link("article"),
+                ),
+            ),
+            (
+                "biography_grid",
+                BiographyGridBlock(
+                    label_format="Biography grid: {title}",
+                    required=False,
+                ),
+            ),
+            (
+                "columns",
+                ColumnBlock(
+                    label="Column block",
+                    label_format="Column block: {column_layout}",
+                    required=False,
+                    help_text=mark_safe(f'Column layout wrapper: {get_docs_link("columns")}. Has Picto sub-components: {get_docs_link("picto")}'),
+                ),
+            ),
+            (
+                "callout",
+                CalloutBlock(
+                    required=False,
+                    label_format="Callout: {headline}",
+                    help_text=get_docs_link("callout"),
+                ),
+            ),
+            (
+                "captioned_image_layout",
+                CaptionedImageLayoutBlock(
+                    required=False,
+                ),
+            ),
+            (
+                "compact_callout",
+                CompactCalloutBlock(
+                    required=False,
+                    label_format="Compact callout: {headline}",
+                    help_text=get_docs_link("compact-callout"),
+                ),
+            ),
+            (
+                "contact_form",
+                ContactFormBlock(
+                    required=False,
+                    label_format="Contact form: {title}",
+                    help_text="Customised with options specifically for the Mozilla Innovations site",
+                ),
+            ),
+            (
+                "details",
+                ExpandingDetailsBlock(
+                    required=False,
+                    label_format="Expandable details: {preamble}",
+                    help_text=get_docs_link("details"),
+                ),
+            ),
+            (
+                "hero",
+                HeroBlock(
+                    required=False,
+                    label_format="Hero: {main_heading}",
+                    help_text="Intended for use at top of the page. Works well with an SVG background image and appropriate color",
+                ),
+            ),
+            (
+                "section_heading",
+                SectionHeadingBlock(
+                    label="Section heading",
+                    label_format="Section heading: {text}",
+                    required=False,
+                ),
+            ),
+            (
+                "split",
+                SplitBlock(
+                    label="Split content",
+                    label_format="Split: {title}",
+                    required=False,
+                    help_text=mark_safe(f'Flexible short text + image component. {get_docs_link("split")} Not all options supported'),
+                ),
+            ),
+            (
+                "table",
+                HeadedTableBlock(
+                    required=False,
+                    label_format="Table: {title}",
+                    help_text=mark_safe(
+                        "Right-click on the table to add/remove cells and control content alignment.<br><br>"
+                        "IMPORTANT: If you do not see the table of data when you expand this section, "
+                        "please resize your browser window to make it appear. Apologies for the inconvenience. "
+                        "<a href='https://github.com/wagtail/wagtail/issues/8611'>The bug is known to the Wagtail Project</a>. ",
+                    ),
+                ),
+            ),
+            (
+                "video",
+                VideoEmbedBlock(
+                    label="Video embed",
+                    label_format="Video embed: {video}",
+                    required=False,
+                    icon="media",
+                    help_text="In alpha - minimal/simple embedding at the moment. No in-page transcript support.",
+                ),
+            ),
+        ],
+        block_counts={
+            "contact_form": {"max_num": 1},
+            "hero": {"max_num": 1},
+        },
+        use_json_field=True,
+        collapsed=True,
+    )
+
+    content_panels = BaseProtocolPage.content_panels + [
+        FieldPanel("content"),
+    ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        title_field = self._meta.get_field("title")
+
+        title_field.help_text = (
+            "The page title as you'd like it to be seen by the public. "
+            "(However, this will not be displayed in the page if a block is "
+            "added that has its own H1-level heading field, such as a Hero)"
+        )
+
+
 class GeneralPurposePage(BaseProtocolPage):
     """General-purpose page with most of the components available in it."""
 
@@ -458,7 +606,7 @@ class LongformArticlePage(BaseProtocolPage):
     def frontend_media(self):
         # The intro para needs the Article CSS
         return forms.Media(
-            css={"all": [static("css/protocol-article.css")]},
+            css={"all": [static("css/birdbox-article.css")]},
         )
 
 
@@ -499,7 +647,7 @@ class FAQPage(BaseProtocolPage):
         title_field.help_text = (
             "The page title as you'd like it to be seen by the public. "
             "(However, this will not be displayed in the page if a block is "
-            "added that has its own H1-level heading field, such the Article)"
+            "added that has its own H1-level heading field, such as the Hero)"
         )
 
 
@@ -946,7 +1094,7 @@ class FormStandardMessages(LockableMixin, Model):
 
 
 class ProtocolTestPage(BaseProtocolPage):
-    """DEVELOPMNENT ONLY. General-purpose page was a way to test out all
+    """DEVELOPMENT ONLY. General-purpose page was a way to test out all
     Protocol-compliant components and options
 
     DO NOT USE IN PRODUCTION
@@ -981,7 +1129,7 @@ class ProtocolTestPage(BaseProtocolPage):
                     label="Column block",
                     label_format="Column block: {column_layout}",
                     required=False,
-                    help_text=mark_safe(f'Column layout wrapper. {get_docs_link("columns")}. Has sub-components. {get_docs_link("picto")}'),
+                    help_text=mark_safe(f'Column layout wrapper. {get_docs_link("columns")}. Has sub-components, eg: {get_docs_link("picto")}'),
                 ),
             ),
             (
@@ -1034,6 +1182,14 @@ class ProtocolTestPage(BaseProtocolPage):
                 ),
             ),
             (
+                "callout",
+                CalloutBlock(
+                    required=False,
+                    label_format="Callout: {headline}",
+                    help_text=get_docs_link("callout"),
+                ),
+            ),
+            (
                 "compact_callout",
                 CompactCalloutBlock(
                     required=False,
@@ -1063,6 +1219,25 @@ class ProtocolTestPage(BaseProtocolPage):
                     required=False,
                     label_format="Contact form: {title}",
                     help_text="This form is cannot be used the same time as a Newsletter form. It is also very specific to Future.m.o",
+                ),
+            ),
+            (
+                "table",
+                HeadedTableBlock(
+                    required=False,
+                    label_format="Table: {title}",
+                    help_text=mark_safe(
+                        "Right-click on the table to add/remove cells and control content alignment.<br><br>"
+                        "IMPORTANT: If you do not see the table of data when you expand this section, "
+                        "please resize your browser window to make it appear. Apologies for the inconvenience. "
+                        "<a href='https://github.com/wagtail/wagtail/issues/8611'>The bug is known to the Wagtail Project</a>. ",
+                    ),
+                ),
+            ),
+            (
+                "captioned_image_layout",
+                CaptionedImageLayoutBlock(
+                    required=False,
                 ),
             ),
         ],

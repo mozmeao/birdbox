@@ -3,19 +3,15 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
-@import '~@mozilla-protocol/core/protocol/css/templates/multi-column';
 
-.bb-column-block {
+.bb-captioned-image-layout {
 
     h2 {
-        @include text-title-xs;
+        text-align: center;
     }
 
-    .mzp-l-columns {
-        padding-top: 0;
+    .bb-captioned-image {
+        padding: $spacing-md;
     }
-
-    .bb-column-block-header  {
-        padding-bottom: $layout-md;
-    }
+    // TODO: vertically align the images in the card layout
 }

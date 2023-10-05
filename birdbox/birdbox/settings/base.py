@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
+    "wagtail.contrib.table_block",
     "wagtail.contrib.modeladmin",
     "wagtail.embeds",
     "wagtail.sites",
@@ -311,6 +312,19 @@ RICHTEXT_FEATURES__FULL = [
     "ol",
     "ul",
 ]
+
+RICHTEXT_FEATURES__LIMITED = [
+    # Order here is the order used in the editor UI
+    "h3",
+    "h4",
+    "bold",
+    "italic",
+    "strikethrough",
+    "link",
+    "ol",
+    "ul",
+]
+
 
 RICHTEXT_FEATURES__SIMPLE = [
     "bold",

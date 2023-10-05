@@ -1,0 +1,14 @@
+{% load microsite_tags wagtailcore_tags %}
+
+<div class="bb-captioned-image-layout {% get_layout_class_from_page %}">
+  {% if block.value.title %}
+  <h2>{{block.value.title}}</h2>
+  {% endif %}
+  <div class="{{ block.value.layout }}">
+    {% for block in block.value.cards %}
+    <section class="mzp-c-card mzp-card-small mzp-has-aspect-1-1">
+      {% include "microsite/blocks/captioned_image.html" with value=block %}
+    </section>
+    {% endfor %}
+  </div>
+</div>
