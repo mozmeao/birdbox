@@ -18,8 +18,15 @@ from ..models import Footer, FormStandardMessages, MicrositeSettings, Page
 
 register = Library()
 
-# Use mozilla-django-product-details to get a set of localised language names
-LANGUAGE_LOOKUP = {k: v.get("native", k) for k, v in product_details.languages.items()}
+_LANGUAGE_LOOKUP = {}
+
+
+def _get_language_lookup():
+    global _LANGUAGE_LOOKUP
+    if not _LANGUAGE_LOOKUP:
+        # Use mozilla-django-product-details to get a set of localised language names
+        _LANGUAGE_LOOKUP = {k: v.get("native", k) for k, v in product_details.languages.items()}
+    return _LANGUAGE_LOOKUP
 
 
 @register.inclusion_tag("microsite/partials/nav.html", takes_context=True)
@@ -107,7 +114,7 @@ def _get_language_name_for_locale(locale_code):
         "en": "en-US",
         "pt": "pt-PT",
     }.get(locale_code, locale_code)
-    return LANGUAGE_LOOKUP.get(adjusted_locale_code, locale_code)
+    return _get_language_lookup().get(adjusted_locale_code, locale_code)
 
 
 @register.inclusion_tag("microsite/blocks/partials/_newsletter_fieldsets.html", takes_context=True)
