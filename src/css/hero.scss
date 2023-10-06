@@ -5,15 +5,13 @@
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
 .hero-section {
-    background-position: right;
+    background-position: right center;
     background-repeat: no-repeat;
-    background-size: 100%;
-
-    @media #{$mq-md} {
-        background-size: 50%;
-    }
+    background-size: contain;
 
     .hero-text-wrapper {
+        padding: $spacing-md $spacing-lg;
+
         @media #{$mq-md} {
             max-width: 45%;
         }
@@ -22,20 +20,19 @@
             @include font-mozilla;
             @include text-title-xs;
             display: block;
-            margin-bottom: $spacing-md;
             font-weight: normal;
-            text-transform: uppercase;
             line-height: 1.2em;
+            margin-bottom: $spacing-md;
+            text-transform: uppercase;
         }
     }
 
     &.hero-section-centered {
         background-position: center;
-        background-repeat: no-repeat;
-        background-size: 100%;
+
         .hero-text-wrapper{
-            max-width: 100%;
-            margin: auto;
+            margin: $spacing-md auto;
+            max-width: $content-md;
             text-align: center;
         }
     }

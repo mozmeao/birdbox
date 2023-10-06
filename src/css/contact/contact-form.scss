@@ -5,7 +5,6 @@
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
 .c-innovation-newsletter {
-
     h3 {
         @include text-title-md;
     }
@@ -22,7 +21,6 @@
     .mzp-c-newsletter-thanks {
         padding-top: 0;
     }
-
 }
 
 
@@ -31,14 +29,17 @@
         &.no-image {
             padding-top: 0 !important;
         }
+
         @media #{$mq-md} {
             padding-top: 0 !important;
 
         }
+
         @media #{$mq-xl} {
             padding-top: $spacing-md !important;
 
         }
+
         .mzp-c-button{
             margin-bottom: $spacing-lg;
 
@@ -49,9 +50,9 @@
             width: 100%;
         }
     }
+
     .mzp-c-newsletter-thanks {
         padding-top: 0 !important;
     }
-
 }
 

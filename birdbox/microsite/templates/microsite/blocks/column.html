@@ -7,7 +7,7 @@
   {% if block.value.title %}
     <h2 class="bb-column-block-title">{{block.value.title}}</h2>
   {% endif %}
-    <div class="{{block.value.column_layout}} {{block.value.theme}}">
+    <div class="{{block.value.column_layout}}">
       {% for block in block.value.content %}
       <div>
         {% include_block block %}
