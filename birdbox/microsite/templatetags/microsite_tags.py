@@ -13,7 +13,7 @@ from wagtail.models import Site
 
 from common.utils import find_streamfield_blocks_by_types, get_freshest_newsletter_data
 
-from ..blocks import ArticleBlock, HeroBlock
+from ..blocks import HeroBlock
 from ..models import Footer, FormStandardMessages, MicrositeSettings, Page
 
 register = Library()
@@ -184,7 +184,10 @@ def seek_dark_theme_class(parent_class_string: str) -> str:
 def block_with_h1_exists_in_page(page: Page) -> bool:
     candidate_blocks = find_streamfield_blocks_by_types(
         page=page,
-        target_block_types=(HeroBlock, ArticleBlock),
+        target_block_types=(
+            HeroBlock,
+            # ArticleBlock does NOT contain a H1 any more, it's a H2
+        ),
     )
     # If we have more than one candidate block in a page, that's a separate problem
     # but should be caught by Wagtail's own a11y checks
