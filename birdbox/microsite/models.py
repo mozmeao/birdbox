@@ -211,8 +211,9 @@ class HomePage(BaseProtocolPage):
             (
                 "contact_form",
                 ContactFormBlock(
+                    label="Innovations Contact Form",
                     required=False,
-                    label_format="Contact form: {title}",
+                    label_format="Innovations Contact Form: {title}",
                     help_text="This form is cannot be used the same time as a Newsletter form. It is also very specific to Future.m.o",
                 ),
             ),
@@ -343,8 +344,9 @@ class InnovationsContentPage(BaseProtocolPage):
             (
                 "contact_form",
                 ContactFormBlock(
+                    label="Innovations Contact Form",
                     required=False,
-                    label_format="Contact form: {title}",
+                    label_format="Innovations Contact Form: {title}",
                     help_text="Customised with options specifically for the Mozilla Innovations site",
                 ),
             ),
@@ -1296,8 +1298,9 @@ class ProtocolTestPage(BaseProtocolPage):
             (
                 "contact_form",
                 ContactFormBlock(
+                    label="Innovations Contact Form",
                     required=False,
-                    label_format="Contact form: {title}",
+                    label_format="Innovations Contact Form: {title}",
                     help_text="This form is cannot be used the same time as a Newsletter form. It is also very specific to Future.m.o",
                 ),
             ),
