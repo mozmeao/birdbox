@@ -564,9 +564,9 @@ CONTACT_FORM_RECIPIENT_EMAIL = {
         default="innovations@mozilla.com",
         parser=str,
     ),
-    "meico": config(
-        "CONTACT_FORM_RECIPIENT_EMAIL__MEICO",
-        default="meico@mozilla.com",
+    "mieco": config(
+        "CONTACT_FORM_RECIPIENT_EMAIL__MIECO",
+        default="mieco@mozilla.com",
         parser=str,
     ),
 }
