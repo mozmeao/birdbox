@@ -450,6 +450,9 @@ SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default="0", parser=int)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 
 
+# Custom CSRF failure view to show custom CSRF messaging
+CSRF_FAILURE_VIEW = "common.views.csrf_failure"
+
 # Authentication with Mozilla OpenID Connect / Auth0
 
 LOGIN_ERROR_URL = "/admin/"

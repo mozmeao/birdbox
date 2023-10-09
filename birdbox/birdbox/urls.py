@@ -18,7 +18,7 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from watchman import views as watchman_views
 
-from common.views import rate_limited
+from common.views import csrf_failure, rate_limited
 from microsite import urls as microsite_urls
 
 handler500 = "common.views.server_error_view"
@@ -66,6 +66,7 @@ if settings.DEBUG:
     urlpatterns += (
         path("404/", import_string(handler404)),
         path("403/", permission_denied, {"exception": HttpResponseForbidden()}),
+        path("csrf_403/", csrf_failure, {}),
         path("429/", rate_limited, {"exception": Ratelimited()}),
         path("500/", import_string(handler500)),
     )
