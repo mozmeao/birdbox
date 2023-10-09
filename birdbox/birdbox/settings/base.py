@@ -449,9 +449,6 @@ SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default="0", parser=int)
 # > Only set this to True if you are certain that all subdomains of your domain should be served exclusively via SSL.
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 
-# Put the CSRF token in the regular session.
-# Note that this doesn't affect our extraction of it from the DOM for XHR calls
-CSRF_USE_SESSIONS = True
 
 # Authentication with Mozilla OpenID Connect / Auth0
 
