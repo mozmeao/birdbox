@@ -13,6 +13,7 @@ COPY docker/bin/apt-install.sh /usr/local/bin/
 RUN apt-install.sh \
     build-essential \
     libpq-dev \
+    libffi-dev \
     libjpeg62-turbo-dev \
     zlib1g-dev \
     libwebp-dev
@@ -93,6 +94,7 @@ CMD ["./bin/run-tests.sh"]
 
 COPY requirements/* ./requirements/
 COPY ./pyproject.toml ./
+RUN pip install --require-hashes --no-cache-dir -r requirements/dev.txt
 RUN pip install --require-hashes --no-cache-dir -r requirements/test.txt
 
 RUN bin/run-sync-all.sh

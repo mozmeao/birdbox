@@ -22,7 +22,7 @@ target-version = 'py39'
 extend-exclude = ["__pycache__", "docs", "assets", "static", "bedrock/externalfiles/files_cache"]
 
 [tool.ruff.per-file-ignores]
-"birdbox/birdbox/settings/dev.py" = ["F403", "F405"]
+"birdbox/birdbox/settings/development.py" = ["F403", "F405"]
 "birdbox/birdbox/settings/test.py" = ["F403", "F405"]
 "birdbox/birdbox/settings/prod.py" = ["F403", "F405"]
 "birdbox/microsite/migrations/*.py" = ["E501"]

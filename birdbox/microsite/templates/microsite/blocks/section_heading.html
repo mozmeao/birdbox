@@ -1,5 +1,7 @@
 {# https://protocol.mozilla.org/components/detail/section-heading.html #}
 
-<{{block.value.heading_level}} class="mzp-c-section-heading {{block.value.alignment}} {{block.value.heading_size}}">
+{% load microsite_tags %}
+
+<{{block.value.heading_level}} class="mzp-c-section-heading {{block.value.alignment}} {{block.value.heading_size}} {% get_layout_modifier_from_page %}">
   {{block.value.text}}
 </{{block.value.heading_level}}>

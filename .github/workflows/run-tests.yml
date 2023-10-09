@@ -19,6 +19,16 @@ jobs:
         run: |
           pip install -r requirements/production.txt
           pip install -r requirements/test.txt
+      - name: Set up Node
+        uses: actions/setup-node@v3.8.1
+        with:
+          node-version: 18
+      - name: Install js dependencies and build assets
+        run: |
+          npm ci
+          npm run build
+      - name: Collect staticfiles
+        run: python birdbox/manage.py collectstatic
       - name: Run tests
         run: >-
           DJANGO_SETTINGS_MODULE=birdbox.settings.test

@@ -4,25 +4,49 @@
 
 from django.conf import settings
 from django.contrib import admin
+from django.http import HttpResponse, HttpResponseForbidden
 from django.urls import include, path
 from django.utils.module_loading import import_string
+from django.views.defaults import permission_denied
+
+from django_ratelimit.exceptions import Ratelimited
 
 # Disabled until we need Search
 # from search import views as search_views
 from wagtail import urls as wagtail_urls
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
+from watchman import views as watchman_views
 
+from common.views import rate_limited
 from microsite import urls as microsite_urls
 
 handler500 = "common.views.server_error_view"
 handler404 = "common.views.page_not_found_view"
 
+
+# Custom 403 handling, sending either a rate-limited response or a regular Forbidden
+def handler403(request, exception=None):
+    if isinstance(exception, Ratelimited):
+        return rate_limited(request, exception)
+    return permission_denied(request, exception)
+
+
 urlpatterns = [
+    path("oidc/", include("mozilla_django_oidc.urls")),
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
+    path("healthz/", watchman_views.ping, name="watchman.ping"),
+    path("readiness/", watchman_views.status, name="watchman.status"),
     path("", include(microsite_urls)),
+    path(
+        "robots.txt",
+        lambda r: HttpResponse(
+            f"User-agent: *\n{'Allow' if settings.ENGAGE_ROBOTS else 'Disallow'}: /",
+            content_type="text/plain",
+        ),
+    ),
     # Disabled until we need Search
     # path("search/", search_views.search, name="search"),
 ]
@@ -41,6 +65,8 @@ if settings.DEFAULT_FILE_STORAGE == "django.core.files.storage.FileSystemStorage
 if settings.DEBUG:
     urlpatterns += (
         path("404/", import_string(handler404)),
+        path("403/", permission_denied, {"exception": HttpResponseForbidden()}),
+        path("429/", rate_limited, {"exception": Ratelimited()}),
         path("500/", import_string(handler500)),
     )
 
@@ -50,7 +76,4 @@ urlpatterns = urlpatterns + [
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
     path("", include(wagtail_urls)),
-    # Alternatively, if you want Wagtail pages to be served from a subpath
-    # of your site, rather than the site root:
-    #    path("pages/", include(wagtail_urls)),
 ]

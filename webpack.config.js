@@ -37,7 +37,6 @@ module.exports = {
         "protocol-split": "./src/css/protocol/components/split.scss",
         "protocol-card": "./src/css/protocol/components/card.scss",
         "protocol-picto": "./src/css/protocol/components/picto.scss",
-        "protocol-article": "./src/css/protocol/components/article.scss",
         "protocol-newsletter-form":
             "./src/css/protocol/components/newsletter.scss",
         "protocol-video": "./src/css/protocol/components/video.scss",
@@ -49,7 +48,13 @@ module.exports = {
         "birdbox-navigation": "./src/css/navigation.scss",
         "birdbox-hero": "./src/css/hero.scss",
         "birdbox-captioned-image": "./src/css/captioned-image.scss",
+        "birdbox-captioned-image-layout":
+            "./src/css/captioned-image-layout.scss",
         "birdbox-contact-form": "./src/css/contact/contact-form.scss",
+        "birdbox-headed-table": "./src/css/headed-table.scss",
+        "birdbox-picto-stack": "./src/css/picto-stack.scss",
+        "birdbox-biography-grid": "./src/css/biography-grid.scss",
+        "birdbox-article": "./src/css/article.scss",
 
         // custom JS
         "futuremo-contact-form-js": "./src/js/contact/futuremo-contact-form.js",

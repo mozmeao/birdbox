@@ -13,13 +13,20 @@ from wagtail.models import Site
 
 from common.utils import find_streamfield_blocks_by_types, get_freshest_newsletter_data
 
-from ..blocks import ArticleBlock, HeroBlock
+from ..blocks import HeroBlock
 from ..models import Footer, FormStandardMessages, MicrositeSettings, Page
 
 register = Library()
 
-# Use mozilla-django-product-details to get a set of localised language names
-LANGUAGE_LOOKUP = {k: v.get("native", k) for k, v in product_details.languages.items()}
+_LANGUAGE_LOOKUP = {}
+
+
+def _get_language_lookup():
+    global _LANGUAGE_LOOKUP
+    if not _LANGUAGE_LOOKUP:
+        # Use mozilla-django-product-details to get a set of localised language names
+        _LANGUAGE_LOOKUP = {k: v.get("native", k) for k, v in product_details.languages.items()}
+    return _LANGUAGE_LOOKUP
 
 
 @register.inclusion_tag("microsite/partials/nav.html", takes_context=True)
@@ -92,12 +99,22 @@ def get_layout_class_from_page(context) -> str:
     return ""
 
 
+@register.simple_tag(takes_context=True)
+def get_layout_modifier_from_page(context) -> str:
+    # Generates a modifier class from the page layout class
+    # - eg turns "mzp-l-content mzp-t-content-md" into "mzp-u-modifier-md"
+    page = context.get("page")
+    if page:
+        return page.specific.page_layout.replace("mzp-l-content ", "").replace("mzp-t-content", "mzp-u-modifier")
+    return ""
+
+
 def _get_language_name_for_locale(locale_code):
     adjusted_locale_code = {
         "en": "en-US",
         "pt": "pt-PT",
     }.get(locale_code, locale_code)
-    return LANGUAGE_LOOKUP.get(adjusted_locale_code, locale_code)
+    return _get_language_lookup().get(adjusted_locale_code, locale_code)
 
 
 @register.inclusion_tag("microsite/blocks/partials/_newsletter_fieldsets.html", takes_context=True)
@@ -167,7 +184,10 @@ def seek_dark_theme_class(parent_class_string: str) -> str:
 def block_with_h1_exists_in_page(page: Page) -> bool:
     candidate_blocks = find_streamfield_blocks_by_types(
         page=page,
-        target_block_types=(HeroBlock, ArticleBlock),
+        target_block_types=(
+            HeroBlock,
+            # ArticleBlock does NOT contain a H1 any more, it's a H2
+        ),
     )
     # If we have more than one candidate block in a page, that's a separate problem
     # but should be caught by Wagtail's own a11y checks

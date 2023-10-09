@@ -11,6 +11,7 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 
 from wagtail import blocks as wagtail_blocks
+from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 
@@ -57,6 +58,13 @@ class SplitBlockSizes(TextChoices):
     SPLIT_BLOCK_SIZE_EXTRA_LARGE = "mzp-t-content-xl", "Extra-large"
 
 
+class LayoutSizes(TextChoices):
+    LAYOUT_SIZE_NONE = "", "N/A"
+    LAYOUT_SIZE_MEDIUM = "mzp-t-content-md", "Medium"
+    LAYOUT_SIZE_LARGE = "mzp-t-content-lg", "Large"
+    LAYOUT_SIZE_EXTRA_LARGE = "mzp-t-content-xl", "Extra-large"
+
+
 class PictoLayoutOptions(TextChoices):
     PICTO_LAYOUT_STANDARD = "", "Standard"
     PICTO_LAYOUT_CENTERED = "mzp-t-picto-center", "Centered"
@@ -78,10 +86,10 @@ class SocialIconChoices(TextChoices):
 
 
 class ColumnOptions(TextChoices):
-    COLUMN_LAYOUT_ONE_COLUMN = "mzp-l-content", "One column"
-    COLUMN_LAYOUT_TWO_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-two", "Two column"
-    COLUMN_LAYOUT_THREE_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-three", "Three column"
-    COLUMN_LAYOUT_FOUR_COLUMN = "mzp-l-content mzp-l-columns mzp-t-columns-four", "Four column"
+    COLUMN_LAYOUT_ONE_COLUMN = " ", "One column"
+    COLUMN_LAYOUT_TWO_COLUMN = "mzp-l-columns mzp-t-columns-two", "Two column"
+    COLUMN_LAYOUT_THREE_COLUMN = "mzp-l-columns mzp-t-columns-three", "Three column"
+    COLUMN_LAYOUT_FOUR_COLUMN = "mzp-l-columns mzp-t-columns-four", "Four column"
 
 
 class ThemeOptions(TextChoices):
@@ -89,21 +97,31 @@ class ThemeOptions(TextChoices):
     THEME_DARK = "mzp-t-dark", "Dark theme"
 
 
-class SectionHeadingLevelOptions(TextChoices):
-    SECTION_HEADING_LEVEL_H2 = "h2", "Heading Level 2"
-    SECTION_HEADING_LEVEL_H3 = "h3", "Heading Level 3"
-    SECTION_HEADING_LEVEL_H4 = "h4", "Heading Level 4"
+class HeadingLevelOptions(TextChoices):
+    HEADING_LEVEL_H2 = "h2", "Heading Level 2"
+    HEADING_LEVEL_H3 = "h3", "Heading Level 3"
+    HEADING_LEVEL_H4 = "h4", "Heading Level 4"
 
 
-class SectionHeadingSizeOptions(TextChoices):
-    SECTION_HEADING_SIZE_LG = "", "Large"
-    SECTION_HEADING_SIZE_MD = "mzp-u-title-md", "Medium"
-    SECTION_HEADING_SIZE_SM = "mzp-u-title-sm", "Small"
+class HeadingSizeOptions(TextChoices):
+    HEADING_SIZE_LG = "", "Large"
+    HEADING_SIZE_MD = "mzp-u-title-md", "Medium"
+    HEADING_SIZE_SM = "mzp-u-title-sm", "Small"
 
 
-class SectionHeadingAlignmentOptions(TextChoices):
+class HeadingAlignmentOptions(TextChoices):
     SECTION_HEADING_ALIGNMENT_DEFAULT = "", "Default"
     SECTION_HEADING_ALIGNMENT_CENTER = "t-align-center", "Center"
+
+
+class HeroLayoutOptions(TextChoices):
+    HERO_LAYOUT_DEFAULT = "hero-section-default", "Default layout"
+    HERO_LAYOUT_CENTERED = "hero-section-centered", "Centered layout"
+
+
+class TableWidthOptions(TextChoices):
+    TABLE_WIDTH_DEFAULT = "bb-table-width-default", "Default width"
+    TABLE_WIDTH_FULL = "bb-table-width-full", "Full width"
 
 
 class LinkStructValue(wagtail_blocks.StructValue):
@@ -154,18 +172,13 @@ class CardBlock(wagtail_blocks.StructBlock):
         "Custom property that lets us selectively include CSS"
         return forms.Media(css={"all": [static("css/protocol-card.css")]})
 
-    size = wagtail_blocks.ChoiceBlock(
-        choices=CardSizes.choices,
-        default=CardSizes.SMALL,
-        required=False,  # so that we can set SMALL, which is actually an empty string
-    )
     title = wagtail_blocks.CharBlock(
-        required=True,
+        required=False,
         max_length=60,
         help_text="Card title with about 30-40 characters",
     )
     description = wagtail_blocks.TextBlock(
-        required=True,
+        required=False,
         max_length=170,
         help_text="A description of about 150 characters. Usually we only have room for one or two sentences.",
     )
@@ -180,6 +193,11 @@ class CardBlock(wagtail_blocks.StructBlock):
         help_text="Meta info at the base of the card",
     )
     link = LinkBlock()
+    size = wagtail_blocks.ChoiceBlock(
+        choices=CardSizes.choices,
+        default=CardSizes.SMALL,
+        required=False,  # so that we can set SMALL, which is actually an empty string
+    )
     image_aspect_ratio = wagtail_blocks.ChoiceBlock(
         choices=AspectRatios.choices,
         default=AspectRatios.ASPECT_3_2,
@@ -199,6 +217,7 @@ class CardBlock(wagtail_blocks.StructBlock):
 class CardLayoutBlock(wagtail_blocks.StructBlock):
     class Meta:
         template = "microsite/blocks/card_layout.html"
+        icon = "copy"
 
     @property
     def frontend_media(self):
@@ -206,8 +225,16 @@ class CardLayoutBlock(wagtail_blocks.StructBlock):
         return forms.Media(css={"all": [static("css/protocol-card.css")]})
 
     layout = wagtail_blocks.ChoiceBlock(
+        label="Layout style",
         choices=CardLayoutOptions.choices,
         default=CardLayoutOptions.CARD_LAYOUT_3,
+    )
+
+    layout_size = wagtail_blocks.ChoiceBlock(
+        choices=LayoutSizes.choices,
+        default=LayoutSizes.LAYOUT_SIZE_NONE,
+        blank=True,
+        required=False,  # to allow for default/empty/large option
     )
 
     cards = wagtail_blocks.ListBlock(
@@ -220,6 +247,7 @@ class CardLayoutBlock(wagtail_blocks.StructBlock):
 class SectionHeadingBlock(wagtail_blocks.StructBlock):
     class Meta:
         template = "microsite/blocks/section_heading.html"
+        icon = "title"
 
     @property
     def frontend_media(self):
@@ -227,8 +255,8 @@ class SectionHeadingBlock(wagtail_blocks.StructBlock):
         return forms.Media(css={"all": [static("css/protocol-section-heading.css")]})
 
     heading_level = wagtail_blocks.ChoiceBlock(
-        choices=SectionHeadingLevelOptions.choices,
-        default=SectionHeadingLevelOptions.SECTION_HEADING_LEVEL_H2,
+        choices=HeadingLevelOptions.choices,
+        default=HeadingLevelOptions.HEADING_LEVEL_H2,
         help_text=mark_safe(
             "Remember to respect best practices around hierarchy of heading level: "
             "<a href='https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#usage_notes'>See MDN</a>"
@@ -236,16 +264,16 @@ class SectionHeadingBlock(wagtail_blocks.StructBlock):
     )
 
     heading_size = wagtail_blocks.ChoiceBlock(
-        choices=SectionHeadingSizeOptions.choices,
-        default=SectionHeadingSizeOptions.SECTION_HEADING_SIZE_LG,
+        choices=HeadingSizeOptions.choices,
+        default=HeadingSizeOptions.HEADING_SIZE_LG,
         help_text=mark_safe("Sets the display size of the heading independent of the heading level (h2, h3, or h4)."),
         blank=True,
         required=False,  # to allow for default/empty/large option
     )
 
     alignment = wagtail_blocks.ChoiceBlock(
-        choices=SectionHeadingAlignmentOptions.choices,
-        default=SectionHeadingAlignmentOptions.SECTION_HEADING_ALIGNMENT_CENTER,
+        choices=HeadingAlignmentOptions.choices,
+        default=HeadingAlignmentOptions.SECTION_HEADING_ALIGNMENT_CENTER,
         blank=True,
         required=False,  # to allow for default/empty/centered option
     )
@@ -409,12 +437,43 @@ class PictoWithLinkBlock(PictoBlock):
     )
 
 
+class StackOfPictosBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/stack_of_pictos.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={
+                "all": [
+                    static("css/birdbox-picto-stack.css"),
+                ]
+            },
+        )
+
+    title = wagtail_blocks.CharBlock(
+        required=False,
+        max_length=100,
+    )
+    pictos = wagtail_blocks.ListBlock(
+        PictoBlock(),
+        collapsed=False,
+    )
+
+
 class ColumnContentBlock(wagtail_blocks.StreamBlock):
+    stack_of_pictos = StackOfPictosBlock(
+        required=False,
+    )
     picto = PictoBlock(
         required=False,
     )
     picto_with_link = PictoWithLinkBlock(
         required=False,
+    )
+    text = wagtail_blocks.RichTextBlock(
+        features=settings.RICHTEXT_FEATURES__LIMITED,
     )
 
 
@@ -436,6 +495,7 @@ class ColumnBlock(wagtail_blocks.StructBlock):
                 "all": [
                     static("css/protocol-columns.css"),
                     static("css/protocol-picto.css"),
+                    static("css/birdbox-picto-stack.css"),
                 ]
             },
         )
@@ -445,15 +505,34 @@ class ColumnBlock(wagtail_blocks.StructBlock):
         max_length=100,
     )
 
+    layout_size = wagtail_blocks.ChoiceBlock(
+        choices=LayoutSizes.choices,
+        default=LayoutSizes.LAYOUT_SIZE_NONE,
+        blank=True,
+        required=False,  # to allow for default/empty/large option
+    )
+
     column_layout = wagtail_blocks.ChoiceBlock(
         choices=ColumnOptions.choices,
         default=ColumnOptions.COLUMN_LAYOUT_TWO_COLUMN,
         required=True,
     )
 
+    background_color = ColorBlock(
+        required=True,
+        help_text="For a solid block of colour. Use with a light/dark theme as appropriate, to ensure text is visible.",
+    )
+
     theme = wagtail_blocks.ChoiceBlock(
         choices=ThemeOptions.choices,
-        default=ThemeOptions.THEME_LIGHT,
+        default=ThemeOptions.THEME_DARK,
+    )
+
+    background_color = ColorBlock(
+        required=True,
+        help_text=(
+            "For a solid block of colour, matched to the background image. Use with a light/dark theme as appropriate, to ensure text is visible."
+        ),
     )
 
     content = ColumnContentBlock(
@@ -470,8 +549,34 @@ class ArticleBlock(wagtail_blocks.StructBlock):
     def frontend_media(self):
         "Custom property that lets us selectively include CSS"
         return forms.Media(
-            css={"all": [static("css/protocol-article.css")]},
+            css={"all": [static("css/birdbox-article.css")]},
         )
+
+    title = wagtail_blocks.CharBlock(
+        max_length=150,
+        required=False,
+    )
+    heading_level = wagtail_blocks.ChoiceBlock(
+        choices=HeadingLevelOptions.choices,
+        default=HeadingLevelOptions.HEADING_LEVEL_H2,
+        help_text=mark_safe(
+            "Remember to respect best practices around hierarchy of heading level: "
+            "<a href='https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#usage_notes'>See MDN</a>"
+        ),
+    )
+    heading_size = wagtail_blocks.ChoiceBlock(
+        choices=HeadingSizeOptions.choices,
+        default=HeadingSizeOptions.HEADING_SIZE_LG,
+        help_text=mark_safe("Sets the display size of the heading independent of the heading level (h2, h3, or h4)."),
+        blank=True,
+        required=False,  # to allow for default/empty/large option
+    )
+    alignment = wagtail_blocks.ChoiceBlock(
+        choices=HeadingAlignmentOptions.choices,
+        default=HeadingAlignmentOptions.SECTION_HEADING_ALIGNMENT_CENTER,
+        blank=True,
+        required=False,  # to allow for default/empty/centered option
+    )
 
     intro_para = wagtail_blocks.CharBlock(
         max_length=1000,
@@ -571,10 +676,7 @@ class BiographyBlock(wagtail_blocks.StructBlock):
         template = "microsite/blocks/biography.html"
         icon = "user"
 
-    @property
-    def frontend_media(self):
-        "Custom property that lets us selectively include CSS"
-        return forms.Media(css={"all": [static("css/protocol-card.css")]})
+    # Frontend_media comes from the parent block that uses this block
 
     name = wagtail_blocks.CharBlock(
         max_length=100,
@@ -600,12 +702,36 @@ class BiographyGridBlock(wagtail_blocks.StructBlock):
         template = "microsite/blocks/biography_grid.html"
         icon = "group"
 
-    # frontend_media comes from the individual blocks
-    # used in this grid
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={
+                "all": [
+                    static("css/protocol-card.css"),
+                    static("css/birdbox-biography-grid.css"),
+                ]
+            }
+        )
 
     title = wagtail_blocks.CharBlock(
         max_length=150,
         required=False,
+    )
+    heading_level = wagtail_blocks.ChoiceBlock(
+        choices=HeadingLevelOptions.choices,
+        default=HeadingLevelOptions.HEADING_LEVEL_H2,
+        help_text=mark_safe(
+            "Remember to respect best practices around hierarchy of heading level: "
+            "<a href='https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#usage_notes'>See MDN</a>"
+        ),
+    )
+    heading_size = wagtail_blocks.ChoiceBlock(
+        choices=HeadingSizeOptions.choices,
+        default=HeadingSizeOptions.HEADING_SIZE_LG,
+        help_text=mark_safe("Sets the display size of the heading independent of the heading level (h2, h3, or h4)."),
+        blank=True,
+        required=False,  # to allow for default/empty/large option
     )
     standfirst = wagtail_blocks.TextBlock(
         max_length=500,
@@ -622,24 +748,21 @@ class BiographyGridBlock(wagtail_blocks.StructBlock):
     )
 
 
-class CompactCalloutBlock(wagtail_blocks.StructBlock):
-    class Meta:
-        template = "microsite/blocks/compact_callout.html"
-
+class CalloutBlockBase(wagtail_blocks.StructBlock):
     @property
     def frontend_media(self):
         "Custom property that lets us selectively include CSS"
         return forms.Media(css={"all": [static("css/protocol-callout.css")]})
 
     headline = wagtail_blocks.CharBlock(
-        max_length=50,
+        max_length=100,
         required=True,
-        help_text="Around 50 chars",
+        help_text="Around 50 chars ideally. Max 100",
     )
     body = wagtail_blocks.TextBlock(
-        max_length=180,
+        max_length=300,
         required=True,
-        help_text="Around 150 chars",
+        help_text="Around 150 chars ideally. Max 300",
     )
     cta = CTAButtonBlock(
         required=True,
@@ -649,6 +772,18 @@ class CompactCalloutBlock(wagtail_blocks.StructBlock):
         required=True,
         default=ThemeOptions.THEME_LIGHT,
     )
+
+
+class CalloutBlock(CalloutBlockBase):
+    class Meta:
+        template = "microsite/blocks/callout.html"
+        icon = "comment"
+
+
+class CompactCalloutBlock(CalloutBlockBase):
+    class Meta:
+        template = "microsite/blocks/compact_callout.html"
+        icon = "comment"
 
 
 class HeroBlock(wagtail_blocks.StructBlock):
@@ -663,15 +798,15 @@ class HeroBlock(wagtail_blocks.StructBlock):
         "Custom property that lets us selectively include CSS"
         return forms.Media(css={"all": [static("css/birdbox-hero.css")]})
 
+    teaser = wagtail_blocks.CharBlock(
+        max_length=150,
+        required=False,
+        help_text="Up to 150 characters, appears above the main heading",
+    )
     main_heading = wagtail_blocks.CharBlock(
         max_length=75,
         required=True,
         help_text="Up to 75 characters. Will be the H1 of the page it's used in",
-    )
-    subheading = wagtail_blocks.CharBlock(
-        max_length=150,
-        required=False,
-        help_text="Up to 150 characters",
     )
     standfirst = wagtail_blocks.TextBlock(
         max_length=400,
@@ -681,6 +816,10 @@ class HeroBlock(wagtail_blocks.StructBlock):
     background_image = ImageChooserBlock(
         required=False,
         help_text="Optional but recommended - needs to be something that will fill well",
+    )
+    call_to_action = LabelledLinkBlock(
+        required=False,
+        help_text="Link for an optional button at the base of the hero",
     )
     background_color = ColorBlock(
         required=True,
@@ -692,9 +831,10 @@ class HeroBlock(wagtail_blocks.StructBlock):
         default=ThemeOptions.THEME_DARK,
         help_text="The dark theme works best with a dark background color selected, the light theme needs a light one.",
     )
-    call_to_action = LabelledLinkBlock(
-        required=False,
-        help_text="Link for an optional button at the base of the hero",
+    layout = wagtail_blocks.ChoiceBlock(
+        choices=HeroLayoutOptions.choices,
+        required=True,
+        default=HeroLayoutOptions.HERO_LAYOUT_DEFAULT,
     )
 
 
@@ -773,6 +913,7 @@ class ContactFormBlock(wagtail_blocks.StructBlock):
     )
     tagline = wagtail_blocks.TextBlock(
         max_length=500,
+        required=False,
     )
     submit_button_text = wagtail_blocks.CharBlock(
         default="Submit",
@@ -809,3 +950,93 @@ class ContactFormBlock(wagtail_blocks.StructBlock):
             }
         )
         return context
+
+
+class HeadedTableBlock(wagtail_blocks.StructBlock):
+
+    """IMPORTANT: if you include this block in a StreamField and the streamfield
+    is set to collapsed=True, the table will not be visible to edit unless the
+    browser window is resized slightly. This is ticketed at
+    https://github.com/wagtail/wagtail/issues/8611 but help-text should be added
+    to make it clear for the end user until the bug is fixed.
+    """
+
+    class Meta:
+        template = "microsite/blocks/headed_table.html"
+        icon = "table"
+
+    @property
+    def frontend_media(self):
+        return forms.Media(
+            css={"all": [static("css/birdbox-headed-table.css")]},
+        )
+
+    title = wagtail_blocks.CharBlock(
+        max_length=50,
+        required=False,
+    )
+    intro = wagtail_blocks.RichTextBlock(
+        required=False,
+        features=settings.RICHTEXT_FEATURES__SIMPLE,
+    )
+
+    table = TableBlock(
+        table_options={
+            "contextMenu": [
+                "row_above",
+                "row_below",
+                "---------",
+                "col_left",
+                "col_right",
+                "---------",
+                "remove_row",
+                "remove_col",
+                "---------",
+                "undo",
+                "redo",
+                "---------",
+                "copy",
+                "cut",
+                "---------",
+                "alignment",
+            ],
+        }
+    )
+    table_width = wagtail_blocks.ChoiceBlock(
+        choices=TableWidthOptions.choices,
+        default=TableWidthOptions.TABLE_WIDTH_DEFAULT,
+    )
+
+
+class CaptionedImageLayoutBlock(wagtail_blocks.StructBlock):
+    class Meta:
+        template = "microsite/blocks/captioned_image_layout.html"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={
+                "all": [
+                    static("css/birdbox-captioned-image.css"),
+                    static("css/birdbox-captioned-image-layout.css"),
+                    static("css/protocol-card.css"),
+                ]
+            }
+        )
+
+    title = wagtail_blocks.CharBlock(
+        max_length=100,
+        rquired=False,
+    )
+
+    layout = wagtail_blocks.ChoiceBlock(
+        choices=CardLayoutOptions.choices,
+        default=CardLayoutOptions.CARD_LAYOUT_3,
+    )
+
+    cards = wagtail_blocks.ListBlock(
+        CaptionedImageBlock(),
+        help_text=get_docs_link("card-layout"),
+        collapsed=True,
+    )

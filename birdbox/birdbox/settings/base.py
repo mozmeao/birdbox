@@ -12,19 +12,28 @@ import sys
 from os.path import abspath
 from pathlib import Path
 
+from django.utils.log import DEFAULT_LOGGING
+
 import dj_database_url
 import sentry_sdk
-from everett.manager import ConfigManager
+from everett.manager import ConfigEnvFileEnv, ConfigManager, ConfigOSEnv
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import ignore_logger
 from wagtail.embeds.oembed_providers import vimeo, youtube
 
-config = ConfigManager.basic_config()
+config = ConfigManager(
+    [
+        ConfigOSEnv(),
+        ConfigEnvFileEnv(".env"),
+    ]
+)
 
 APP_NAME = "birdbox"
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BIRDBOX_BASE_DIR = os.path.dirname(PROJECT_DIR)
 ROOT_DIR = Path(__file__).resolve().parents[3]
+
+DEBUG = config("DEBUG", default="False", parser=bool)
 
 
 def path_from_root(*args):
@@ -40,6 +49,7 @@ INSTALLED_APPS = [
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
+    "wagtail.contrib.table_block",
     "wagtail.contrib.modeladmin",
     "wagtail.embeds",
     "wagtail.sites",
@@ -59,6 +69,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "mozilla_django_oidc",  # needs to be loaded after django.contrib.auth
     "product_details",
     "wagtailstreamforms",  # Has to come ahead of any custom apps that might extend it
     "generic_chooser",  # Needed by wagtailstreamforms - see https://github.com/labd/wagtailstreamforms/issues/216
@@ -74,7 +85,13 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    # In case someone has their Auth0 revoked while logged in, revalidate it:
+    "mozilla_django_oidc.middleware.SessionRefresh",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    # set_remote_addr_from_forwarded_for must come before rate_limiter
+    "common.middleware.set_remote_addr_from_forwarded_for",
+    "common.middleware.rate_limiter",
+    "django_ratelimit.middleware.RatelimitMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
@@ -145,9 +162,10 @@ GS_PROJECT_ID = config("GS_PROJECT_ID", default="", parser=str)
 if GS_BUCKET_NAME and GS_PROJECT_ID:
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     GS_DEFAULT_ACL = "publicRead"
-    GS_FILE_OVERWRITE = True
+    GS_FILE_OVERWRITE = False
 
-# Password validation
+
+# Password validation, if users are signing in with passwords - see OIDC setup, below, too
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -251,8 +269,14 @@ WAGTAILSEARCH_BACKENDS = {
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = config(
     "WAGTAILADMIN_BASE_URL",
-    default="http://birdbox.mozilla.com",
+    default="http://birdbox.mozilla.org",
 )
+
+BASE_SITE_URL = config(
+    "BASE_SITE_URL",
+    default=WAGTAILADMIN_BASE_URL,
+)
+
 
 WAGTAILEMBEDS_FINDERS = [
     {
@@ -289,6 +313,19 @@ RICHTEXT_FEATURES__FULL = [
     "ul",
 ]
 
+RICHTEXT_FEATURES__LIMITED = [
+    # Order here is the order used in the editor UI
+    "h3",
+    "h4",
+    "bold",
+    "italic",
+    "strikethrough",
+    "link",
+    "ol",
+    "ul",
+]
+
+
 RICHTEXT_FEATURES__SIMPLE = [
     "bold",
     "italic",
@@ -302,6 +339,10 @@ RICHTEXT_FEATURES__ARTICLE = RICHTEXT_FEATURES__FULL
 RICHTEXT_FEATURES__BLOGPAGE = RICHTEXT_FEATURES__FULL
 RICHTEXT_FEATURES__BIO = RICHTEXT_FEATURES__SIMPLE
 RICHTEXT_FEATURES__DETAIL = RICHTEXT_FEATURES__SIMPLE
+
+# Robots.txt - also see production.py for where we may allow it to be rendered
+
+ENGAGE_ROBOTS = config("ENGAGE_ROBOTS", parser=bool, default="False")
 
 # Logging
 
@@ -352,6 +393,126 @@ if SENTRY_DSN:
         integrations=[DjangoIntegration()],
     )
 
+# Rate limiting using django-ratelimit
+
+RATELIMIT_ENABLE = config(
+    "RATELIMIT_ENABLE",
+    default="True",
+    parser=bool,
+)
+RATELIMIT_USE_CACHE = config(
+    "RATELIMIT_USE_CACHE",
+    default="default",
+    parser=str,
+)
+RATELIMIT_VIEW = "common.views.rate_limited"
+RATELIMIT_DEFAULT_LIMIT = config(
+    "RATELIMIT_DEFAULT_LIMIT",
+    default="65/m",
+    parser=str,
+)
+
+# django-watchman
+WATCHMAN_DISABLE_APM = True
+WATCHMAN_CHECKS = (
+    "watchman.checks.caches",
+    "watchman.checks.databases",
+)
+
+# Security settings (see `manage.py check --deploy`)
+
+DISABLE_SSL = config("DISABLE_SSL", default=str(DEBUG), parser=bool)  # so default: "False"
+SECURE_SSL_REDIRECT = config(
+    "SECURE_SSL_REDIRECT",
+    default=str(not DISABLE_SSL),
+    parser=bool,
+)  # so default: "True"
+if config("USE_SECURE_PROXY_HEADER", default=str(SECURE_SSL_REDIRECT), parser=bool):
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_REDIRECT_EXEMPT = [
+    r"^healthz/$",
+    r"^readiness/$",
+]
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SESSION_COOKIE_SECURE = True
+X_FRAME_OPTIONS = "DENY"
+
+# Set header Strict-Transport-Security header
+SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default="0", parser=int)
+# Configure via env var
+
+# We do NOT want to roll all subdomains into the same HSTS setting
+# > Only set this to True if you are certain that all subdomains of your domain should be served exclusively via SSL.
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+
+
+# Authentication with Mozilla OpenID Connect / Auth0
+
+LOGIN_ERROR_URL = "/admin/"
+LOGIN_REDIRECT_URL_FAILURE = "/admin/"
+LOGIN_REDIRECT_URL = "/admin/"
+LOGOUT_REDIRECT_URL = "/admin/"
+
+OIDC_RP_SIGN_ALGO = "RS256"
+
+# How frequently do we check with the provider that the user still exists
+# and is authorised? It's 15 mins by default.
+OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS = config(
+    "OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS",
+    default="900",  # 15 mins, same as project default
+    parser=int,
+)
+
+OIDC_CREATE_USER = False  # We don't want drive-by signups
+
+OIDC_RP_CLIENT_ID = config("OIDC_RP_CLIENT_ID", default="", parser=str)
+OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET", default="", parser=str)
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = "https://auth.mozilla.auth0.com/authorize"
+OIDC_OP_TOKEN_ENDPOINT = "https://auth.mozilla.auth0.com/oauth/token"
+OIDC_OP_USER_ENDPOINT = "https://auth.mozilla.auth0.com/userinfo"
+OIDC_OP_DOMAIN = "auth.mozilla.auth0.com"
+OIDC_OP_JWKS_ENDPOINT = "https://auth.mozilla.auth0.com/.well-known/jwks.json"
+
+# If True (which should only be for local work in your .env), then show
+# username and password fields when signing up, not the SSO button
+USE_SSO_AUTH = config("USE_SSO_AUTH", default="True", parser=bool)
+
+if USE_SSO_AUTH:
+    AUTHENTICATION_BACKENDS = (
+        # Deliberately OIDC or no entry by default
+        "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
+    )
+else:
+    AUTHENTICATION_BACKENDS = (
+        # Regular username + password auth
+        "django.contrib.auth.backends.ModelBackend",
+    )
+
+# Note that AUTHENTICATION_BACKENDS is overridden in tests, so take care
+# to check/amend those if you add additional auth backends
+
+# Extra Wagtail config to disable password usage (SSO should be the only route)
+# https://docs.wagtail.org/en/v4.2.4/reference/settings.html#wagtail-password-management-enabled
+# Don't let users change or reset their password
+if USE_SSO_AUTH:
+    WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
+    WAGTAIL_PASSWORD_RESET_ENABLED = False
+
+    # Don't require a password when creating a user,
+    # and blank password means cannot log in unless SSO
+    WAGTAILUSERS_PASSWORD_ENABLED = False
+
+# EXTRA LOGGING
+DEFAULT_LOGGING["loggers"]["mozilla_django_oidc"] = {
+    "handlers": ["console"],
+    "level": "INFO",
+}
+
 
 # Mozillaverse settings
 
@@ -390,6 +551,8 @@ BLOG_PAGINATION_PAGE_SIZE = config(
 # For analytics
 GOOGLE_TAG_ID = config("GOOGLE_TAG_ID", default="", parser=str)
 
+
+# For Mozilla Innovations contact form ONLY
 CONTACT_FORM_RECIPIENT_EMAIL = {
     "default": config(
         "CONTACT_FORM_RECIPIENT_EMAIL__DEFAULT",
@@ -401,9 +564,9 @@ CONTACT_FORM_RECIPIENT_EMAIL = {
         default="innovations@mozilla.com",
         parser=str,
     ),
-    "meico": config(
-        "CONTACT_FORM_RECIPIENT_EMAIL__MEICO",
-        default="meico@mozilla.com",
+    "mieco": config(
+        "CONTACT_FORM_RECIPIENT_EMAIL__MIECO",
+        default="mieco@mozilla.com",
         parser=str,
     ),
 }

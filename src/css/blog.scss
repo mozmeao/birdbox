@@ -4,25 +4,31 @@
 
 // custom CSS for the Blog pages
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
-@import '~@mozilla-protocol/core/protocol/css/components/article';
 @import '~@mozilla-protocol/core/protocol/css/components/split';
+@import 'article.scss';
 @import 'pre-protocol/pagination.scss';
 
 
-.blog-category-tag {
-    @include font-size(12px);
-    background-color: $color-black;
+.blog-tags-list {
+    list-style: none;
+}
+
+.blog-tag {
+    @include text-body-sm;
+    background-color: $color-light-gray-20;
     border-radius: $border-radius-sm;
-    color: $color-white;
     display: inline-block;
-    font-family: get-theme('button-font-family');
-    font-weight: lighter;
-    letter-spacing: 1px;
-    line-height: type-scale('body-line-height');
     margin-bottom: $spacing-lg;
     margin-right: $spacing-sm;
-    padding: 3px $spacing-sm;
+    padding: $spacing-xs $spacing-md;
     text-transform: uppercase;
+}
+
+.blog-byline {
+    font-weight: bold;
+    border-bottom: 1px solid $color-marketing-gray-30;
+    padding-bottom: $spacing-md;
+    margin-bottom: $spacing-xl;
 }
 
 .blogpost figure.header-image {

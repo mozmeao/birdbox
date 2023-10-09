@@ -90,7 +90,7 @@ class MEICOContactForm(ContactFormBase):
         )
         self.order_fields(["name", "email", "interests", "description"])
         self.email_subject = "MIECO Interest Form"
-        self.recipient_email = settings.CONTACT_FORM_RECIPIENT_EMAIL["meico"]
+        self.recipient_email = settings.CONTACT_FORM_RECIPIENT_EMAIL["mieco"]
 
         # self.root_css_class is not needed for this form
         self.form_type = "mieco-form"  # used to set a key class for behaviour
@@ -130,7 +130,7 @@ CONTACT_FORM_CHOICES = (
     ),
     (
         "microsite.forms.MEICOContactForm",
-        "MEICO contact form",
+        "MIECO contact form",
     ),
     (
         "microsite.forms.BuildersChallengeForm",

@@ -12,3 +12,9 @@ DEBUG = False
 CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", parser=ListOf(str))
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", parser=ListOf(str))
 SECRET_KEY = config("SECRET_KEY", parser=str)
+
+ENGAGE_ROBOTS = config(
+    "ENGAGE_ROBOTS",
+    parser=bool,
+    default=str(BASE_SITE_URL in ALLOWED_HOSTS),
+)

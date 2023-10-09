@@ -1,14 +1,18 @@
 certifi>=2023.7.22
+cryptography>=41.0.4
 dj-database-url==2.1.0
 django-mozilla-product-details>=1.0.3
 django-storages[google]==1.14
 Django>=4.2.5
+django-ratelimit==4.1.0
 django-redis==5.3.0
 django-jsonview==2.0.0
+django-watchman==1.3.0
 everett>=3.2.0
 gevent>=23.9.1
 gunicorn==21.2.0
 honcho==1.1.0
+mozilla-django-oidc==3.0.0
 Pillow==10.0.1
 psycopg2-binary==2.9.7  # NB: 3.x not currently supported until Django 4.2 is in use
 requests>=2.31.0

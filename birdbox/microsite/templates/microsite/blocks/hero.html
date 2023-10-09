@@ -21,6 +21,7 @@
     box-shadow: 0 0 3px var(--hero-background-color, #ffffffb2);
   }
 
+  .hero-section-centered,
   @media (min-width: 768px) {
     .hero-section.mzp-t-dark .hero-text-wrapper,
     .hero-section.mzp-t-light .hero-text-wrapper {
@@ -33,28 +34,28 @@
 </style>
 
 <section
-  class="{{block.value.theme}} hero-section"
+  class="{{block.value.theme}} hero-section {{block.value.layout}}"
   style="background-color: {{block.value.background_color}};
   {% if block.value.background_image %}
     {% image block.value.background_image width-1000 as bg_image %}
         background-image: url('{{bg_image.url}}')
   {% endif %}"
 >
-  <div class="{% get_layout_class_from_page %}">
+  <div class="mzp-l-content">
       <div class="hero-text-wrapper">
-          <h1>{{block.value.main_heading}}</h1>
-        {% if block.value.subheading %}
-          <h2>{{block.value.subheading}}</h2>
+        {% if block.value.teaser %}
+          <span class="hero-title-teaser">{{block.value.teaser}}</span>
         {% endif %}
+          <h1>{{block.value.main_heading}}</h1>
         {% if block.value.standfirst %}
           <p>{{block.value.standfirst|linebreaksbr}}</p>
         {% endif %}
+        {% if block.value.call_to_action.url %}
+          <a href="{{block.value.call_to_action.url}}" class="mzp-c-button {{block.value.theme}}">
+            {{block.value.call_to_action.label}}
+          </a>
+        {% endif %}
       </div>
-      {% if block.value.call_to_action.url %}
-        <a href="{{block.value.call_to_action.url}}" class="mzp-c-button {{block.value.theme}}">
-          {{block.value.call_to_action.label}}
-        </a>
-      {% endif %}
   </div>
 
 </section>

@@ -5,16 +5,20 @@
 
 {% block content %}
 <div class="{% get_layout_class_from_page %}">
-  <article class="mzp-c-article">
+  <article class="bb-c-article">
 
-    {% for tag in page.tags.all %}
-    <div class="blog-category-tag">{{tag}}</div>
-    {% endfor %}
+    {% if page.tags.all %}
+      <ul class="blog-tags-list">
+      {% for tag in page.tags.all %}
+        <li class="blog-tag">{{ tag }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
 
-    <h1 class="mzp-c-article-title">{{page.title}}</h1>
+    <h1 class="bb-c-article-title">{{page.title}}</h1>
 
     {% with page.get_author_info as author_info %}
-    <p>{{page.date|date}} {% if author_info %}{% if page.date %}|{% endif %}{% endif %} {{page.get_author_info}}</p>
+    <p class="blog-byline">{{page.date|date}} {% if author_info %}{% if page.date %}|{% endif %}{% endif %} {{page.get_author_info}}</p>
     {% endwith %}
 
     {% if page.header_image %}
@@ -24,7 +28,7 @@
     {% endif %}
 
     {% if page.standfirst %}
-    <p class="mzp-c-article-intro">
+    <p class="bb-c-article-intro">
       {{page.standfirst}}
     </p>
     {% endif %}

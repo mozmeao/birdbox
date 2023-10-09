@@ -4,6 +4,7 @@
 
 from typing import Dict, List
 
+from django.conf import settings
 from django.template import Library
 from django.template.loader import render_to_string
 
@@ -62,7 +63,7 @@ def get_alt_text_for_accessible_image_block(block_data):
     Wagtail also uses by default"""
 
     retval = ""
-    if not block_data.get("decorative_only"):
+    if block_data and not block_data.get("decorative_only"):
         retval = block_data.get("alt_text")
         if not retval:
             retval = getattr(block_data.get("image"), "title", "")
@@ -78,3 +79,8 @@ def gather_field_errors(form):
             errors.append(f"{field.label}: {combined_errors}")
 
     return errors
+
+
+@register.simple_tag
+def should_use_sso_auth():
+    return settings.USE_SSO_AUTH

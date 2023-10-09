@@ -15,12 +15,28 @@
 
     .hero-text-wrapper {
         @media #{$mq-md} {
-            max-width: 55%;
+            max-width: 45%;
         }
 
-        h2 {
-            @include text-title-sm;
+        & .hero-title-teaser {
+            @include font-mozilla;
+            @include text-title-xs;
+            display: block;
+            margin-bottom: $spacing-md;
             font-weight: normal;
+            text-transform: uppercase;
+            line-height: 1.2em;
+        }
+    }
+
+    &.hero-section-centered {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        .hero-text-wrapper{
+            max-width: 100%;
+            margin: auto;
+            text-align: center;
         }
     }
 }

@@ -4,7 +4,10 @@
 
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
-.c-captioned-image {
+.bb-captioned-image {
+    align-items: center;
+    display: flex;
+    height: 150px;
     margin: $spacing-lg 0;
     text-align: center;
 

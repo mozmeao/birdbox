@@ -5,13 +5,14 @@
 
 {% block content %}
 
-{% block_with_h1_exists_in_page page as h1_exists %}
-
-{% if not h1_exists %}
 <div class="{% get_layout_class_from_page %}">
   <h1>{{page.title}}</h1>
+  {% if page.introduction %}
+  <div>
+    {{page.introduction|richtext}}
+  </div>
+  {% endif %}
 </div>
-{% endif %}
 
 {% for block in page.content %}
     {% include_block block %}

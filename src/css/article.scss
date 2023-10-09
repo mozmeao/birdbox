@@ -1,0 +1,18 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+@import '~@mozilla-protocol/core/protocol/css/includes/lib';
+
+.bb-c-article {
+    max-width: $content-md;
+    margin: 0 auto;
+}
+
+.bb-c-article-title {
+    @include text-title-lg;
+}
+
+.bb-c-article-intro {
+    @include text-body-lg;
+}
