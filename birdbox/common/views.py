@@ -16,6 +16,10 @@ def page_not_found_view(request, exception=None, template_name="404.html"):
     return render(request, template_name, status=404)
 
 
+def csrf_failure(request, reason="CSRF failure", template_name="403_csrf.html"):
+    return render(request, template_name, status=403)
+
+
 @never_cache
 def rate_limited(request, exception):
     """Render a rate-limited exception page"""
