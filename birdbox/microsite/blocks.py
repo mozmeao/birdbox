@@ -692,6 +692,10 @@ class BiographyBlock(wagtail_blocks.StructBlock):
     website = wagtail_blocks.URLBlock(
         required=False,
     )
+    website_link_label = wagtail_blocks.CharBlock(
+        max_length=50,
+        required=False,
+    )
     image = AccessibleImageBlock(
         required=False,
     )

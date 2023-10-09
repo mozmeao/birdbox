@@ -23,7 +23,7 @@
       {% if block.website %}
       <p class="mzp-c-card-cta">
           <a href="{{block.website}}" class="mzp-c-card-cta-text">
-            {{block.website}}
+            {{block.website_link_label|default:block.website}}
           </a>
       </p>
       {% endif %}
