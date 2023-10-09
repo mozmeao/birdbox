@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+from django.conf import settings
 from django.test import override_settings
 from django.urls import path, reverse
 
@@ -41,3 +42,8 @@ def test_robots_txt(client, engage_robots, expected_content):
     with override_settings(ENGAGE_ROBOTS=engage_robots):
         resp = client.get("/robots.txt")
         assert resp.content == expected_content
+
+
+@pytest.mark.django_db
+def test_csrf_view_is_custom_one():
+    assert settings.CSRF_FAILURE_VIEW == "common.views.csrf_failure"
