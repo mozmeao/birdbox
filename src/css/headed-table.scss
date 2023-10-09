@@ -6,13 +6,14 @@
 
 
 .bb-headed-table-block {
-
     &.bb-table-width-full {
         table {
             width: 100%;
         }
+
         th {
             width: 30%;
+
             @media #{$mq-md} {
                 width: 20%
             }
@@ -21,25 +22,32 @@
 
     table {
         text-align: left;
+
         // Styles required by the table plugin used by Wagtail's TableBlock
         .htLeft {
             text-align: left;
         }
+
         .htCenter {
             text-align: center;
         }
+
         .htRight {
             text-align: right;
         }
+
         .htJustify {
             text-justify: inter-word;
         }
+
         .htTop {
             vertical-align: top;
         }
+
         .htMiddle {
             vertical-align: middle;
         }
+
         .htBottom {
             vertical-align: bottom;
         }

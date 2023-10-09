@@ -6,15 +6,11 @@
 
 
 .bb-c-picto-stack {
-
-    // border: 1px solid #ccc;
-
-    h3.title {
+    .title {
         text-align: center;
         padding: $spacing-sm 0;
         margin-bottom: $spacing-lg;
     }
-
 
     .mzp-c-picto-image {
         max-width: 128px; // 2x $layout-lg
@@ -23,7 +19,7 @@
     .mzp-c-picto,
     .mzp-c-picto-center {
         & .mzp-c-picto-image {
-            margin-bottom: 0px;
+            margin-bottom: 0;
         }
     }
 
@@ -33,7 +29,7 @@
         margin-bottom: $spacing-2xl;
     }
 
-    h3.mzp-c-picto-heading {
+    .mzp-c-picto-heading {
         @include text-title-3xs;
     }
 }
