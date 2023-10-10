@@ -937,15 +937,19 @@ class BlogIndexPage(BaseProtocolPage):
         context["non_featured_posts"] = posts
         return context
 
-    def get_non_featured_ordered_posts(self, exclude_featured_post=True):
+    def get_non_featured_ordered_posts(self, exclude_featured_post=True, live=True):
         posts = BlogPage.objects.child_of(self).specific().order_by("-date")
+        if live:
+            posts = posts.live()
         if exclude_featured_post:
             if featured_post := self.get_specific_featured_post():
                 posts = posts.exclude(id=featured_post.id)
         return posts
 
-    def get_specific_featured_post(self) -> List[BlogPage]:
-        base_qs = BlogPage.objects.child_of(self).live().order_by("-date")
+    def get_specific_featured_post(self, live=True) -> List[BlogPage]:
+        base_qs = BlogPage.objects.child_of(self).specific().order_by("-date")
+        if live:
+            base_qs = base_qs.live()
         return base_qs.filter(is_featured=True).first()
 
 
