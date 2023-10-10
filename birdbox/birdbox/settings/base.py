@@ -239,8 +239,11 @@ MEDIA_URL = "/media/"
 
 
 def set_whitenoise_headers(headers, path, url):
-    if "/fonts/" in url:
-        headers["Cache-Control"] = "public, max-age=604800"  # one week
+    if url.startswith("/static/"):
+        # Static assets should have cachebusting MD5 hashes in them because
+        # we're using CompressedManifestStaticFilesStorage.
+        # As such, they are safe to cache for quite a while
+        headers["Cache-Control"] = "public, max-age=30758400"  # 1 year
 
 
 WHITENOISE_ADD_HEADERS_FUNCTION = set_whitenoise_headers
