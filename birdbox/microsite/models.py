@@ -921,10 +921,14 @@ class BlogIndexPage(BaseProtocolPage):
         context = super().get_context(request, *args, **kwargs)
 
         # add featured post to the context:
-        context["featured_post"] = self.get_specific_featured_post()
+        context["featured_post"] = self.get_specific_featured_post(
+            is_preview_mode=request.is_preview,
+        )
 
         # now paginate the rest
-        non_featured_posts = self.get_non_featured_ordered_posts()
+        non_featured_posts = self.get_non_featured_ordered_posts(
+            is_preview_mode=request.is_preview,
+        )
         paginator = Paginator(non_featured_posts, settings.BLOG_PAGINATION_PAGE_SIZE)
         page = request.GET.get("page")
         try:
@@ -937,15 +941,28 @@ class BlogIndexPage(BaseProtocolPage):
         context["non_featured_posts"] = posts
         return context
 
-    def get_non_featured_ordered_posts(self, exclude_featured_post=True):
+    def get_non_featured_ordered_posts(
+        self,
+        exclude_featured_post=True,
+        is_preview_mode=False,
+    ):
         posts = BlogPage.objects.child_of(self).specific().order_by("-date")
+        if not is_preview_mode:
+            # We only want live posts
+            posts = posts.live()
         if exclude_featured_post:
-            if featured_post := self.get_specific_featured_post():
+            if featured_post := self.get_specific_featured_post(is_preview_mode=is_preview_mode):
                 posts = posts.exclude(id=featured_post.id)
         return posts
 
-    def get_specific_featured_post(self) -> List[BlogPage]:
-        base_qs = BlogPage.objects.child_of(self).live().order_by("-date")
+    def get_specific_featured_post(
+        self,
+        is_preview_mode=False,
+    ) -> List[BlogPage]:
+        base_qs = BlogPage.objects.child_of(self).specific().order_by("-date")
+        if not is_preview_mode:
+            # We only want live posts
+            base_qs = base_qs.live()
         return base_qs.filter(is_featured=True).first()
 
 
