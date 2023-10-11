@@ -251,6 +251,9 @@ WHITENOISE_ROOT = config(
     "WHITENOISE_ROOT",
     default=path_from_root("root_files"),
 )
+
+# Default age duration for static assets without an MD5 hash in their filename.
+# (Which shouldn't be accessed in production anyway)
 WHITENOISE_MAX_AGE = 6 * 60 * 60  # 6 hours
 
 # Wagtail settings
