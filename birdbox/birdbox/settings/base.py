@@ -78,6 +78,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "common.middleware.remove_vary_on_cookie_for_statics",  # Must go above SessionMiddleware so that it runs last on the response
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -237,17 +238,13 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BIRDBOX_BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
-
-def set_whitenoise_headers(headers, path, url):
-    if "/fonts/" in url:
-        headers["Cache-Control"] = "public, max-age=604800"  # one week
-
-
-WHITENOISE_ADD_HEADERS_FUNCTION = set_whitenoise_headers
 WHITENOISE_ROOT = config(
     "WHITENOISE_ROOT",
     default=path_from_root("root_files"),
 )
+
+# Default age duration for static assets without an MD5 hash in their filename.
+# (Which shouldn't be accessed in production anyway)
 WHITENOISE_MAX_AGE = 6 * 60 * 60  # 6 hours
 
 # Wagtail settings

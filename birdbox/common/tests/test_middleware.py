@@ -2,15 +2,22 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+from copy import deepcopy
 from unittest import mock
 
 from django.conf import settings
 from django.core.cache import cache
+from django.http import HttpResponse
 from django.test import RequestFactory, TestCase, override_settings
 
+import pytest
 from django_ratelimit.exceptions import Ratelimited
 
-from common.middleware import rate_limiter, set_remote_addr_from_forwarded_for
+from common.middleware import (
+    rate_limiter,
+    remove_vary_on_cookie_for_statics,
+    set_remote_addr_from_forwarded_for,
+)
 
 
 @override_settings(RATELIMIT_ENABLE=True, RATELIMIT_DEFAULT_LIMIT="2/m")
@@ -118,3 +125,108 @@ class RemoteAddressMiddlewareTests(TestCase):
 
                 updated_request = mock_get_response.call_args_list[0][0][0]
                 self.assertEqual(updated_request.META["REMOTE_ADDR"], case["expected_ip"])
+
+
+_HEADERS___SIMPLE_VARY_ON_COOKIE = {
+    "Content-Type": "image/png",
+    "Access-Control-Allow-Origin": "*",
+    "Cache-Control": "public, max-age=3600",
+    "Vary": "Cookie",
+    "Last-Modified": "Wed, 27 Sep 2023 13:24:03 GMT",
+    "ETag": '"65142cf3-1cee"',
+    "Content-Length": "1780",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "same-origin",
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "X-Frame-Options": "DENY",
+}
+_HEADERS___COMPLEX_VARY_ON_COOKIE = deepcopy(_HEADERS___SIMPLE_VARY_ON_COOKIE)
+_HEADERS___COMPLEX_VARY_ON_COOKIE["Vary"] = "Accept-Encoding, Cookie"
+
+_HEADERS__WITHOUT_SIMPLE_VARY_ON_COOKIE = deepcopy(_HEADERS___SIMPLE_VARY_ON_COOKIE)
+del _HEADERS__WITHOUT_SIMPLE_VARY_ON_COOKIE["Vary"]
+
+_HEADERS__WITHOUT_COMPLEX_VARY_ON_COOKIE = deepcopy(_HEADERS___COMPLEX_VARY_ON_COOKIE)
+_HEADERS__WITHOUT_COMPLEX_VARY_ON_COOKIE["Vary"] = "Accept-Encoding"
+
+
+@pytest.mark.parametrize(
+    "request_path, original_headers, status_code, expected_headers",
+    (
+        (
+            "/",
+            _HEADERS___SIMPLE_VARY_ON_COOKIE,
+            200,
+            _HEADERS___SIMPLE_VARY_ON_COOKIE,
+        ),
+        (
+            "/some-non-static-path/",
+            _HEADERS___COMPLEX_VARY_ON_COOKIE,
+            200,
+            _HEADERS___COMPLEX_VARY_ON_COOKIE,
+        ),
+        (
+            "/static/test.png",
+            _HEADERS___SIMPLE_VARY_ON_COOKIE,
+            200,
+            _HEADERS__WITHOUT_SIMPLE_VARY_ON_COOKIE,
+        ),
+        (
+            "/static/path/to/test.png",
+            _HEADERS___COMPLEX_VARY_ON_COOKIE,
+            200,
+            _HEADERS__WITHOUT_COMPLEX_VARY_ON_COOKIE,
+        ),
+        (
+            "/static/path/to/test.png",
+            _HEADERS___SIMPLE_VARY_ON_COOKIE,
+            404,
+            _HEADERS___SIMPLE_VARY_ON_COOKIE,
+        ),
+        (
+            "/static/path/to/test.png",
+            _HEADERS___COMPLEX_VARY_ON_COOKIE,
+            404,
+            _HEADERS___COMPLEX_VARY_ON_COOKIE,
+        ),
+        (
+            "/static/path/to/test.png",
+            _HEADERS___SIMPLE_VARY_ON_COOKIE,
+            301,
+            _HEADERS___SIMPLE_VARY_ON_COOKIE,
+        ),
+        (
+            "/static/path/to/test.png",
+            _HEADERS___COMPLEX_VARY_ON_COOKIE,
+            302,
+            _HEADERS___COMPLEX_VARY_ON_COOKIE,
+        ),
+    ),
+    ids=(
+        "Not a static path, no change to simple Vary: Cookie header",
+        "Not a static path, no change to complex Vary: Cookie header",
+        "Static path, dropping of simple Vary: Cookie header",
+        "Static path, change to complex Vary: Cookie header",
+        "Static path, but 404 so no change; simple Vary: Cookie header",
+        "Static path, but 404 so no change; complex Vary: Cookie header",
+        "Static path, but 301 so no change; simple Vary: Cookie header",  # very artificial headers for a 302
+        "Static path, but 302 so no change; complex Vary: Cookie header",  # very artificial headers for a 302
+    ),
+)
+def test_remove_vary_on_cookie_for_statics(
+    request_path,
+    original_headers,
+    status_code,
+    expected_headers,
+):
+    mock_get_response = mock.Mock(name="get_response")
+    middleware_func = remove_vary_on_cookie_for_statics(mock_get_response)
+
+    fake_request = RequestFactory().get(request_path)
+    fake_response = HttpResponse("", headers=original_headers, status=status_code)
+    mock_get_response.return_value = fake_response
+
+    response = middleware_func(fake_request)
+
+    mock_get_response.assert_called_once_with(fake_request)
+    assert response.headers == expected_headers
