@@ -7,6 +7,70 @@
 .bb-c-article {
     max-width: $content-md;
     margin: 0 auto;
+
+    ul {
+        @include bidi(((margin-left, $layout-sm, margin-right, 0),));
+        list-style: disc;
+
+        li {
+            margin-bottom: 0.25em;
+        }
+
+        ul {
+            @include bidi(((margin-left, $layout-xs, margin-right, 0),));
+            list-style: circle;
+            margin-bottom: 0;
+        }
+
+        ol {
+            @include bidi(((margin-left, $layout-xs, margin-right, 0),));
+            list-style: decimal;
+            margin-bottom: 0;
+        }
+    }
+
+    ol {
+        @include bidi(((margin-left, $layout-sm, margin-right, 0),));
+        list-style: decimal;
+
+        li {
+            margin-bottom: 0.25em;
+        }
+
+        ol {
+            @include bidi(((margin-left, $layout-xs, margin-right, 0),));
+            list-style: lower-alpha;
+            margin-bottom: 0;
+        }
+
+        ul {
+            @include bidi(((margin-left, $layout-xs, margin-right, 0),));
+            list-style: disc;
+            margin-bottom: 0;
+        }
+    }
+
+    dl {
+        dt {
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        dd {
+            @include bidi(((margin-left, $layout-xs, margin-right, 0),));
+            margin-bottom: 0.25em;
+        }
+
+        ul,
+        ol {
+            @include bidi(((margin-left, $layout-xs, margin-right, 0),));
+            margin-bottom: 0;
+        }
+
+        ul {
+            list-style: circle;
+        }
+    }
 }
 
 .bb-c-article-title {
