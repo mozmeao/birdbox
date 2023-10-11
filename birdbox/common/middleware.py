@@ -4,6 +4,8 @@
 
 """Custom middleware for Birdbox"""
 
+from http import HTTPStatus
+
 from django.conf import settings
 
 from django_ratelimit import ALL
@@ -80,6 +82,34 @@ def set_remote_addr_from_forwarded_for(get_response):
             request.META["REMOTE_ADDR"] = forwarded_for
 
         response = get_response(request)
+        return response
+
+    return middleware
+
+
+def remove_vary_on_cookie_for_statics(get_response):
+    """We're using whitenoise to serve static assets, but Django is setting the
+    `Vary: Cookie` header on static assets, which is stoppping the CDN from
+    caching them effectively.
+
+    This middleware needs to go before SessionMiddleware so that it can
+    selectively prune back the Vary: Cookie header which that middleware sets.
+    """
+
+    VARY_HEADER_KEY = "Vary"
+    COOKIE_VALUE = "Cookie"
+
+    def middleware(request):
+        response = get_response(request)
+        if response.status_code == HTTPStatus.OK and request.path.startswith(settings.STATIC_URL):
+            for key, value in list(response.headers.items()):
+                if key.lower() == VARY_HEADER_KEY.lower():
+                    split_values = [x.strip() for x in value.split(",")]
+                    if split_values == [COOKIE_VALUE]:
+                        del response.headers[key]
+                    elif COOKIE_VALUE in split_values:
+                        split_values.pop(split_values.index(COOKIE_VALUE))
+                        response.headers[key] = ", ".join(split_values)
         return response
 
     return middleware
