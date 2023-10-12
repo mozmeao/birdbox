@@ -23,6 +23,9 @@
   {% if settings.microsite.MicrositeSettings.navigation_enabled %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/birdbox-navigation.css' %}">
   {% endif %}
+  {% if page.specific.show_breadcrumbs %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/protocol-breadcrumb.css' %}">
+  {% endif %}
 {% endblock extra_css %}
 
 {% block extra_head %}

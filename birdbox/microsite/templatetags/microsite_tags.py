@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+from collections import defaultdict
 from operator import itemgetter
 from typing import Dict, List
 
@@ -9,12 +10,22 @@ from django.conf import settings
 from django.template import Library
 
 from product_details import product_details
+from wagtail.blocks.struct_block import StructBlock
 from wagtail.models import Site
 
-from common.utils import find_streamfield_blocks_by_types, get_freshest_newsletter_data
+from common.utils import (
+    find_streamfield_blocks_by_types,
+    get_freshest_newsletter_data,
+)
 
 from ..blocks import HeroBlock
-from ..models import Footer, FormStandardMessages, MicrositeSettings, Page
+from ..models import (
+    Footer,
+    FormStandardMessages,
+    MicrositeSettings,
+    Page,
+    StructuralPage,
+)
 
 register = Library()
 
@@ -192,3 +203,27 @@ def block_with_h1_exists_in_page(page: Page) -> bool:
     # If we have more than one candidate block in a page, that's a separate problem
     # but should be caught by Wagtail's own a11y checks
     return len(candidate_blocks) > 0
+
+
+@register.inclusion_tag("microsite/partials/breadcrumbs.html")
+def breadcrumbs(page: Page) -> Dict[str, str]:
+    context = defaultdict(list)
+    context["show_breadcrumbs"] = page.specific.show_breadcrumbs
+    context["page"] = page
+
+    # Exclude the Wagtail-internal site Root page, because that's not a viewable page
+    ancestors_up_to_homepage = page.get_ancestors().defer_streamfields().live().public()[1:]
+    for ancestor in ancestors_up_to_homepage:
+        context["ancestors"].append(
+            {
+                "title": ancestor.title,
+                "url": ancestor.url if not isinstance(ancestor.specific, StructuralPage) else None,
+            }
+        )
+
+    return context
+
+
+@register.filter
+def is_hero_block(value: StructBlock) -> bool:
+    return isinstance(value.block, HeroBlock)

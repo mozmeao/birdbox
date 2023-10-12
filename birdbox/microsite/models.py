@@ -128,11 +128,19 @@ class BaseProtocolPage(CacheAwareAbstractBasePage):
         help_text="Text to accompany an entry in the navigation menu. Optional.",
     )
 
+    show_breadcrumbs = BooleanField(
+        default=False,
+        help_text=mark_safe(
+            "Automatically show <a href='https://protocol.mozilla.org/components/detail/breadcrumb'>breadcrumbs</a> on this page, if appropriate?",
+        ),
+    )
+
     settings_panels = Page.settings_panels + [
         FieldPanel("page_layout"),
         MultiFieldPanel(
             [
                 FieldPanel("show_in_menus"),  # From base page. TODO: avoid duplication
+                FieldPanel("show_breadcrumbs"),
                 FieldPanel("menu_icon"),
                 FieldPanel("menu_description"),
             ],
