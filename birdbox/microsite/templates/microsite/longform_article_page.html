@@ -5,10 +5,12 @@
 
 {% block content %}
 
+{% breadcrumbs page %}
+
 <div class="{% get_layout_class_from_page %}">
+
   <article class="bb-c-article">
     <h1 class="bb-c-article-title">{{page.title}}</h1>
-
     {% if page.introduction %}
     <div class="bb-c-article-intro">
       {{ page.introduction|richtext }}

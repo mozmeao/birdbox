@@ -14,7 +14,8 @@
 {% endif %}
 
 {% for block in page.content %}
-    {% include_block block %}
+  {# Breadcrumbs go after the hero unit #}
+  {% include "microsite/partials/block_with_breadcrumbs_where_appropriate.html" %}
 {% endfor %}
 
 {% endblock content %}

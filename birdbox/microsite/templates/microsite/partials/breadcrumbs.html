@@ -1,0 +1,18 @@
+{% if show_breadcrumbs %}
+<nav aria-label="breadcrumb" class="mzp-c-breadcrumb">
+  <ol class="mzp-c-breadcrumb-list">
+      {% for ancestor in ancestors %}
+      <li class="mzp-c-breadcrumb-item">
+          {% if ancestor.url %}
+          <a href="{{ancestor.url}}">{{ ancestor.title }}</a>
+          {% else %}
+          {{ ancestor.title }}
+          {% endif %}
+        </li>
+      {% endfor %}
+      <li aria-current="page" class="mzp-c-breadcrumb-item">
+          {{ page.title }}
+      </li>
+  </ol>
+</nav>
+{% endif %}

@@ -1,0 +1,17 @@
+{% load microsite_tags wagtailcore_tags %}
+
+{# Breadcrumbs go after the hero unit #}
+
+{% if forloop.counter0 == 0 %}
+  {% if not block|is_hero_block %}
+    {% breadcrumbs page %}
+  {% endif %}
+{% endif %}
+
+{% include_block block %}
+
+{% if forloop.counter0 == 0 %}
+  {% if block|is_hero_block %}
+    {% breadcrumbs page %}
+  {% endif %}
+{% endif %}
