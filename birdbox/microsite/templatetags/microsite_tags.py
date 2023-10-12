@@ -55,7 +55,7 @@ def navigation(context) -> Dict:
     }
 
     if microsite_settings.navigation_generate_nav_from_page_tree:
-        context["nav_links"] = [child_page for child_page in homepage.get_children().defer_streamfields().live().in_menu()]
+        context["nav_links"] = [child_page for child_page in homepage.get_children().defer_streamfields().live().public().in_menu()]
 
     if microsite_settings.navigation_show_cta_button:
         context["cta_label"] = microsite_settings.navigation_cta_button_label
