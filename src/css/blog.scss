@@ -9,6 +9,11 @@
 @import 'pre-protocol/pagination.scss';
 
 
+.bb-title-wrapper {
+    padding-top: $layout-sm;
+    padding-bottom: $layout-md;
+}
+
 .blog-tags-list {
     list-style: none;
 }
