@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="{% get_layout_class_from_page %}">
+<div class="{% get_layout_class_from_page %} bb-title-wrapper">
   <h1>{{page.title}}</h1>
 
 {% if featured_post and not request.GET.page or request.GET.page == "1" %}
