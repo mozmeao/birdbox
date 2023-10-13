@@ -245,7 +245,7 @@ WHITENOISE_ROOT = config(
 
 # Default age duration for static assets without an MD5 hash in their filename.
 # (Which shouldn't be accessed in production anyway)
-WHITENOISE_MAX_AGE = 6 * 60 * 60  # 6 hours
+WHITENOISE_MAX_AGE = 24 * 60 * 60  # 24 hours
 
 # Wagtail settings
 
@@ -405,7 +405,7 @@ RATELIMIT_USE_CACHE = config(
 RATELIMIT_VIEW = "common.views.rate_limited"
 RATELIMIT_DEFAULT_LIMIT = config(
     "RATELIMIT_DEFAULT_LIMIT",
-    default="65/m",
+    default="85/m",
     parser=str,
 )
 
