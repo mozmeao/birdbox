@@ -35,6 +35,7 @@ from wagtail.contrib.settings.models import BaseGenericSetting, register_setting
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import LockableMixin, Page
 from wagtail.snippets.models import register_snippet
+from wagtailmarkdown.blocks import MarkdownBlock
 from wagtailstreamforms.blocks import WagtailFormBlock
 
 from birdbox.protocol_links import get_docs_link
@@ -668,6 +669,13 @@ class LongformArticlePage(BaseProtocolPage):
                 ),
             ),
             (
+                "markdown",
+                MarkdownBlock(
+                    label="Markdown block",
+                    required=False,
+                ),
+            ),
+            (
                 "image",
                 CaptionedImageBlock(
                     label_format="Captioned image: {image_caption}",
@@ -761,7 +769,14 @@ class BlogPage(BaseProtocolPage):
                 "blogtext",
                 RichTextBlock(
                     features=settings.RICHTEXT_FEATURES__BLOGPAGE,
-                    label="Text block for blog post",
+                    label="Rich text",
+                    required=False,
+                ),
+            ),
+            (
+                "markdown",
+                MarkdownBlock(
+                    label="Markdown",
                     required=False,
                 ),
             ),
