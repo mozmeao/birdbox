@@ -18,6 +18,12 @@
     list-style: none;
 }
 
+.mzp-c-card-date {
+    @include text-body-sm;
+    color: $color-light-gray-90;
+    margin-bottom: $spacing-sm;
+}
+
 .blog-tag {
     @include text-body-sm;
     background-color: $color-light-gray-20;
