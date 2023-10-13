@@ -71,6 +71,12 @@
             list-style: circle;
         }
     }
+
+    pre {
+        background-color: $color-light-gray-20;
+        margin-bottom: 1.25em;
+        padding: $spacing-md;
+    }
 }
 
 .bb-c-article-title {

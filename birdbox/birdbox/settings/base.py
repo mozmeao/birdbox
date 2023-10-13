@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "mozilla_django_oidc",  # needs to be loaded after django.contrib.auth
     "product_details",
+    "wagtailmarkdown",
     "wagtailstreamforms",  # Has to come ahead of any custom apps that might extend it
     "generic_chooser",  # Needed by wagtailstreamforms - see https://github.com/labd/wagtailstreamforms/issues/216
     "common",
@@ -523,6 +524,53 @@ if USE_SSO_AUTH:
 DEFAULT_LOGGING["loggers"]["mozilla_django_oidc"] = {
     "handlers": ["console"],
     "level": "INFO",
+}
+
+
+WAGTAILMARKDOWN = {
+    "autodownload_fontawesome": False,
+    "allowed_tags": [
+        "p",
+        "div",
+        "span",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "tt",
+        "pre",
+        "em",
+        "strong",
+        "ul",
+        "sup",
+        "li",
+        "dl",
+        "dd",
+        "dt",
+        "code",
+        "img",
+        "a",
+        "table",
+        "tr",
+        "th",
+        "td",
+        "tbody",
+        "caption",
+        "colgroup",
+        "thead",
+        "tfoot",
+        "blockquote",
+        "ol",
+        "hr",
+        "br",
+    ],
+    "allowed_styles": [],  # a list of CSS attributes - nothing allowed
+    "allowed_attributes": {},  # optional. a dict with HTML tag as key and a list of attributes as value
+    "allowed_settings_mode": "override",  # optional. Possible values: "extend" or "override". Defaults to "extend".
+    "extensions": [],  # optional. a list of python-markdown supported extensions
+    "extension_configs": {},  # optional. a dictionary with the extension name as key, and its configuration as value
+    "extensions_settings_mode": "extend",  # optional. Possible values: "extend" or "override". Defaults to "extend".
 }
 
 
