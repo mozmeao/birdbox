@@ -8,14 +8,6 @@
 {% breadcrumbs page %}
 
 <div class="{% get_layout_class_from_page %}">
-  {% if page.tags.all %}
-  <ul class="blog-tags-list">
-  {% for tag in page.tags.all %}
-    <li class="blog-tag">{{ tag }}</li>
-  {% endfor %}
-  </ul>
-  {% endif %}
-
   <article class="bb-c-article">
     <h1 class="bb-c-article-title">{{page.title}}</h1>
 
@@ -39,6 +31,13 @@
       {% include_block block %}
     {% endfor %}
 
+    {% if page.tags.all %}
+    <ul class="blog-tags-list">
+    {% for tag in page.tags.all %}
+      <li class="blog-tag">{{ tag }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
   </article>
 </div>
 {% endblock content %}
