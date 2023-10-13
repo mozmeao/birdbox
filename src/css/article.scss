@@ -75,6 +75,7 @@
     pre {
         background-color: $color-light-gray-20;
         margin-bottom: 1.25em;
+        overflow-x: auto;
         padding: $spacing-md;
     }
 }
