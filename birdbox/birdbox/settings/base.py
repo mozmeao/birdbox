@@ -159,6 +159,11 @@ else:
 
 GS_BUCKET_NAME = config("GS_BUCKET_NAME", default="", parser=str)
 GS_PROJECT_ID = config("GS_PROJECT_ID", default="", parser=str)
+GS_OBJECT_PARAMETERS = {
+    "cache_control": "max-age=2592000, public, immutable",
+    # 2592000 == 30 days 1 month age
+}
+
 
 if GS_BUCKET_NAME and GS_PROJECT_ID:
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
