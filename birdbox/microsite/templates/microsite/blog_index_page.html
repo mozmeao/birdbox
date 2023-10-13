@@ -15,9 +15,6 @@
 <section class="mzp-c-split {% get_layout_class_from_page %} mzp-t-dark mzp-t-background-secondary">
   <div class="mzp-c-split-container">
     <div class="mzp-c-split-body">
-      {% for tag in featured_post.specific.tags.all %}
-      <div class="mzp-c-card-tag">{{tag}}</div>
-      {% endfor %}
       <h1 class="mzp-u-title-md">{{featured_post.title}}</h1>
       <p>{{featured_post.get_preview_text|truncatewords:30}}</p>
       <p>

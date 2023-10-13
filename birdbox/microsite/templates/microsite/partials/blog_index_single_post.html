@@ -8,13 +8,16 @@
             {% endwith %}
         </div>
         <div class="mzp-c-card-content">
-            {% for tag in post.specific.tags.all %}
-            <div class="mzp-c-card-tag">{{tag}}</div>
-            {% endfor %}
+            <div class="mzp-c-card-date">{{post.date|date}}</div>
             <h2 class="mzp-c-card-title">{{post.title}}</h2>
             <p class="mzp-c-card-desc">
               {{post.get_preview_text|truncatewords:20}}
             </p>
+            <div class="mzp-c-card-meta">
+            {% for tag in post.specific.tags.all %}
+            {{tag}}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+            </div>
         </div>
     </a>
 </section>
