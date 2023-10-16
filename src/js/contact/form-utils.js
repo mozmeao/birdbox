@@ -77,8 +77,6 @@ function postToEmailServer(
         url = "https://basket.mozilla.org/news/subscribe/";
     }
 
-    console.log("selected URL", url);
-
     const { email } = params;
 
     // Emails used in automation for page-level integration tests
