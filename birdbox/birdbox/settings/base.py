@@ -429,7 +429,7 @@ SECURE_SSL_REDIRECT = config(
     default="False",  # Deliberately off by default - we don't need to upgrade at the app level
     parser=bool,
 )
-if config("USE_SECURE_PROXY_HEADER", default="True", parser=bool):
+if config("USE_SECURE_PROXY_HEADER", default="False", parser=bool):
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Only necessary if SECURE_SSL_REDIRECT is set to True at the app level, which we shouldn't
