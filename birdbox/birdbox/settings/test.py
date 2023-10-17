@@ -5,4 +5,5 @@
 from .development import *
 
 DEBUG = False
-USE_SECURE_PROXY_HEADER = False
+DISABLE_SSL = True
+SECURE_SSL_REDIRECT = False

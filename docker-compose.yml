@@ -94,11 +94,11 @@ services:
     environment:
       ALLOWED_HOSTS: "*"
       CSRF_TRUSTED_ORIGINS: "*"
+      DISABLE_SSL: True
       DATABASE_URL: postgres://postgres:postgres@db/postgres
       EMAIL_BACKEND: "django.core.mail.backends.console.EmailBackend"
       REDIS_URL: redis://redis:6379
       SECRET_KEY: "This is not the 53cr3t k3Y, it is just a tribute"
-      USE_SECURE_PROXY_HEADER: False
 
     image: mozmeao/birdbox:${GIT_COMMIT:-latest}
     platform: linux/amd64

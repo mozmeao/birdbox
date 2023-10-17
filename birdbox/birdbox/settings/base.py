@@ -424,16 +424,14 @@ WATCHMAN_CHECKS = (
 
 # Security settings (see `manage.py check --deploy`)
 
+DISABLE_SSL = config("DISABLE_SSL", default=str(DEBUG), parser=bool)  # so default: "False"
 SECURE_SSL_REDIRECT = config(
     "SECURE_SSL_REDIRECT",
-    default="False",  # Deliberately off by default - we don't need to upgrade at the app level
+    default=str(not DISABLE_SSL),
     parser=bool,
-)
-if config("USE_SECURE_PROXY_HEADER", default="False", parser=bool):
+)  # so default: "True"
+if config("USE_SECURE_PROXY_HEADER", default=str(SECURE_SSL_REDIRECT), parser=bool):
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-# Only necessary if SECURE_SSL_REDIRECT is set to True at the app level, which we shouldn't
-# need anyway
 SECURE_REDIRECT_EXEMPT = [
     r"^healthz/$",
     r"^readiness/$",
