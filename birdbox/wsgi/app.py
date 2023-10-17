@@ -5,7 +5,7 @@
 # flake8: noqa
 import os
 
-IS_HTTPS = os.environ.get("HTTPS", "").strip() == "on"
+IS_HTTPS = os.environ.get("IS_HTTPS", "").strip() == "True"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "birdbox.settings.prod")
 
 # must be imported after env var is set above.
