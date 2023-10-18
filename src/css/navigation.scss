@@ -202,6 +202,16 @@
         background-color: $color-marketing-gray-20;
         background-image: url('#{$image-path}/icons/close.svg');
     }
+
+    .mzp-t-dark & {
+        background-color: $color-marketing-gray-30;
+
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: $color-marketing-gray-20;
+        }
+    }
 }
 
 .c-navigation-menu-button:not(.has-label) {
