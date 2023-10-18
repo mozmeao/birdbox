@@ -8,6 +8,7 @@ const errorList = {
     EMAIL_INVALID_ERROR: "Invalid email address",
     EMAIL_UNKNOWN_ERROR: "Email address not known",
     NEWSLETTER_ERROR: "Newsletter not selected",
+    NAME_REQUIRED: "Name not provided",
     COUNTRY_ERROR: "Country not selected",
     LANGUAGE_ERROR: "Language not selected",
     PRIVACY_POLICY_ERROR: "Privacy policy not checked",

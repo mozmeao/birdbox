@@ -37,6 +37,9 @@ const EmailForm = {
             case errorList.NEWSLETTER_ERROR:
                 error = form.querySelector(".error-newsletter-checkbox");
                 break;
+            case errorList.NAME_REQUIRED:
+                error = form.querySelector(".error-name-required");
+                break;
             default:
                 error = form.querySelector(".error-try-again-later");
         }
@@ -57,6 +60,7 @@ const EmailForm = {
 
     validateFields: () => {
         const email = form.querySelector('input[type="email"]').value;
+        const name = form.querySelector('input[id="name"]').value;
         const privacy = !!form.querySelector('input[name="privacy"]:checked');
         const newsletters = form.querySelectorAll(
             'input[name="interests"]:checked'
@@ -73,6 +77,13 @@ const EmailForm = {
             EmailForm.handleFormError(errorList.PRIVACY_POLICY_ERROR);
             return false;
         }
+
+        // Confirm name is required on MIECO page
+        if (!name && isMIECO) {
+            EmailForm.handleFormError(errorList.NAME_REQUIRED);
+            return false;
+        }
+
         // the form on the builder page already includes a newsletter so these aren't required
         if (newsletters.length === 0 && !isBuilderPage) {
             EmailForm.handleFormError(errorList.NEWSLETTER_ERROR);
