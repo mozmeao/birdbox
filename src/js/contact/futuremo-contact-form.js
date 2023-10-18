@@ -35,7 +35,7 @@ const EmailForm = {
                 error = form.querySelector(".error-privacy-policy");
                 break;
             case errorList.NEWSLETTER_ERROR:
-                error = form.querySelector(".error-newsletter");
+                error = form.querySelector(".error-newsletter-checkbox");
                 break;
             default:
                 error = form.querySelector(".error-try-again-later");

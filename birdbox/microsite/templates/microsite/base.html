@@ -34,7 +34,7 @@
 
 {% block extra_js %}
   {{block.super}}
-  {% if settings.microsite.MicrositeSettings.navigation_enabled %}
+  {% if settings.microsite.MicrositeSettings.navigation_enabled and settings.microsite.MicrositeSettings.navigation_generate_nav_from_page_tree %}
   <script type="text/javascript" src="{% static 'js/protocol-navigation-js.js' %}"></script>
   {% endif %}
 {% endblock extra_js %}
