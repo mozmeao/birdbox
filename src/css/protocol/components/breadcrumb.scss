@@ -8,7 +8,18 @@
 
 .mzp-c-breadcrumb {
     margin-bottom: $spacing-xl;
+
     .mzp-c-breadcrumb-list {
         max-width: $content-max;
+        margin: 0 auto;
+        padding: $spacing-sm $h-grid-xs;
+
+        @media #{$mq-md} {
+            padding: $spacing-sm $h-grid-md;
+        }
+
+        @media #{$mq-xl} {
+            padding: $spacing-sm $h-grid-xl;
+        }
     }
 }

@@ -16,15 +16,15 @@
 
     .c-navigation-l-content {
         @include clearfix;
-        padding: $spacing-md $spacing-lg;
+        padding: $spacing-md $h-grid-xs;
         position: relative;
 
         @media #{$mq-md} {
-            padding: 0 $layout-lg;
+            padding: 0 $h-grid-md;
         }
 
-        @media #{$mq-lg} {
-            padding: 0 $layout-xl;
+        @media #{$mq-xl} {
+            padding: 0 $h-grid-xl;
         }
     }
 
