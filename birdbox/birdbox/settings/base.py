@@ -614,7 +614,7 @@ BLOG_PAGINATION_PAGE_SIZE = config(
 GOOGLE_TAG_ID = config("GOOGLE_TAG_ID", default="", parser=str)
 
 
-# For Mozilla Innovations contact form ONLY
+# For Mozilla Innovations contact form ONLY. Values are set by env vars in k8s
 CONTACT_FORM_RECIPIENT_EMAIL = {
     "default": config(
         "CONTACT_FORM_RECIPIENT_EMAIL__DEFAULT",
@@ -623,12 +623,12 @@ CONTACT_FORM_RECIPIENT_EMAIL = {
     ),
     "innovations": config(
         "CONTACT_FORM_RECIPIENT_EMAIL__INNOVATIONS",
-        default="innovations@mozilla.com",
+        default="",
         parser=str,
     ),
     "mieco": config(
         "CONTACT_FORM_RECIPIENT_EMAIL__MIECO",
-        default="mieco@mozilla.com",
+        default="",
         parser=str,
     ),
 }
