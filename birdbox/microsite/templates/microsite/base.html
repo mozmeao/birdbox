@@ -3,14 +3,11 @@
 
 {% block analytics %}
 {% if GOOGLE_TAG_ID %}
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{GOOGLE_TAG_ID}}"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', '{{GOOGLE_TAG_ID}}');
+  // dnt-helper.js sets the window.Mozilla namespace
+  window.Mozilla.googleTagId = "{{GOOGLE_TAG_ID}}";
 </script>
+<script type="text/javascript" src="{% static 'js/analytics.js' %}"></script>
 {% endif %}
 {% endblock analytics %}
 
