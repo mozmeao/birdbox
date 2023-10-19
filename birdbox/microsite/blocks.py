@@ -764,9 +764,9 @@ class CalloutBlockBase(wagtail_blocks.StructBlock):
         help_text="Around 50 chars ideally. Max 100",
     )
     body = wagtail_blocks.TextBlock(
-        max_length=300,
+        max_length=400,
         required=True,
-        help_text="Around 150 chars ideally. Max 300",
+        help_text="Around 150 chars ideally. Max 400",
     )
     cta = CTAButtonBlock(
         required=True,
