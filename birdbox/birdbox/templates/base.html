@@ -7,7 +7,7 @@ License, v.2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en"{% if GOOGLE_TAG_ID %} data-gtm-id="{{GOOGLE_TAG_ID}}"{% endif %}>
     <head>
         <meta charset="utf-8" />
         <title>
@@ -30,7 +30,6 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         {% endif %}
 
         <script type="text/javascript" src="{% static 'js/protocol-base.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/dnt-helper.js' %}"></script>
 
         {# Global stylesheets #}
         {% block global_stylesheets %}{% endblock global_stylesheets %}

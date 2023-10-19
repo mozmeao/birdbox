@@ -3,10 +3,6 @@
 
 {% block analytics %}
 {% if GOOGLE_TAG_ID %}
-<script>
-  // dnt-helper.js sets the window.Mozilla namespace
-  window.Mozilla.googleTagId = "{{GOOGLE_TAG_ID}}";
-</script>
 <script type="text/javascript" src="{% static 'js/analytics.js' %}"></script>
 {% endif %}
 {% endblock analytics %}
