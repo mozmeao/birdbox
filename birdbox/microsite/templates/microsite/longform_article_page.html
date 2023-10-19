@@ -21,6 +21,10 @@
       {% include_block block %}
     {% endfor %}
   </article>
+
+  {% for block in page.aftermatter %}
+    {% include_block block %}
+  {% endfor %}
 </div>
 
 {% endblock content %}

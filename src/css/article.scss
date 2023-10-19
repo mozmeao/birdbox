@@ -6,7 +6,7 @@
 
 .bb-c-article {
     max-width: $content-md;
-    margin: 0 auto;
+    margin: 0 auto $layout-lg;
 
     ul {
         @include bidi(((margin-left, $layout-sm, margin-right, 0),));
