@@ -9,13 +9,12 @@ var dntEnabled = require("@mozmeao/dnt-helper");
 (function () {
     "use strict";
     const googleTagId = document.documentElement.dataset.gtmId;
+    window.dataLayer = window.dataLayer || [];
 
     // If doNotTrack is not enabled, it is ok to add GTM
     // @see https://bugzilla.mozilla.org/show_bug.cgi?id=1217896 for more details
     // prettier-ignore
     if (typeof dntEnabled === 'function' && !dntEnabled() && googleTagId) {
-
-        window.dataLayer = window.dataLayer || [];
 
         (function(w,d,s,l,i,j,f,dl,k,q){
             w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});f=d.getElementsByTagName(s)[0];
