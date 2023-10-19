@@ -695,9 +695,43 @@ class LongformArticlePage(BaseProtocolPage):
         use_json_field=True,
     )
 
+    aftermatter = StreamField(
+        [
+            (
+                "callout",
+                CalloutBlock(
+                    required=False,
+                    label_format="Compact callout: {headline}",
+                    help_text=get_docs_link("compact-callout"),
+                ),
+            ),
+            (
+                "compact_callout",
+                CompactCalloutBlock(
+                    required=False,
+                    label_format="Compact callout: {headline}",
+                    help_text=get_docs_link("compact-callout"),
+                ),
+            ),
+            (
+                "split",
+                SplitBlock(
+                    label="Split content",
+                    label_format="Split: {title}",
+                    required=False,
+                    help_text=mark_safe(f'{get_docs_link("split")} - most, but not all, options are supported'),
+                ),
+            ),
+        ],
+        null=True,
+        blank=True,
+        use_json_field=True,
+    )
+
     content_panels = BaseProtocolPage.content_panels + [
         FieldPanel("introduction"),
         FieldPanel("content"),
+        FieldPanel("aftermatter"),
     ]
 
     @property
