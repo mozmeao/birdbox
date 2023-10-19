@@ -18,6 +18,7 @@ module.exports = {
         "protocol-base": "./src/js/protocol/base.js",
         "protocol-global": "./src/js/protocol/global.js",
         "newsletter-form": "./src/js/newsletter/newsletter-init.js", // not protocol JS (yet)
+        analytics: "./src/js/analytics.js",
 
         // CSS
         // base/core
