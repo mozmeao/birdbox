@@ -6,14 +6,19 @@
 
 
 .bb-c-picto-stack {
+    border: 1px solid $color-light-gray-40;
+    padding: 0 $spacing-md;
+
     .title {
+        @include text-title-xs;
+        border-bottom: 1px solid $color-light-gray-40;
         text-align: center;
         padding: $spacing-sm 0;
         margin-bottom: $spacing-lg;
     }
 
     .mzp-c-picto-image {
-        max-width: 128px; // 2x $layout-lg
+        max-width: 80px;
     }
 
     .mzp-c-picto,
@@ -26,10 +31,19 @@
     .mzp-c-picto,
     .mzp-c-picto-side,
     .mzp-c-picto-center {
-        margin-bottom: $spacing-2xl;
+        margin-bottom: $layout-md;
     }
 
     .mzp-c-picto-heading {
-        @include text-title-3xs;
+        @include font-base;
+        @include text-body-lg;
+    }
+}
+
+.mzp-l-columns .bb-c-picto-stack {
+    .mzp-c-picto,
+    .mzp-c-picto-side,
+    .mzp-c-picto-center {
+        margin-bottom: $layout-sm;
     }
 }
