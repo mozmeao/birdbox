@@ -416,10 +416,12 @@ urllib3==2.0.7 \
     # via
     #   -r requirements/test.in
     #   requests
-wagtail==5.1.2 \
-    --hash=sha256:1f79d7810e27a644340016da7d02f860425f9ff78ace09706cc895f5e6610828 \
-    --hash=sha256:f4df51dea3b492d21effae2523cb1aed11631e354844c02c7eb8f5985d79bf38
-    # via wagtail-factories
+wagtail==5.1.3 \
+    --hash=sha256:45fac794e4c20c7e75b018069d7f9761f25faa3619ef30df24013ca24abf9a74 \
+    --hash=sha256:f4a6cc2adc40f687d8fb62fed2d4fc0804941dfa45b4624887f260dc6cf6b9f2
+    # via
+    #   -r requirements/test.in
+    #   wagtail-factories
 wagtail-factories==4.1.0 \
     --hash=sha256:067e3e1a30721a90eaa1514c8214aae7a171490bbedf026eeaa904a2ed9abcd0 \
     --hash=sha256:6abd435518fdf0cdd3d9920acb2abbd9005936d6fecfdf6fdde3e404834d4b0c

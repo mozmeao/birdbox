@@ -3,3 +3,4 @@ pytest-cov==4.1.0
 pytest-django==4.5.2
 wagtail-factories==4.1.0
 urllib3>=2.0.7
+wagtail>=5.1.3<5.2  # Wagtail 5.2 LTS is due in November 2023
