@@ -41,7 +41,7 @@
     "webpack-remove-empty-scripts": "^1.0.3"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0",
+    "concurrently": "^8.2.2",
     "webpack-dev-server": "^4.15.1"
   },
   "browserslist": [
