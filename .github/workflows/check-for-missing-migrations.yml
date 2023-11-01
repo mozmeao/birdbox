@@ -1,0 +1,27 @@
+name: Check for missing migrations
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+jobs:
+  python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements/production.txt
+          pip install -r requirements/test.txt
+      - name: Fake in static dir (because we're not compiling statics for this test)
+        run: mkdir birdbox/birdbox/static/
+      - name: Check we are not missing migrations
+        run: >-
+          BASKET_NEWSLETTER_DATA_DO_SYNC=false
+          python ./birdbox/manage.py makemigrations --dry-run --check
