@@ -217,6 +217,7 @@ django==4.2.5 \
     # via
     #   -r requirements/production.in
     #   dj-database-url
+    #   django-csp
     #   django-filter
     #   django-modelcluster
     #   django-mozilla-product-details
@@ -229,6 +230,10 @@ django==4.2.5 \
     #   djangorestframework
     #   mozilla-django-oidc
     #   wagtail
+django-csp==3.7 \
+    --hash=sha256:01443a07723f9a479d498bd7bb63571aaa771e690f64bde515db6cdb76e8041a \
+    --hash=sha256:01eda02ad3f10261c74131cdc0b5a6a62b7c7ad4fd017fbefb7a14776e0a9727
+    # via -r requirements/production.in
 django-filter==22.1 \
     --hash=sha256:ed429e34760127e3520a67f415bec4c905d4649fbe45d0d6da37e6ff5e0287eb \
     --hash=sha256:ed473b76e84f7e83b2511bb2050c3efb36d135207d0128dfe3ae4b36e3594ba5
