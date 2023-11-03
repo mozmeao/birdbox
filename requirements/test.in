@@ -1,6 +1,7 @@
-pytest==7.4.2
+-r production.txt
+
+pytest==7.4.3
 pytest-cov==4.1.0
 pytest-django==4.5.2
 wagtail-factories==4.1.0
-urllib3>=2.0.7
-wagtail>=5.2<5.3 # declared here to stop wagtail-factories downgrading it during dep build
+
