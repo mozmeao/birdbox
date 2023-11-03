@@ -57,7 +57,7 @@ class ConventionalLoginDeniedTest(LoginTestBase):
         for url, error_message, expected_template in (
             (
                 self.wagtail_login_url,
-                b"Your username and password didn't match.",
+                b"Your username and password didn&#x27;t match. Please try again.",
                 "wagtailadmin/login.html",
             ),
             (
