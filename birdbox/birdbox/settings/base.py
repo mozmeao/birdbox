@@ -28,7 +28,7 @@ config = ConfigManager(
     ]
 )
 
-APP_NAME = "birdbox"
+APP_NAME = config("APP_NAME", default="birdbox")
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BIRDBOX_BASE_DIR = os.path.dirname(PROJECT_DIR)
 ROOT_DIR = Path(__file__).resolve().parents[3]
@@ -591,30 +591,33 @@ if CSP_ENABLED:
     )
 
     CSP_REPORT_ONLY = config("CSP_REPORT_ONLY", default="True", parser=bool)
-    CSP_REPORT_URI = config("CSP_REPORTING_ENDPOINT", default="", parser=str)
+    CSP_REPORT_URI = config("CSP_REPORTING_ENDPOINT", default="")
 
     # Remember to quote 'self', 'unsafe-inline', 'unsafe-eval', or 'none'
     # e.g.: CSP_DEFAULT_SRC = "'self'" - without quotes they will not work as intended.
 
-    CSP_DEFAULT_SRC = config("CSP_DEFAULT_SRC", default=_CSP_SELF_ONLY, parser=str)
+    CSP_DEFAULT_SRC = config("CSP_DEFAULT_SRC", default=_CSP_SELF_ONLY)
 
-    CSP_SCRIPT_SRC = config("CSP_SCRIPT_SRC", default=_CSP_SELF_ONLY, parser=str)
-    CSP_STYLE_SRC = config("CSP_STYLE_SRC", default="'self' 'unsafe-inline'", parser=str)
+    CSP_SCRIPT_SRC = config("CSP_SCRIPT_SRC", default=_CSP_SELF_ONLY)
+    CSP_STYLE_SRC = config("CSP_STYLE_SRC", default="'self' 'unsafe-inline'")
+
+    CSP_MEDIA_SRC = config("CSP_MEDIA_SRC", default=_CSP_SELF_ONLY)
 
     # CSP_IMG_SRC will be set in production with details of the relevant cloud bucket
-    CSP_IMG_SRC = config("CSP_IMG_SRC", default="'self' data:", parser=str)
-    CSP_FONT_SRC = config("CSP_FONT_SRC", default=_CSP_SELF_ONLY, parser=str)
+    CSP_IMG_SRC = config("CSP_IMG_SRC", default="'self' data:")
+    CSP_FONT_SRC = config("CSP_FONT_SRC", default=_CSP_SELF_ONLY)
 
-    CSP_CONNECT_SRC = config("CSP_CONNECT_SRC", default=_CSP_SELF_ONLY, parser=str)
+    CSP_CHILD_SRC = config("CSP_CHILD_SRC", default=_CSP_SELF_ONLY)
+    CSP_FRAME_SRC = config("CSP_FRAME_SRC", default=_CSP_SELF_ONLY)
+    CSP_CONNECT_SRC = config("CSP_CONNECT_SRC", default=_CSP_SELF_ONLY)
+
     CSP_BASE_URI = config(
         "CSP_BASE_URI",
         default="'none'",  # https://csp.withgoogle.com/docs/strict-csp.html
-        parser=str,
     )
     CSP_OBJECT_SRC = config(
         "CSP_OBJECT_SRC",
         default="'none'",  # Deny by default - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/object-src
-        parser=str,
     )
 
 # Mozillaverse settings
