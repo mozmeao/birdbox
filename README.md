@@ -1,4 +1,4 @@
-# README.md
+# About this codebase
 
 This project is based on the Birdbox kit, from Mozilla MEAO (Marketing Engineering And Operations).
 
