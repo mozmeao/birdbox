@@ -7,7 +7,7 @@ from unittest import mock
 
 from django.conf import settings
 from django.core.cache import cache
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.test import RequestFactory, TestCase, override_settings
 
 import pytest
@@ -82,6 +82,37 @@ class RateLimiterMiddlewareTests(TestCase):
         middleware_func(fake_request)
         with self.assertRaises(Ratelimited):
             middleware_func(fake_request)
+
+    @override_settings(RATELIMIT_DEFAULT_LIMIT="300/m")
+    def test_rate_limiter_handles_badly_formatted_ips_quietly(self):
+        factory = RequestFactory()
+        mock_get_response = mock.Mock(name="get_response")
+        middleware_func = rate_limiter(mock_get_response)
+        cache.clear()  # reset any previous rate limiting
+        for ip in [
+            'foo.bar"></script><script>alert(window.location.href);</script>',
+            "foo.bar",
+            "aabbccdee-HTTP-FORWARDED-FOR-IPheader'<\"testexample.com/><div/id=savik></div>",
+            "${jndi${:-:}ldap${:-:}//pre.${hostName}.future.mozilla.org443.foo.bar.baz.tld:53/future.mozilla.org}",
+        ]:
+            fake_request = factory.get("/", REMOTE_ADDR=ip)
+            resp = middleware_func(fake_request)
+            assert isinstance(resp, HttpResponseBadRequest)
+        assert mock_get_response.call_count == 0
+
+    @override_settings(RATELIMIT_DEFAULT_LIMIT="300/m")
+    def test_rate_limiter_does_not_swallow_other_value_errors(self):
+        factory = RequestFactory()
+        mock_get_response = mock.Mock(name="get_response")
+        middleware_func = rate_limiter(mock_get_response)
+        cache.clear()  # reset any previous rate
+
+        with mock.patch("common.middleware.is_ratelimited") as mock_is_ratelimited:
+            mock_is_ratelimited.side_effect = ValueError("This does not contain the bad-ip string we filter for")
+            fake_request = factory.get("/", REMOTE_ADDR="127.0.0.2")
+            with pytest.raises(ValueError):
+                middleware_func(fake_request)
+        assert mock_get_response.call_count == 0
 
 
 class RemoteAddressMiddlewareTests(TestCase):

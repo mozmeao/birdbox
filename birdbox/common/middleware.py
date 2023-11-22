@@ -7,6 +7,7 @@
 from http import HTTPStatus
 
 from django.conf import settings
+from django.http import HttpResponseBadRequest
 
 from django_ratelimit import ALL
 from django_ratelimit.core import is_ratelimited
@@ -46,14 +47,20 @@ def rate_limiter(get_response):
         group = "all_requests"
 
         old_limited = getattr(request, "limited", False)
-        ratelimited = is_ratelimited(
-            request=request,
-            group=group,
-            key="ip",
-            rate=settings.RATELIMIT_DEFAULT_LIMIT,
-            increment=True,
-            method=ALL,  # ie include GET, not just ratelimit.UNSAFE methods
-        )
+        try:
+            ratelimited = is_ratelimited(
+                request=request,
+                group=group,
+                key="ip",
+                rate=settings.RATELIMIT_DEFAULT_LIMIT,
+                increment=True,
+                method=ALL,  # ie include GET, not just ratelimit.UNSAFE methods
+            )
+        except ValueError as ve:
+            if "does not appear to be an IPv4 or IPv6 network" in str(ve):
+                return HttpResponseBadRequest()
+            raise ve
+
         request.limited = ratelimited or old_limited
         if ratelimited:
             raise Ratelimited()
