@@ -478,7 +478,7 @@ OIDC_RP_SIGN_ALGO = "RS256"
 
 OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS = config(
     "OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS",
-    default="3600",  # 1 hour
+    default="86400",  # 24 hours
     parser=int,
 )
 
