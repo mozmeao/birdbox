@@ -1,0 +1,14 @@
+name: Push main to prod
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  push-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: git push
+        run: |
+          git push origin main:prod
