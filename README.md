@@ -6,6 +6,8 @@ The documentation for the Birdbox project [lives separately](https://github.com/
 
 For those with Mozilla access, a Birdbox explainer is [here](https://mozilla-hub.atlassian.net/wiki/spaces/EN/pages/444268553/Birdbox).
 
+[![CI status](https://github.com/mozmeao/birdbox/actions/workflows/run-tests.yml/badge.svg)](https://github.com/mozmeao/birdbox/actions/workflows/run-tests.yml)
+
 ----
 
 LICENSE: [Mozilla Public License Version 2.0](LICENSE)
