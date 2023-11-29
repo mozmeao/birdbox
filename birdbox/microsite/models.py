@@ -62,6 +62,8 @@ from .blocks import (
     VideoEmbedBlock,
 )
 
+ALL = "__all__"
+
 
 class ProtocolLayout(TextChoices):
     SMALL = "mzp-l-content mzp-t-content-sm", "Small"
@@ -158,6 +160,15 @@ class BaseProtocolPage(CacheAwareAbstractBasePage):
     def get_children_for_nav(self):
         "Only return children that may be shown in a nav menu"
         return self.get_children().specific().filter(show_in_menus=True)
+
+    @classmethod
+    def can_create_at(cls, parent):
+        """Only allow users to create pages that are permitted
+        by configuration."""
+        page_model_signature = f"{cls._meta.app_label}.{cls._meta.object_name}"
+        if settings.ALLOWED_PAGE_MODELS == [ALL] or page_model_signature in settings.ALLOWED_PAGE_MODELS:
+            return super().can_create_at(parent)
+        return False
 
 
 class StructuralPage(BaseProtocolPage):

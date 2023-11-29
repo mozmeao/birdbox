@@ -16,7 +16,7 @@ from django.utils.log import DEFAULT_LOGGING
 
 import dj_database_url
 import sentry_sdk
-from everett.manager import ConfigEnvFileEnv, ConfigManager, ConfigOSEnv
+from everett.manager import ConfigEnvFileEnv, ConfigManager, ConfigOSEnv, ListOf
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import ignore_logger
 from wagtail.embeds.oembed_providers import vimeo, youtube
@@ -528,6 +528,14 @@ DEFAULT_LOGGING["loggers"]["mozilla_django_oidc"] = {
     "level": "INFO",
 }
 
+# Custom code in birdbox.microsite.models.BirdboxBasePage limits what page models
+# can be added - allowing us to configure deployments of Birdbox to behave
+# differently while still all sharing the same common codebase.
+ALLOWED_PAGE_MODELS = config(
+    "ALLOWED_PAGE_MODELS",
+    default="__all__",
+    parser=ListOf(str),
+)
 
 WAGTAILMARKDOWN = {
     "autodownload_fontawesome": False,

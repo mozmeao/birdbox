@@ -4,9 +4,16 @@
 
 from unittest import mock
 
+from django.test import override_settings
+
 import pytest
 
-from microsite.models import CacheAwareAbstractBasePage, HomePage
+from microsite.models import (
+    CacheAwareAbstractBasePage,
+    GeneralPurposePage,
+    HomePage,
+    StructuralPage,
+)
 
 
 @mock.patch("microsite.models.HomePage.get_view_restrictions")
@@ -35,3 +42,28 @@ def test_cache_control_headers_on_pages_with_view_restrictions(
     response = client.get("/")
 
     assert response.get("Cache-Control") == expected_headers
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "config, page_class, success_expected",
+    (
+        ("__all__", GeneralPurposePage, True),  # same as default
+        ("microsite.InnovationsContentPage,microsite.StructuralPage,microsite.GeneralPurposePage", StructuralPage, True),
+        ("microsite.GeneralPurposePage", GeneralPurposePage, True),
+        ("microsite.GeneralPurposePage,microsite.InnovationsContentPage", GeneralPurposePage, True),
+        ("microsite.InnovationsContentPage,microsite.GeneralPurposePage", GeneralPurposePage, True),
+        ("microsite.InnovationsContentPage,microsite.SomeOtherPageClass", GeneralPurposePage, False),
+        ("microsite.SomeOtherPageClass", GeneralPurposePage, False),
+        ("microsite.InnovationsContentPage,microsite.SomeOtherPageClass", StructuralPage, False),
+    ),
+)
+def test_can_create_at(
+    config,
+    page_class,
+    success_expected,
+    bootstrap_minimal_site,
+):
+    home_page = HomePage.objects.get()
+    with override_settings(ALLOWED_PAGE_MODELS=config.split(",")):
+        assert page_class.can_create_at(home_page) == success_expected
