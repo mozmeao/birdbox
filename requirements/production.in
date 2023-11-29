@@ -1,5 +1,5 @@
 certifi>=2023.7.22
-cryptography>=41.0.4
+cryptography>=41.0.7
 dj-database-url==2.1.0
 Django>=4.2.7
 django-csp==3.7
