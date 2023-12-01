@@ -179,8 +179,8 @@ class CardBlock(wagtail_blocks.StructBlock):
     )
     description = wagtail_blocks.TextBlock(
         required=False,
-        max_length=170,
-        help_text="A description of about 150 characters. Usually we only have room for one or two sentences.",
+        max_length=350,
+        help_text="A description ideally around 150 characters, max 350. Usually we only have room for one or two sentences.",
     )
     cta = wagtail_blocks.CharBlock(
         required=False,
