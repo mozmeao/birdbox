@@ -306,7 +306,9 @@ class SplitBlock(wagtail_blocks.StructBlock):
         max_length=120,
         required=True,
     )
-    text = wagtail_blocks.TextBlock(
+
+    text = wagtail_blocks.RichTextBlock(
+        features=settings.RICHTEXT_FEATURES__SIMPLE,
         max_length=500,
         required=True,
     )
@@ -424,8 +426,9 @@ class PictoBlock(wagtail_blocks.StructBlock):
         max_length=100,
         required=False,
     )
-    body = wagtail_blocks.TextBlock(
-        max_length=150,
+    body = wagtail_blocks.RichTextBlock(
+        features=settings.RICHTEXT_FEATURES__SIMPLE,
+        max_length=500,
         required=False,
         help_text="Don’t use this component for long-form content; it’s only for blurbs.",
     )
