@@ -853,9 +853,9 @@ whitenoise==6.6.0 \
     --hash=sha256:8998f7370973447fac1e8ef6e8ded2c5209a7b1f67c1012866dbcd09681c3251 \
     --hash=sha256:b1f9db9bf67dc183484d760b99f4080185633136a273a03f6436034a41064146
     # via -r requirements/production.in
-willow[heif]==1.6.2 \
-    --hash=sha256:957a4af8a7733e116a65eca34da11afe3fd52ffdb397494c8823901c25863787 \
-    --hash=sha256:e2d0450fd78ab19052d0478b888ef163e3264e8dcd1af002dd691458db98056f
+willow[heif]==1.7.0 \
+    --hash=sha256:2202ac8852d24312b4d71a4ef9f75f813c8799d440f58e905f055ea4a220c1b1 \
+    --hash=sha256:c7cb6804a58df670c6ea6d8de21210e9c2f5aba0d91929763fa6e13e94e550cd
     # via
     #   -r requirements/production.in
     #   wagtail
