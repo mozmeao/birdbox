@@ -21,6 +21,5 @@ sentry-sdk==1.38.0
 wagtail==5.2.1  # Wagtail 5.2 is an LTS release
 wagtail-markdown==0.11.1
 Willow[heif]<1.7,>=1.6
-# Using a fork until there's formal 5.x support in the released package
-https://github.com/mozmeao/wagtailstreamforms/archive/refs/tags/wagtail-5-support.tar.gz#egg=wagtailstreamforms
+wagtailstreamforms==4.1.0
 whitenoise==6.6.0
