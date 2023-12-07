@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-No changes
+### Changed
+
+* Switch wagtailstreamforms from our fork to the official release, now it has Django 5.2 compat
 
 ## [1.2.0]
 

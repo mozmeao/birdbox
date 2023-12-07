@@ -840,8 +840,9 @@ wagtail-markdown==0.11.1 \
     --hash=sha256:3d2c5dcfac718c3fc03f2ed05aca535b2aa70f71254599505ee272c54437db21 \
     --hash=sha256:afcb64efac5b1b57de9f7cc475987c0c7dec5b669833e4617ec4658880de0f77
     # via -r requirements/production.in
-wagtailstreamforms @ https://github.com/mozmeao/wagtailstreamforms/archive/refs/tags/wagtail-5-support.tar.gz \
-    --hash=sha256:d39b60d41362569b416f9f54d0250d862f00f98ef254dc81aea553a53c374ae9
+wagtailstreamforms==4.1.0 \
+    --hash=sha256:053a63a9cd648708e6cd6aea4d60bbecea6bcc491796d8c0b509621397f7ef71 \
+    --hash=sha256:411b8deedd161f25fc0f028053b4ea64f24b2e083fbb537477a4dd7c2778f7e7
     # via -r requirements/production.in
 webencodings==0.5.1 \
     --hash=sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78 \
