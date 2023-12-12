@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 * Switch wagtailstreamforms from our fork to the official release, now it has Django 5.2 compat
+* Increase length of split block's rich-text-area to 650 chars
 
 ## [1.2.0]
 
