@@ -309,8 +309,9 @@ class SplitBlock(wagtail_blocks.StructBlock):
 
     text = wagtail_blocks.RichTextBlock(
         features=settings.RICHTEXT_FEATURES__SIMPLE,
-        max_length=500,
+        max_length=650,
         required=True,
+        help_text="Ideally less than 500 chars. 650 max.",
     )
     cta_button = CTAButtonBlock(required=False)
     image = AccessibleImageBlock(required=True)
