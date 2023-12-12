@@ -1,5 +1,10 @@
 {% extends "microsite/base.html" %}
-{% load microsite_tags wagtailcore_tags %}
+{% load microsite_tags wagtailcore_tags wagtailmetadata_tags %}
+
+{% block extra_head %}
+  {{block.super}}
+  {% meta_tags %}
+{% endblock extra_head %}
 
 {% block body_class %}template-longform{% endblock %}
 

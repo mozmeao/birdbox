@@ -1014,6 +1014,7 @@ wagtail==5.2.1 \
     #   -r requirements/production.txt
     #   wagtail-factories
     #   wagtail-markdown
+    #   wagtail-metadata
     #   wagtailstreamforms
 wagtail-factories==4.1.0 \
     --hash=sha256:067e3e1a30721a90eaa1514c8214aae7a171490bbedf026eeaa904a2ed9abcd0 \
@@ -1028,6 +1029,10 @@ wagtail-generic-chooser==0.6 \
 wagtail-markdown==0.11.1 \
     --hash=sha256:3d2c5dcfac718c3fc03f2ed05aca535b2aa70f71254599505ee272c54437db21 \
     --hash=sha256:afcb64efac5b1b57de9f7cc475987c0c7dec5b669833e4617ec4658880de0f77
+    # via -r requirements/production.txt
+wagtail-metadata==5.0.0 \
+    --hash=sha256:3b9109928bad53306b21b64cf9205d84cbb88fc625bac0a38305bebb9c26e64a \
+    --hash=sha256:fcc2bbb71e83b353ceef05d69a4cde3f2fbe645c9e5035e46f7829fc234a6405
     # via -r requirements/production.txt
 wagtailstreamforms==4.1.0 \
     --hash=sha256:053a63a9cd648708e6cd6aea4d60bbecea6bcc491796d8c0b509621397f7ef71 \

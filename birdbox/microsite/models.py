@@ -36,6 +36,7 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.models import LockableMixin, Page
 from wagtail.snippets.models import register_snippet
 from wagtailmarkdown.blocks import MarkdownBlock
+from wagtailmetadata.models import MetadataPageMixin
 from wagtailstreamforms.blocks import WagtailFormBlock
 
 from birdbox.protocol_links import get_docs_link
@@ -101,7 +102,7 @@ class CacheAwareAbstractBasePage(Page):
         return response
 
 
-class BaseProtocolPage(CacheAwareAbstractBasePage):
+class BaseProtocolPage(MetadataPageMixin, CacheAwareAbstractBasePage):
     """Abstract wagtail.Page subclass that features fields we want on _all_ pages,
     in order to support Protocol - e.g. layout style.
 
@@ -153,6 +154,7 @@ class BaseProtocolPage(CacheAwareAbstractBasePage):
 
     # Crudely drop the show_in_menus section. TODO: make this more elegant and less brittle
     promote_panels = Page.promote_panels[:-1]
+    promote_panels += [FieldPanel("search_image")]
 
     def has_menu_icon(self):
         return bool(self.menu_icon)
