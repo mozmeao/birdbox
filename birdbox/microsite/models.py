@@ -143,7 +143,7 @@ class BaseProtocolPage(MetadataPageMixin, CacheAwareAbstractBasePage):
         FieldPanel("page_layout"),
         MultiFieldPanel(
             [
-                FieldPanel("show_in_menus"),  # From base page. TODO: avoid duplication
+                FieldPanel("show_in_menus"),
                 FieldPanel("show_breadcrumbs"),
                 FieldPanel("menu_icon"),
                 FieldPanel("menu_description"),
@@ -910,10 +910,10 @@ class BlogPage(BaseProtocolPage):
         ),
     ]
 
+    _promote_panels_list = Page.promote_panels + [FieldPanel("search_image")]
+    show_in_menus_panel = _promote_panels_list.pop(-2)
     promote_panels = [
-        MultiFieldPanel(
-            Page.promote_panels,
-        ),
+        MultiFieldPanel(_promote_panels_list),
         FieldPanel("is_featured"),
         MultiFieldPanel(
             [
@@ -923,6 +923,9 @@ class BlogPage(BaseProtocolPage):
             "Feed Image",
         ),
         FieldPanel("tags"),
+    ]
+    Page.settings_panels + [
+        show_in_menus_panel,
     ]
 
     # Parent page / subpage type rules
