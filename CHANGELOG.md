@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-No changes
+### Changed
+
+* Add Protocol article styling for article blocks, including a class for centered titles.
 
 ## [1.3.0]
 

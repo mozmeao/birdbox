@@ -45,6 +45,7 @@ module.exports = {
         "protocol-section-heading":
             "./src/css/protocol/components/section-heading.scss",
         "protocol-breadcrumb": "./src/css/protocol/components/breadcrumb.scss",
+        "protocol-article": "./src/css/protocol/components/article.scss",
 
         // custom CSS
         "birdbox-navigation": "./src/css/navigation.scss",
