@@ -4,3 +4,13 @@
 
 @use '~@mozilla-protocol/core/protocol/css/includes/lib' as * with ($image-path: '/static/protocol/img');
 @import '~@mozilla-protocol/core/protocol/css/components/article';
+
+.mzp-c-article {
+    margin: 0 auto;
+    max-width: $content-lg;
+    width: auto;
+
+    .t-align-center {
+        text-align: center;
+    }
+}

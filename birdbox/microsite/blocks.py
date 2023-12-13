@@ -553,7 +553,7 @@ class ArticleBlock(wagtail_blocks.StructBlock):
     def frontend_media(self):
         "Custom property that lets us selectively include CSS"
         return forms.Media(
-            css={"all": [static("css/birdbox-article.css")]},
+            css={"all": [static("css/protocol-article.css")]},
         )
 
     title = wagtail_blocks.CharBlock(
