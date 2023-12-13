@@ -36,6 +36,7 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.models import LockableMixin, Page
 from wagtail.snippets.models import register_snippet
 from wagtailmarkdown.blocks import MarkdownBlock
+from wagtailmetadata.models import MetadataPageMixin
 from wagtailstreamforms.blocks import WagtailFormBlock
 
 from birdbox.protocol_links import get_docs_link
@@ -101,7 +102,7 @@ class CacheAwareAbstractBasePage(Page):
         return response
 
 
-class BaseProtocolPage(CacheAwareAbstractBasePage):
+class BaseProtocolPage(MetadataPageMixin, CacheAwareAbstractBasePage):
     """Abstract wagtail.Page subclass that features fields we want on _all_ pages,
     in order to support Protocol - e.g. layout style.
 
@@ -142,7 +143,7 @@ class BaseProtocolPage(CacheAwareAbstractBasePage):
         FieldPanel("page_layout"),
         MultiFieldPanel(
             [
-                FieldPanel("show_in_menus"),  # From base page. TODO: avoid duplication
+                FieldPanel("show_in_menus"),
                 FieldPanel("show_breadcrumbs"),
                 FieldPanel("menu_icon"),
                 FieldPanel("menu_description"),
@@ -153,6 +154,7 @@ class BaseProtocolPage(CacheAwareAbstractBasePage):
 
     # Crudely drop the show_in_menus section. TODO: make this more elegant and less brittle
     promote_panels = Page.promote_panels[:-1]
+    promote_panels += [FieldPanel("search_image")]
 
     def has_menu_icon(self):
         return bool(self.menu_icon)
@@ -908,10 +910,10 @@ class BlogPage(BaseProtocolPage):
         ),
     ]
 
+    _promote_panels_list = Page.promote_panels + [FieldPanel("search_image")]
+    show_in_menus_panel = _promote_panels_list.pop(-2)
     promote_panels = [
-        MultiFieldPanel(
-            Page.promote_panels,
-        ),
+        MultiFieldPanel(_promote_panels_list),
         FieldPanel("is_featured"),
         MultiFieldPanel(
             [
@@ -921,6 +923,9 @@ class BlogPage(BaseProtocolPage):
             "Feed Image",
         ),
         FieldPanel("tags"),
+    ]
+    Page.settings_panels + [
+        show_in_menus_panel,
     ]
 
     # Parent page / subpage type rules

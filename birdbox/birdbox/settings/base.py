@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     "generic_chooser",  # Needed by wagtailstreamforms - see https://github.com/labd/wagtailstreamforms/issues/216
     "common",
     "microsite",
+    "wagtailmetadata",
 ]
 
 MIDDLEWARE = [
@@ -346,6 +347,9 @@ RICHTEXT_FEATURES__DETAIL = RICHTEXT_FEATURES__SIMPLE
 # Robots.txt - also see production.py for where we may allow it to be rendered
 
 ENGAGE_ROBOTS = config("ENGAGE_ROBOTS", parser=bool, default="False")
+
+# Customise the size of the social-sharing card image
+WAGTAILMETADATA_IMAGE_FILTER = "fill-1200x630"
 
 # Logging
 

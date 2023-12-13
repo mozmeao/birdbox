@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-No changes
+### Added
+
+* Support for specific per-page social-sharing images, at a reasonable size (#255)
 
 ## [1.2.1]
 
