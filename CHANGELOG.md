@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Make callout text into richtext, with a limited set of features; increase limit to 1000 chars
 * Support for specific per-page social-sharing images, at a reasonable size (#255)
 
 ## [1.2.1]
