@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-No changes
+### Changed
+
+* Update YouTube video embeds to use the youtube-nocookie.com domain instead of regular youtube.com
 
 ## [1.3.0]
 
