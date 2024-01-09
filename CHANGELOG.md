@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-No changes
+### Changed
+
+* Do no load analytics JS (if allowed based on DNT) on 40x pages
 
 ## [1.3.0]
 
