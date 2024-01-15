@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-No changes
+### Changed
+
+* Drop ColorField and replace with ThemeColorField that only allows a subset of on-brand color choices
 
 ## [1.3.0]
 

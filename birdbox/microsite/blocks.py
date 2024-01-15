@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+
 """Custom Wagtail blocks that map to Protocol components, intended for use in a StreamField"""
 from django import forms
 from django.conf import settings
@@ -16,7 +17,7 @@ from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 from birdbox.protocol_links import get_docs_link
-from common.blocks import AccessibleImageBlock, ColorBlock
+from common.blocks import AccessibleImageBlock, ThemedColorBlock
 from common.utils import get_freshest_newsletter_options
 from microsite.forms import CONTACT_FORM_CHOICES
 
@@ -522,21 +523,8 @@ class ColumnBlock(wagtail_blocks.StructBlock):
         required=True,
     )
 
-    background_color = ColorBlock(
+    color_theme = ThemedColorBlock(
         required=True,
-        help_text="For a solid block of colour. Use with a light/dark theme as appropriate, to ensure text is visible.",
-    )
-
-    theme = wagtail_blocks.ChoiceBlock(
-        choices=ThemeOptions.choices,
-        default=ThemeOptions.THEME_DARK,
-    )
-
-    background_color = ColorBlock(
-        required=True,
-        help_text=(
-            "For a solid block of colour, matched to the background image. Use with a light/dark theme as appropriate, to ensure text is visible."
-        ),
     )
 
     content = ColumnContentBlock(
@@ -830,15 +818,8 @@ class HeroBlock(wagtail_blocks.StructBlock):
         required=False,
         help_text="Link for an optional button at the base of the hero",
     )
-    background_color = ColorBlock(
+    color_theme = ThemedColorBlock(
         required=True,
-        help_text="For a solid block of colour, matched to the background image",
-    )
-    theme = wagtail_blocks.ChoiceBlock(
-        choices=ThemeOptions.choices,
-        required=True,
-        default=ThemeOptions.THEME_DARK,
-        help_text="The dark theme works best with a dark background color selected, the light theme needs a light one.",
     )
     layout = wagtail_blocks.ChoiceBlock(
         choices=HeroLayoutOptions.choices,

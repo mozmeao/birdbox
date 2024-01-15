@@ -1,0 +1,67 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+@use '~@mozilla-protocol/core/protocol/css/includes/tokens';
+
+// These CSS class names are also referenced in Python, and will vary in their
+// actual color impact in different themes, so they have simple names rather
+// than descriptive ones
+
+// Core light/dark options
+
+.bb-theme-monochrome {
+    background-color: tokens.$color-white;
+    color: tokens.$color-black;
+}
+
+.bb-theme-monochrome-inverse {
+    background-color: tokens.$color-black;
+    color: tokens.$color-white;
+}
+
+// 10 combinations: TODO: update these for Firefox Brand
+
+// These must be used with mzp-t-light, which is automatically
+// done via common.blocks.ThemedColorBlock
+.bb-mzp-t-light-themed-color-1 {
+    background-color: tokens.$color-green-20;
+}
+
+.bb-mzp-t-light-themed-color-2 {
+    background-color: tokens.$color-purple-10;
+}
+
+.bb-mzp-t-light-themed-color-3 {
+    background-color: tokens.$color-moz-lemon-yellow;
+}
+
+.bb-mzp-t-light-themed-color-4 {
+    background-color: tokens.$color-moz-neon-blue;
+}
+
+.bb-mzp-t-light-themed-color-5 {
+    background-color: tokens.$color-moz-light-gray;
+}
+
+// These must be used with mzp-t-dark, which is automatically
+// done via common.blocks.ThemedColorBlock
+.bb-mzp-t-dark-themed-color-1 {
+    background-color: tokens.$color-moz-dark-purple;
+}
+
+.bb-mzp-t-dark-themed-color-2 {
+    background-color: tokens.$color-moz-dark-blue;
+}
+
+.bb-mzp-t-dark-themed-color-3 {
+    background-color: tokens.$color-red-70;
+}
+
+.bb-mzp-t-dark-themed-color-4 {
+    background-color: tokens.$color-moz-warm-red;
+}
+
+.bb-mzp-t-dark-themed-color-5 {
+    background-color: tokens.$color-moz-dark-green;
+}
