@@ -33,6 +33,7 @@ class AccessibleImageBlock(AccessibleImageBlockBase):
 
 
 class ColorBlock(blocks.FieldBlock):
+    # DEPRECATED. Historic Migrations need updating when/if we remove this custom block
     def __init__(self, help_text=None, required=True, **kwargs):
         self.field = forms.CharField(
             help_text=help_text,
@@ -41,3 +42,31 @@ class ColorBlock(blocks.FieldBlock):
             widget=forms.TextInput(attrs={"type": "color"}),
         )
         super().__init__(**kwargs)
+
+
+# PICK UP HERE PREFIXING THE CLASSNAMES WITH mzp-t-light or mzp-t-dark
+
+
+DEFAULT_THEMED_COLOR_CLASSNAMES = "mzp-t-light bb-theme-monochrome"
+
+
+def _get_themed_color_options():
+    return (
+        (DEFAULT_THEMED_COLOR_CLASSNAMES, "Default monochrome"),
+        ("mzp-t-dark bb-theme-monochrome-inverse", "Inverse monochrome"),
+        ("mzp-t-light bb-mzp-t-light-themed-color-1", "Light-theme color option 1"),
+        ("mzp-t-light bb-mzp-t-light-themed-color-2", "Light-theme color option 2"),
+        ("mzp-t-light bb-mzp-t-light-themed-color-3", "Light-theme color option 3"),
+        ("mzp-t-light bb-mzp-t-light-themed-color-4", "Light-theme color option 4"),
+        ("mzp-t-light bb-mzp-t-light-themed-color-5", "Light-theme color option 5"),
+        ("mzp-t-dark bb-mzp-t-dark-themed-color-1", "Dark-theme color option 1"),
+        ("mzp-t-dark bb-mzp-t-dark-themed-color-2", "Dark-theme color option 2"),
+        ("mzp-t-dark bb-mzp-t-dark-themed-color-3", "Dark-theme color option 3"),
+        ("mzp-t-dark bb-mzp-t-dark-themed-color-4", "Dark-theme color option 4"),
+        ("mzp-t-dark bb-mzp-t-dark-themed-color-5", "Dark-theme color option 5"),
+    )
+
+
+class ThemedColorBlock(blocks.ChoiceBlock):
+    choices = _get_themed_color_options()
+    default = DEFAULT_THEMED_COLOR_CLASSNAMES
