@@ -1,8 +1,8 @@
 {% load microsite_tags wagtailimages_tags %}
 
 <style type="text/css">
-  :root {
-    --hero-background-color: {{block.value.background_color}}b2;
+  {% comment %} :root {
+    --hero-background-color: #000000b2;
   }
 
   .hero-section.mzp-t-dark .hero-text-wrapper {
@@ -22,15 +22,13 @@
       background-color: transparent;
       box-shadow: none;
     }
-  }
+  } {% endcomment %}
 </style>
-
 <section
-  class="{{block.value.theme}} hero-section {{block.value.layout}}"
-  style="background-color: {{block.value.background_color}};
+  class="hero-section {{block.value.color_theme}} {{block.value.layout}}"
   {% if block.value.background_image %}
-    {% image block.value.background_image width-1000 as bg_image %}
-        background-image: url('{{bg_image.url}}')
+  {% image block.value.background_image width-1000 as bg_image %}
+  style="background-image: url('{{bg_image.url}}')"
   {% endif %}"
 >
   <div class="mzp-l-content">
@@ -43,7 +41,7 @@
           <p>{{block.value.standfirst|linebreaksbr}}</p>
         {% endif %}
         {% if block.value.call_to_action.url %}
-          <a href="{{block.value.call_to_action.url}}" class="mzp-c-button {{block.value.theme}}">
+          <a href="{{block.value.call_to_action.url}}" class="mzp-c-button {% seek_dark_theme_class block.value.color_theme %}">
             {{block.value.call_to_action.label}}
           </a>
         {% endif %}
