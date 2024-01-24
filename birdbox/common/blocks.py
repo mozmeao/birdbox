@@ -47,23 +47,27 @@ class ColorBlock(blocks.FieldBlock):
 # PICK UP HERE PREFIXING THE CLASSNAMES WITH mzp-t-light or mzp-t-dark
 
 
-DEFAULT_THEMED_COLOR_CLASSNAMES = "mzp-t-light bb-theme-monochrome"
+DEFAULT_THEMED_COLOR_CLASSNAMES = "mzp-t-light"
 
 
 def _get_themed_color_options():
     return (
-        (DEFAULT_THEMED_COLOR_CLASSNAMES, "Default monochrome"),
-        ("mzp-t-dark bb-theme-monochrome-inverse", "Inverse monochrome"),
-        ("mzp-t-light bb-mzp-t-light-themed-color-1", "Light-theme color option 1"),
-        ("mzp-t-light bb-mzp-t-light-themed-color-2", "Light-theme color option 2"),
-        ("mzp-t-light bb-mzp-t-light-themed-color-3", "Light-theme color option 3"),
-        ("mzp-t-light bb-mzp-t-light-themed-color-4", "Light-theme color option 4"),
-        ("mzp-t-light bb-mzp-t-light-themed-color-5", "Light-theme color option 5"),
-        ("mzp-t-dark bb-mzp-t-dark-themed-color-1", "Dark-theme color option 1"),
-        ("mzp-t-dark bb-mzp-t-dark-themed-color-2", "Dark-theme color option 2"),
-        ("mzp-t-dark bb-mzp-t-dark-themed-color-3", "Dark-theme color option 3"),
-        ("mzp-t-dark bb-mzp-t-dark-themed-color-4", "Dark-theme color option 4"),
-        ("mzp-t-dark bb-mzp-t-dark-themed-color-5", "Dark-theme color option 5"),
+        (DEFAULT_THEMED_COLOR_CLASSNAMES, "White"),
+        ("mzp-t-dark", "Black/Ink"),
+        ("mzp-t-light bb-t-light-color-01", "Light Gray"),
+        ("mzp-t-dark bb-t-dark-color-01", "Dark Gray"),
+        ("mzp-t-light bb-t-light-color-02", "Pink"),
+        ("mzp-t-dark bb-t-dark-color-02", "Red"),
+        ("mzp-t-light bb-t-light-color-03", "Light Yellow"),
+        ("mzp-t-dark bb-t-dark-color-03", "Dark Yellow"),
+        ("mzp-t-light bb-t-light-color-04", "Light Orange"),
+        ("mzp-t-dark bb-t-dark-color-04", "Dark Orange"),
+        ("mzp-t-light bb-t-light-color-05", "Light Green"),
+        ("mzp-t-dark bb-t-dark-color-05", "Dark Green"),
+        ("mzp-t-light bb-t-light-color-06", "Light Blue"),
+        ("mzp-t-dark bb-t-dark-color-06", "Dark Blue"),
+        ("mzp-t-light bb-t-light-color-07", "Light Violet"),
+        ("mzp-t-dark bb-t-dark-color-07", "Dark Violet"),
     )
 
 
