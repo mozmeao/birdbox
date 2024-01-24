@@ -10,6 +10,7 @@ from wagtail.images import blocks as wagtailimages_blocks
 
 class AccessibleImageBlockBase(wagtail_blocks.StructBlock):
     "Custom Image wrapper with increased a11y provision"
+
     image = wagtailimages_blocks.ImageChooserBlock(
         required=False,
     )
