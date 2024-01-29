@@ -283,14 +283,19 @@ BASE_SITE_URL = config(
 
 
 WAGTAILEMBEDS_FINDERS = [
+    # Only these two for now - others need to be confirmed to be cookie-approprite
+    {
+        "class": "common.embed.YouTubeNoCookieEmbedFinder",
+        "providers": [
+            youtube,
+        ],
+    },
     {
         "class": "wagtail.embeds.finders.oembed",
         "providers": [
-            # Only these two
-            youtube,
             vimeo,
         ],
-    }
+    },
 ]
 
 WAGTAILIMAGES_EXTENSIONS = [
