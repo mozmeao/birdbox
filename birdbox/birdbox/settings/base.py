@@ -585,7 +585,14 @@ WAGTAILMARKDOWN = {
         "br",
     ],
     "allowed_styles": [],  # a list of CSS attributes - nothing allowed
-    "allowed_attributes": {},  # optional. a dict with HTML tag as key and a list of attributes as value
+    "allowed_attributes": { # optional. a dict with HTML tag as key and a list of attributes as value
+        "a": [
+            "href",
+            "target",
+            "rel",
+            "title",
+        ],
+    },
     "allowed_settings_mode": "override",  # optional. Possible values: "extend" or "override". Defaults to "extend".
     "extensions": [],  # optional. a list of python-markdown supported extensions
     "extension_configs": {},  # optional. a dictionary with the extension name as key, and its configuration as value
