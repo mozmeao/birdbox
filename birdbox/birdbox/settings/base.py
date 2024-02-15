@@ -585,11 +585,16 @@ WAGTAILMARKDOWN = {
         "br",
     ],
     "allowed_styles": [],  # a list of CSS attributes - nothing allowed
-    "allowed_attributes": { # optional. a dict with HTML tag as key and a list of attributes as value
+    "allowed_attributes": {  # optional. a dict with HTML tag as key and a list of attributes as value
         "a": [
             "href",
             "target",
             "rel",
+            "title",
+        ],
+        "img": [
+            "src",
+            "alt",
             "title",
         ],
     },
