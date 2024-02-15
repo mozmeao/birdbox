@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Dependency updates for security and stability
 * Configure wagtail-markdown so that bleach does not strip anchor element attributes
 * Configure wagtail-markdown so that bleach does not strip img element attributes
+* Dependency updates
 
 ## [1.3.0]
 
