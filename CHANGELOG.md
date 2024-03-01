@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Nothing yet
+
+## [1.4.1]
+
+### Changed
+
 * Fix StructuralPage blow-up when trying to add one (#309)
 * Increase default rate limit to 300reqs/min, up from 85r/min
 
