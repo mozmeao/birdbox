@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* Nothing yet
+* Increase default rate limit to 300reqs/min, up from 85r/min
 
 ## [1.4.0]
 
