@@ -188,6 +188,10 @@ class StructuralPage(BaseProtocolPage):
     settings_panels = Page.settings_panels + [
         FieldPanel("show_in_menus"),
     ]
+    content_panels = [
+        FieldPanel("title"),
+        FieldPanel("slug"),
+    ]
     promote_panels = []
 
     def serve_preview(self, request, mode_name="irrelevant"):
