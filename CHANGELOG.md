@@ -7,11 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+* Nothing yet
+
+### Changed
+
+* Nothing yet
+
+## [1.4.1]
+
+### Changed
+
+* Fix StructuralPage blow-up when trying to add one (#309)
+* Increase default rate limit to 300reqs/min, up from 85r/min
+
+## [1.4.0]
+
 ### Changed
 
 * Update YouTube video embeds to use the youtube-nocookie.com domain instead of regular youtube.com
 * Do not load analytics JS (if allowed based on DNT) on 40x pages
 * Dependency updates for security and stability
+* Configure wagtail-markdown so that bleach does not strip anchor element attributes
+* Configure wagtail-markdown so that bleach does not strip img element attributes
+* Dependency updates
 
 ## [1.3.0]
 

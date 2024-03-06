@@ -420,7 +420,7 @@ RATELIMIT_USE_CACHE = config(
 RATELIMIT_VIEW = "common.views.rate_limited"
 RATELIMIT_DEFAULT_LIMIT = config(
     "RATELIMIT_DEFAULT_LIMIT",
-    default="85/m",
+    default="300/m",
     parser=str,
 )
 
@@ -585,7 +585,19 @@ WAGTAILMARKDOWN = {
         "br",
     ],
     "allowed_styles": [],  # a list of CSS attributes - nothing allowed
-    "allowed_attributes": {},  # optional. a dict with HTML tag as key and a list of attributes as value
+    "allowed_attributes": {  # optional. a dict with HTML tag as key and a list of attributes as value
+        "a": [
+            "href",
+            "target",
+            "rel",
+            "title",
+        ],
+        "img": [
+            "src",
+            "alt",
+            "title",
+        ],
+    },
     "allowed_settings_mode": "override",  # optional. Possible values: "extend" or "override". Defaults to "extend".
     "extensions": [],  # optional. a list of python-markdown supported extensions
     "extension_configs": {},  # optional. a dictionary with the extension name as key, and its configuration as value
