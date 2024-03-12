@@ -32,3 +32,13 @@ class BlogPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
         model = models.BlogPage
+
+
+class StructuralPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.StructuralPage
+
+
+class ExternalRedirectionPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.ExternalRedirectionPage

@@ -17,6 +17,7 @@ from django.db.models import (
     ForeignKey,
     Model,
     TextChoices,
+    URLField,
 )
 from django.shortcuts import redirect
 from django.templatetags.static import static
@@ -182,9 +183,6 @@ class StructuralPage(BaseProtocolPage):
 
     is_structural_page = True
 
-    # TO COME: guard rails on page heirarchy
-    # subpage_types = []
-
     settings_panels = Page.settings_panels + [
         FieldPanel("show_in_menus"),
     ]
@@ -200,6 +198,42 @@ class StructuralPage(BaseProtocolPage):
 
     def serve(self, request):
         return redirect(self.get_parent().get_full_url())
+
+
+class ExternalRedirectionPage(BaseProtocolPage):
+    """A page that, when loaded, redirects to a new destination
+    outside of the site.
+
+    This is NOT the same as Wagtail redirect: because it's a Page
+    it can go in the page tree, and therefore be managed in the
+    nav like any other page"""
+
+    # Minimal fields on this model - only exactly what we need
+    # `title` and `slug` fields come from BaseProtocolPage->Page
+
+    is_redirecting_page = True
+
+    destination = URLField(
+        blank=False,
+        null=False,
+        help_text="URL of the external page to link to",
+    )
+    settings_panels = Page.settings_panels + [
+        FieldPanel("show_in_menus"),
+    ]
+    content_panels = [
+        FieldPanel("title"),
+        FieldPanel("slug"),
+        FieldPanel("destination"),
+    ]
+    promote_panels = []
+
+    def serve_preview(self, request, mode_name="irrelevant"):
+        # Regardless of mode_name, always redirect to the parent page
+        return redirect(self.destination)
+
+    def serve(self, request):
+        return redirect(self.destination)
 
 
 class HomePage(BaseProtocolPage):
