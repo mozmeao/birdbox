@@ -7,13 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+###  Added
+
+Nothing yet
+
+### Changed
+
+Nothing yet
+
+## [1.5.0]
+
 ### Added
 
 * Add ExternalRedirectionPage, which can be added to the page tree and will 302 to a destination URL. The core use-case for this is external links in the nav
 
 ### Changed
 
-* Nothing yet
+* FE dep updates
 
 ## [1.4.1]
 
