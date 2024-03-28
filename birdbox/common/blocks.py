@@ -44,33 +44,26 @@ class ColorBlock(blocks.FieldBlock):
         super().__init__(**kwargs)
 
 
-# PICK UP HERE PREFIXING THE CLASSNAMES WITH mzp-t-light or mzp-t-dark
-
-
-DEFAULT_THEMED_COLOR_CLASSNAMES = "mzp-t-light"
-
-
-def _get_themed_color_options():
-    return (
-        (DEFAULT_THEMED_COLOR_CLASSNAMES, "White"),
-        ("mzp-t-dark", "Black/Ink"),
-        ("mzp-t-light bb-t-light-color-01", "Light Gray"),
-        ("mzp-t-dark bb-t-dark-color-01", "Dark Gray"),
-        ("mzp-t-light bb-t-light-color-02", "Pink"),
-        ("mzp-t-dark bb-t-dark-color-02", "Red"),
-        ("mzp-t-light bb-t-light-color-03", "Light Yellow"),
-        ("mzp-t-dark bb-t-dark-color-03", "Dark Yellow"),
-        ("mzp-t-light bb-t-light-color-04", "Light Orange"),
-        ("mzp-t-dark bb-t-dark-color-04", "Dark Orange"),
-        ("mzp-t-light bb-t-light-color-05", "Light Green"),
-        ("mzp-t-dark bb-t-dark-color-05", "Dark Green"),
-        ("mzp-t-light bb-t-light-color-06", "Light Blue"),
-        ("mzp-t-dark bb-t-dark-color-06", "Dark Blue"),
-        ("mzp-t-light bb-t-light-color-07", "Light Violet"),
-        ("mzp-t-dark bb-t-dark-color-07", "Dark Violet"),
-    )
+DEFAULT_THEMED_COLOR_CLASSNAME = "mzp-t-light"
 
 
 class ThemedColorBlock(blocks.ChoiceBlock):
-    choices = _get_themed_color_options()
-    default = DEFAULT_THEMED_COLOR_CLASSNAMES
+    choices = (
+        (DEFAULT_THEMED_COLOR_CLASSNAME, DEFAULT_THEMED_COLOR_CLASSNAME),
+        ("mzp-t-dark", "mzp-t-dark"),
+        ("mzp-t-light bb-t-light-color-01", "bb-t-light-color-01"),
+        ("mzp-t-dark bb-t-dark-color-01", "bb-t-dark-color-01"),
+        ("mzp-t-light bb-t-light-color-02", "bb-t-light-color-02"),
+        ("mzp-t-dark bb-t-dark-color-02", "bb-t-dark-color-02"),
+        ("mzp-t-light bb-t-light-color-03", "bb-t-light-color-03"),
+        ("mzp-t-dark bb-t-dark-color-03", "bb-t-dark-color-03"),
+        ("mzp-t-light bb-t-light-color-04", "bb-t-light-color-04"),
+        ("mzp-t-dark bb-t-dark-color-04", "bb-t-dark-color-04"),
+        ("mzp-t-light bb-t-light-color-05", "bb-t-light-color-05"),
+        ("mzp-t-dark bb-t-dark-color-05", "bb-t-dark-color-05"),
+        ("mzp-t-light bb-t-light-color-06", "bb-t-light-color-06"),
+        ("mzp-t-dark bb-t-dark-color-06", "bb-t-dark-color-06"),
+        ("mzp-t-light bb-t-light-color-07", "bb-t-light-color-07"),
+        ("mzp-t-dark bb-t-dark-color-07", "bb-t-dark-color-07"),
+    )
+    default = DEFAULT_THEMED_COLOR_CLASSNAME
