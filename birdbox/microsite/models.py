@@ -1141,8 +1141,9 @@ class Footer(BaseGenericSetting):
 
 
 class BrandChoices(TextChoices):
-    MOZORG_BRAND = "mozilla", "Mozilla.org theme"
-    FIREFOX_BRAND = "firefox", "Firefox theme"
+    BRAND_MOZORG = "mozilla", "Mozilla.org theme"
+    BRAND_FIREFOX = "firefox", "Firefox theme"
+    BRAND_INNOVATION = "innovation", "Firefox theme"
 
 
 class NavThemeChoices(TextChoices):
@@ -1155,7 +1156,7 @@ class MicrositeSettings(BaseGenericSetting):
     site_theme = CharField(
         max_length=64,
         choices=BrandChoices.choices,
-        default=BrandChoices.MOZORG_BRAND,
+        default=BrandChoices.BRAND_MOZORG,
         help_text="Choose the design theme (typography, colours) for this site. Changes will be immediately applied - there is no preview",
     )
     navigation_enabled = BooleanField(

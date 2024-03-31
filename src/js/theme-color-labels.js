@@ -46,6 +46,24 @@ const colorLabels = {
         "bb-t-light-color-07": "Light Violet",
         "bb-t-dark-color-07": "Dark Violet",
     },
+    "innovation": {
+        "mzp-t-light": "White",
+        "mzp-t-dark": "Black/Ink",
+        "bb-t-light-color-01": "Light Gray",
+        "bb-t-dark-color-01": "Dark Gray",
+        "bb-t-light-color-02": "Pink",
+        "bb-t-dark-color-02": "Red",
+        "bb-t-light-color-03": "Light Yellow",
+        "bb-t-dark-color-03": "Dark Yellow",
+        "bb-t-light-color-04": "Light Orange",
+        "bb-t-dark-color-04": "Dark Orange",
+        "bb-t-light-color-05": "Light Green",
+        "bb-t-dark-color-05": "Dark Green",
+        "bb-t-light-color-06": "Light Blue",
+        "bb-t-dark-color-06": "Dark Blue",
+        "bb-t-light-color-07": "Light Violet",
+        "bb-t-dark-color-07": "Dark Violet",
+    },
 }
 
 var fixupHelper = function(themeName){
