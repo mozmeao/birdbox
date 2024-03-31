@@ -4,9 +4,9 @@
 * file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
-/* These mappings let us give descriptive names to CSS classes
-* when we surface them in the Wagtail editor. If you change the
-* value of the relevant class, you may need to update here, too
+/* These mappings let us give descriptive names to CSS classes when we surface
+* them in the Wagtail editor. If you change the value of the relevant class in
+* src/css/protocol-{THEME-NAME}-theme-colors.scss, you may need to update here, too
 */
 
 const colorLabels = {

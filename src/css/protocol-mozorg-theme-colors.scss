@@ -4,9 +4,9 @@
 
 @use '~@mozilla-protocol/core/protocol/css/includes/tokens';
 
-// These CSS class names are also referenced in Python, and will vary in their
-// actual color impact in different themes, so they have simple names rather
-// than descriptive ones
+// These CSS class names are also referenced in src/js/theme-color-labels.js,
+// and will vary in their actual color impact in different themes, so they
+// have simple names rather than descriptive ones
 
 // 14 combinations: 7 light and 7 dark (primaries plus a gray)
 
