@@ -13,7 +13,7 @@ Nothing yet
 
 ### Changed
 
-Nothing yet
+* Drop ColorField and replace with ThemeColorField that only allows a subset of on-brand color choices
 
 ## [1.5.0]
 
