@@ -13,7 +13,14 @@ Nothing yet
 
 ### Changed
 
+Nothing yet
+
+## [1.6.0]
+
+### Changed
+
 * Drop ColorField and replace with ThemeColorField that only allows a subset of on-brand color choices
+* Dependency updates
 
 ## [1.5.0]
 
