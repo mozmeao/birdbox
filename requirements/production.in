@@ -13,7 +13,7 @@ everett>=3.3.0
 gevent>=23.9.1
 gunicorn==22.0.0
 honcho==1.1.0
-mozilla-django-oidc==4.0.0
+mozilla-django-oidc==4.0.1
 Pillow==10.2.0
 psycopg[binary]==3.1.18
 requests>=2.31.0
