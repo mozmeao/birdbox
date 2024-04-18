@@ -15,6 +15,12 @@ Nothing yet
 
 Nothing yet
 
+## [1.6.1]
+
+### Changed
+
+* Avoid risk of HTTP 500 during rollout of ThemedColorField
+
 ## [1.6.0]
 
 ### Changed
