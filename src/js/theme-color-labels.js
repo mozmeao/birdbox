@@ -48,7 +48,7 @@ const colorLabels = {
     },
     "innovation": {
         "mzp-t-light": "White",
-        "mzp-t-dark": "Black/Ink",
+        "mzp-t-dark": "Black",
         "bb-t-light-color-01": "Light Gray",
         "bb-t-dark-color-01": "Dark Gray",
         "bb-t-light-color-02": "Pink",

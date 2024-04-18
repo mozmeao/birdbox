@@ -1143,7 +1143,7 @@ class Footer(BaseGenericSetting):
 class BrandChoices(TextChoices):
     BRAND_MOZORG = "mozilla", "Mozilla.org theme"
     BRAND_FIREFOX = "firefox", "Firefox theme"
-    BRAND_INNOVATION = "innovation", "Firefox theme"
+    BRAND_INNOVATION = "innovation", "Innovations theme"
 
 
 class NavThemeChoices(TextChoices):
