@@ -13,7 +13,7 @@ Nothing yet
 
 ### Changed
 
-Nothing yet
+* Add Innovation-specific Theme, alongide Mozorg and Firefox
 
 ## [1.6.1]
 

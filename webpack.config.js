@@ -25,6 +25,7 @@ module.exports = {
         // base/core
         "protocol-mozilla-theme": "./src/css/protocol/mozilla.scss",
         "protocol-firefox-theme": "./src/css/protocol/firefox.scss",
+        "protocol-innovation-theme": "./src/css/protocol/innovation.scss",
 
         // page/feature-specific CSS
         "birdbox-blog": "./src/css/blog.scss",
