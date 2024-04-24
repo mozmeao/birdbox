@@ -13,7 +13,7 @@ Nothing yet
 
 ### Changed
 
-* Drop ColorField and replace with ThemeColorField that only allows a subset of on-brand color choices
+* Add Innovation-specific Theme, alongide Mozorg and Firefox
 
 ## [1.6.1]
 
