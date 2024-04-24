@@ -17,7 +17,11 @@ class Migration(migrations.Migration):
             model_name="micrositesettings",
             name="site_theme",
             field=models.CharField(
-                choices=[("mozilla", "Mozilla.org theme"), ("firefox", "Firefox theme"), ("innovation", "Firefox theme")],
+                choices=[
+                    ("mozilla", "Mozilla.org theme"),
+                    ("firefox", "Firefox theme"),
+                    ("innovation", "Innovations theme"),
+                ],
                 default="mozilla",
                 help_text="Choose the design theme (typography, colours) for this site. Changes will be immediately applied - there is no preview",
                 max_length=64,
