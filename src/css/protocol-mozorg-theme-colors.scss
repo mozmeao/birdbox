@@ -1,0 +1,71 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+@use '~@mozilla-protocol/core/protocol/css/includes/tokens';
+
+// These CSS class names are also referenced in src/js/theme-color-labels.js,
+// and will vary in their actual color impact in different themes, so they
+// have simple names rather than descriptive ones
+
+// 14 combinations: 7 light and 7 dark (primaries plus a gray)
+
+// These must be used with mzp-t-light, which is automatically
+// done via common.blocks.ThemedColorBlock
+.bb-t-light-color-01 {
+    background-color: tokens.$color-light-gray-20;
+}
+
+.bb-t-light-color-02 {
+    background-color: tokens.$color-pink-10;
+}
+
+.bb-t-light-color-03 {
+    background-color: tokens.$color-yellow-05;
+}
+
+.bb-t-light-color-04 {
+    background-color: tokens.$color-orange-05;
+}
+
+.bb-t-light-color-05 {
+    background-color: tokens.$color-green-10;
+}
+
+.bb-t-light-color-06 {
+    background-color: tokens.$color-blue-05;
+}
+
+.bb-t-light-color-07 {
+    background-color: tokens.$color-violet-10;
+}
+
+// These must be used with mzp-t-dark, which is automatically
+// done via common.blocks.ThemedColorBlock
+.bb-t-dark-color-01 {
+    background-color: tokens.$color-dark-gray-40;
+}
+
+.bb-t-dark-color-02 {
+    background-color: tokens.$color-red-80;
+}
+
+.bb-t-dark-color-03 {
+    background-color: tokens.$color-yellow-80;
+}
+
+.bb-t-dark-color-04 {
+    background-color: tokens.$color-orange-80;
+}
+
+.bb-t-dark-color-05 {
+    background-color: tokens.$color-moz-dark-green;
+}
+
+.bb-t-dark-color-06 {
+    background-color: tokens.$color-moz-dark-blue;
+}
+
+.bb-t-dark-color-07 {
+    background-color: tokens.$color-moz-dark-purple;
+}

@@ -185,8 +185,11 @@ def seek_dark_theme_class(parent_class_string: str) -> str:
     """
     DARK_THEME_CLASSNAME = "mzp-t-dark"
 
-    if DARK_THEME_CLASSNAME in parent_class_string:
-        return DARK_THEME_CLASSNAME
+    try:
+        if DARK_THEME_CLASSNAME in parent_class_string:
+            return DARK_THEME_CLASSNAME
+    except TypeError:
+        pass
 
     return ""
 
