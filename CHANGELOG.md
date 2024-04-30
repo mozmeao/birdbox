@@ -14,6 +14,7 @@ Nothing yet
 ### Changed
 
 * Add Innovation-specific Theme, alongide Mozorg and Firefox
+* Dependency updates
 
 ## [1.6.1]
 
