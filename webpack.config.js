@@ -19,11 +19,13 @@ module.exports = {
         "protocol-global": "./src/js/protocol/global.js",
         "newsletter-form": "./src/js/newsletter/newsletter-init.js", // not protocol JS (yet)
         analytics: "./src/js/analytics.js",
+        "color-theme-block-labels": "./src/js/theme-color-labels.js",
 
         // CSS
         // base/core
         "protocol-mozilla-theme": "./src/css/protocol/mozilla.scss",
         "protocol-firefox-theme": "./src/css/protocol/firefox.scss",
+        "protocol-innovation-theme": "./src/css/protocol/innovation.scss",
 
         // page/feature-specific CSS
         "birdbox-blog": "./src/css/blog.scss",

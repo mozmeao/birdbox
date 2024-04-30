@@ -4,6 +4,26 @@
 
 @import '~@mozilla-protocol/core/protocol/css/includes/lib';
 
+.hero-section.mzp-t-dark .hero-text-wrapper {
+    background-color: #000000b2;
+    box-shadow: 0 0 3px #000000b2;
+}
+
+.hero-section.mzp-t-light .hero-text-wrapper {
+    background-color: #ffffffb2;
+    box-shadow: 0 0 3px #ffffffb2;
+}
+
+// TODO: also support hero-section-centered
+// .hero-section-centered,
+@media (min-width: 768px) {
+    .hero-section.mzp-t-dark .hero-text-wrapper,
+    .hero-section.mzp-t-light .hero-text-wrapper {
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
 .hero-section {
     background-position: right center;
     background-repeat: no-repeat;

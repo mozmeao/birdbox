@@ -140,6 +140,16 @@ class BaseProtocolPage(MetadataPageMixin, CacheAwareAbstractBasePage):
         ),
     )
 
+    canonical_rel = URLField(
+        blank=True,
+        help_text=mark_safe(
+            'Value to use within a &lt;link rel="canonical" ...&gt; tag in the head of this page, '
+            "to indicate a preferred URL for this page elsewhere. "
+            "Only set this if you know what you are doing. "
+            'See <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel#canonical">MDN docs</a>.'
+        ),
+    )
+
     settings_panels = Page.settings_panels + [
         FieldPanel("page_layout"),
         MultiFieldPanel(
@@ -153,9 +163,12 @@ class BaseProtocolPage(MetadataPageMixin, CacheAwareAbstractBasePage):
         ),
     ]
 
-    # Crudely drop the show_in_menus section. TODO: make this more elegant and less brittle
+    # Crudely drop the show_in_menus section, which we've moved into the settings_panels
+    # TODO: make this more elegant and less brittle
     promote_panels = Page.promote_panels[:-1]
     promote_panels += [FieldPanel("search_image")]
+
+    promote_panels += [FieldPanel("canonical_rel")]
 
     def has_menu_icon(self):
         return bool(self.menu_icon)
@@ -1141,8 +1154,9 @@ class Footer(BaseGenericSetting):
 
 
 class BrandChoices(TextChoices):
-    MOZORG_BRAND = "mozilla", "Mozilla.org theme"
-    FIREFOX_BRAND = "firefox", "Firefox theme"
+    BRAND_MOZORG = "mozilla", "Mozilla.org theme"
+    BRAND_FIREFOX = "firefox", "Firefox theme"
+    BRAND_INNOVATION = "innovation", "Innovations theme"
 
 
 class NavThemeChoices(TextChoices):
@@ -1155,7 +1169,7 @@ class MicrositeSettings(BaseGenericSetting):
     site_theme = CharField(
         max_length=64,
         choices=BrandChoices.choices,
-        default=BrandChoices.MOZORG_BRAND,
+        default=BrandChoices.BRAND_MOZORG,
         help_text="Choose the design theme (typography, colours) for this site. Changes will be immediately applied - there is no preview",
     )
     navigation_enabled = BooleanField(

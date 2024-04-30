@@ -28,4 +28,7 @@
 @import '~@mozilla-protocol/core/protocol/css/components/forms/form';
 
 // Custom overrides for use in Birdbox
-@import './src/css/birdbox-protocol-overrides.scss'
+@import './src/css/birdbox-protocol-overrides.scss';
+
+// Theme colors needed for this Mozorg theme
+@import './src/css/protocol-firefox-theme-colors.scss';
