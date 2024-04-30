@@ -15,13 +15,23 @@ Nothing yet
 
 Nothing yet
 
-## [1.7.0]
+## [1.7.1]
 
 ### Changed
 
-* Add first cut of Innovation-specific Theme, alongide Mozorg and Firefox themes
+* Bugfix: reveal field in Wagtail UI for managing rel=canonical on BlogPost pages, too
 * Dependency updates
+
+## [1.7.0]
+
+### Added
+
+* Add first cut of Innovation-specific Theme, alongide Mozorg and Firefox themes
 * Support declaring a preferred URL for a page via rel=canonical (#351)
+
+### Changed
+
+* Dependency updates
 
 ## [1.6.1]
 
