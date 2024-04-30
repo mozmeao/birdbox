@@ -13,7 +13,13 @@ Nothing yet
 
 ### Changed
 
-* Add Innovation-specific Theme, alongide Mozorg and Firefox
+Nothing yet
+
+## [1.7.0]
+
+### Changed
+
+* Add first cut of Innovation-specific Theme, alongide Mozorg and Firefox themes
 * Dependency updates
 * Support declaring a preferred URL for a page via rel=canonical (#351)
 
