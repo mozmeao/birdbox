@@ -15,6 +15,7 @@ Nothing yet
 
 * Add Innovation-specific Theme, alongide Mozorg and Firefox
 * Dependency updates
+* Support declaring a preferred URL for a page via rel=canonical (#351)
 
 ## [1.6.1]
 
