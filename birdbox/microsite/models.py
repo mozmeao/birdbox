@@ -974,6 +974,7 @@ class BlogPage(BaseProtocolPage):
             "Feed Image",
         ),
         FieldPanel("tags"),
+        FieldPanel("canonical_rel"),
     ]
     Page.settings_panels + [
         show_in_menus_panel,
