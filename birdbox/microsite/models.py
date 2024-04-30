@@ -140,12 +140,11 @@ class BaseProtocolPage(MetadataPageMixin, CacheAwareAbstractBasePage):
         ),
     )
 
-    canonical_rel = CharField(
-        default="",
+    canonical_rel = URLField(
         blank=True,
-        max_length=512,
         help_text=mark_safe(
-            'Value to use within &lt;link rel="canonical" ...&gt; tag in the head of this page, to indicate a preferred URL for this page elewhere. '
+            'Value to use within a &lt;link rel="canonical" ...&gt; tag in the head of this page, '
+            "to indicate a preferred URL for this page elsewhere. "
             "Only set this if you know what you are doing. "
             'See <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel#canonical">MDN docs</a>.'
         ),
