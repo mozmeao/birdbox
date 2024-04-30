@@ -29,6 +29,10 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         <base target="_blank">
         {% endif %}
 
+        {% if page.canonical_rel %}
+        <link rel="canonical" href="{{ page.canonical_rel }}" />
+        {% endif %}
+
         <script type="text/javascript" src="{% static 'js/protocol-base.js' %}"></script>
 
         {# Global stylesheets #}

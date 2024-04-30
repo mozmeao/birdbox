@@ -7,13 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Added
+###  Added
 
-* Nothing yet
+Nothing yet
 
 ### Changed
 
-* Nothing yet
+Nothing yet
+
+## [1.7.0]
+
+### Changed
+
+* Add first cut of Innovation-specific Theme, alongide Mozorg and Firefox themes
+* Dependency updates
+* Support declaring a preferred URL for a page via rel=canonical (#351)
+
+## [1.6.1]
+
+### Changed
+
+* Avoid risk of HTTP 500 during rollout of ThemedColorField
+
+## [1.6.0]
+
+### Changed
+
+* Drop ColorField and replace with ThemeColorField that only allows a subset of on-brand color choices
+* Dependency updates
+
+## [1.5.0]
+
+### Added
+
+* Add ExternalRedirectionPage, which can be added to the page tree and will 302 to a destination URL. The core use-case for this is external links in the nav
+
+### Changed
+
+* FE dep updates
 
 ## [1.4.1]
 

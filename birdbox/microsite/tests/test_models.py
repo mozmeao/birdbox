@@ -14,10 +14,15 @@ from microsite.models import (
     HomePage,
     StructuralPage,
 )
+from microsite.tests.factories import (
+    ExternalRedirectionPageFactory,
+    StructuralPageFactory,
+)
+
+pytestmark = pytest.mark.django_db
 
 
 @mock.patch("microsite.models.HomePage.get_view_restrictions")
-@pytest.mark.django_db
 @pytest.mark.parametrize(
     "fake_restrictions, expected_headers",
     (
@@ -44,7 +49,6 @@ def test_cache_control_headers_on_pages_with_view_restrictions(
     assert response.get("Cache-Control") == expected_headers
 
 
-@pytest.mark.django_db
 @pytest.mark.parametrize(
     "config, page_class, success_expected",
     (
@@ -67,3 +71,42 @@ def test_can_create_at(
     home_page = HomePage.objects.get()
     with override_settings(ALLOWED_PAGE_MODELS=config.split(",")):
         assert page_class.can_create_at(home_page) == success_expected
+
+
+def test_StructuralPage_serve_methods(
+    bootstrap_minimal_site,
+    rf,
+):
+    home_page = HomePage.objects.get()
+    sp = StructuralPageFactory(parent=home_page)
+    sp.save()
+
+    request = rf.get("/some/path/")
+
+    live_result = sp.serve(request)
+    preview_result = sp.serve_preview(request)
+    assert live_result.headers["location"] == home_page.url
+    assert preview_result.headers["location"] == home_page.url
+
+
+def test_ExternalRedirectionPage_serve_methods(
+    bootstrap_minimal_site,
+    rf,
+):
+    home_page = HomePage.objects.get()
+    erp = ExternalRedirectionPageFactory(
+        parent=home_page,
+        destination="https://example.com/path/here",
+    )
+    erp.save()
+
+    request = rf.get("/some/path/")
+
+    live_result = erp.serve(request)
+    preview_result = erp.serve_preview(request)
+
+    assert live_result.headers["location"] == "https://example.com/path/here"
+    assert live_result.status_code == 302
+
+    assert preview_result.headers["location"] == "https://example.com/path/here"
+    assert preview_result.status_code == 302

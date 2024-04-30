@@ -10,6 +10,7 @@ from wagtail.images import blocks as wagtailimages_blocks
 
 class AccessibleImageBlockBase(wagtail_blocks.StructBlock):
     "Custom Image wrapper with increased a11y provision"
+
     image = wagtailimages_blocks.ImageChooserBlock(
         required=False,
     )
@@ -33,6 +34,7 @@ class AccessibleImageBlock(AccessibleImageBlockBase):
 
 
 class ColorBlock(blocks.FieldBlock):
+    # DEPRECATED. Historic Migrations need updating when/if we remove this custom block
     def __init__(self, help_text=None, required=True, **kwargs):
         self.field = forms.CharField(
             help_text=help_text,
@@ -41,3 +43,28 @@ class ColorBlock(blocks.FieldBlock):
             widget=forms.TextInput(attrs={"type": "color"}),
         )
         super().__init__(**kwargs)
+
+
+DEFAULT_THEMED_COLOR_CLASSNAME = "mzp-t-light"
+
+
+class ThemedColorBlock(blocks.ChoiceBlock):
+    choices = (
+        (DEFAULT_THEMED_COLOR_CLASSNAME, DEFAULT_THEMED_COLOR_CLASSNAME),
+        ("mzp-t-dark", "mzp-t-dark"),
+        ("mzp-t-light bb-t-light-color-01", "bb-t-light-color-01"),
+        ("mzp-t-dark bb-t-dark-color-01", "bb-t-dark-color-01"),
+        ("mzp-t-light bb-t-light-color-02", "bb-t-light-color-02"),
+        ("mzp-t-dark bb-t-dark-color-02", "bb-t-dark-color-02"),
+        ("mzp-t-light bb-t-light-color-03", "bb-t-light-color-03"),
+        ("mzp-t-dark bb-t-dark-color-03", "bb-t-dark-color-03"),
+        ("mzp-t-light bb-t-light-color-04", "bb-t-light-color-04"),
+        ("mzp-t-dark bb-t-dark-color-04", "bb-t-dark-color-04"),
+        ("mzp-t-light bb-t-light-color-05", "bb-t-light-color-05"),
+        ("mzp-t-dark bb-t-dark-color-05", "bb-t-dark-color-05"),
+        ("mzp-t-light bb-t-light-color-06", "bb-t-light-color-06"),
+        ("mzp-t-dark bb-t-dark-color-06", "bb-t-dark-color-06"),
+        ("mzp-t-light bb-t-light-color-07", "bb-t-light-color-07"),
+        ("mzp-t-dark bb-t-dark-color-07", "bb-t-dark-color-07"),
+    )
+    default = DEFAULT_THEMED_COLOR_CLASSNAME
