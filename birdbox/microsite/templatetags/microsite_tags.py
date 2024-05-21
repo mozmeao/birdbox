@@ -104,8 +104,13 @@ def favicon_links(context) -> Dict:
 
 @register.simple_tag(takes_context=True)
 def get_layout_class_from_page(context) -> str:
+    OVERRIDES_TO_STOP_CLASS_FROM_PAGE = [
+        # Most blocks call this by default, but there are some pages where we want to stop that happening
+        "BlogPage",
+    ]
+
     page = context.get("page")
-    if page:
+    if page and page.__class__.__name__ not in OVERRIDES_TO_STOP_CLASS_FROM_PAGE:
         return page.specific.page_layout
     return ""
 

@@ -886,6 +886,19 @@ class BlogPage(BaseProtocolPage):
                 ),
             ),
             (
+                "table",
+                HeadedTableBlock(
+                    required=False,
+                    label_format="Table: {title}",
+                    help_text=mark_safe(
+                        "Right-click on the table to add/remove cells and control content alignment.<br><br>"
+                        "IMPORTANT: If you do not see the table of data when you expand this section, "
+                        "please resize your browser window to make it appear. Apologies for the inconvenience. "
+                        "<a href='https://github.com/wagtail/wagtail/issues/8611'>The bug is known to the Wagtail Project</a>. ",
+                    ),
+                ),
+            ),
+            (
                 "video",
                 VideoEmbedBlock(
                     label="Mid-body video",
