@@ -105,7 +105,7 @@ def favicon_links(context) -> Dict:
 @register.simple_tag(takes_context=True)
 def get_layout_class_from_page(context) -> str:
     OVERRIDES_TO_STOP_CLASS_FROM_PAGE = [
-        # Some pages we don't want to do this with
+        # Most blocks call this by default, but there are some pages where we want to stop that happening
         "BlogPage",
     ]
 
