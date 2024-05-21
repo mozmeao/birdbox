@@ -13,7 +13,7 @@ Nothing yet
 
 ### Changed
 
-Nothing yet
+* Dependency updates
 
 ## [1.7.1]
 
