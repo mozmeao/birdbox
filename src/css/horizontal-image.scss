@@ -1,0 +1,26 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+@import '~@mozilla-protocol/core/protocol/css/includes/lib';
+
+.bb-horizontal-image {
+    text-align: center;
+    padding: $layout-xs $layout-md 0 $layout-md;
+
+    @media #{$mq-md} {
+
+        &.bb-horizontal-image-small-spacing {
+            padding: $layout-xs $layout-sm $layout-xs $layout-sm;
+        }
+        &.bb-horizontal-image-medium-spacing {
+            padding: $layout-sm $layout-md $layout-xs $layout-md ;
+        }
+        &.bb-horizontal-image-large-spacing {
+            padding: $layout-md $layout-lg $layout-sm $layout-lg;
+        }
+        &.bb-horizontal-image-xl-spacing {
+            padding: $layout-lg $layout-xl $layout-md $layout-xl;
+        }
+    }
+}

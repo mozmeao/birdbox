@@ -17,7 +17,7 @@ from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 from birdbox.protocol_links import get_docs_link
-from common.blocks import AccessibleImageBlock, ThemedColorBlock
+from common.blocks import AccessibleImageBlock, AccessibleImageBlockBase, ThemedColorBlock
 from common.utils import get_freshest_newsletter_options
 from microsite.forms import CONTACT_FORM_CHOICES
 
@@ -125,6 +125,14 @@ class TableWidthOptions(TextChoices):
     TABLE_WIDTH_FULL = "bb-table-width-full", "Full width"
 
 
+class HorizontalImageBlockOptions(TextChoices):
+    HORIZONTAL_IMAGE_LAYOUT_DEFAULT = "bb-horizontal-image-default-spacing", "Default spacing (none extra)"
+    HORIZONTAL_IMAGE_LAYOUT_SMALL = "bb-horizontal-image-small-spacing", "Small spacing"
+    HORIZONTAL_IMAGE_LAYOUT_MEDIUM = "bb-horizontal-image-medium-spacing", "Medium spacing"
+    HORIZONTAL_IMAGE_LAYOUT_LARGE = "bb-horizontal-image-large-spacing", "Large spacing"
+    HORIZONTAL_IMAGE_LAYOUT_EXTRA_LARGE = "bb-horizontal-image-xl-spacing", "XL spacing"
+
+
 class LinkStructValue(wagtail_blocks.StructValue):
     def url(self):
         external_url = self.get("external_url")
@@ -137,6 +145,7 @@ class LinkStructValue(wagtail_blocks.StructValue):
 
 class LinkBlock(wagtail_blocks.StructBlock):
     "Block that allows linking to ether a Wagtail Page or an external URL"
+
     page = wagtail_blocks.PageChooserBlock(label="Page", required=False)
     external_url = wagtail_blocks.URLBlock(label="External URL", required=False)
     rel = wagtail_blocks.CharBlock(
@@ -1030,3 +1039,25 @@ class CaptionedImageLayoutBlock(wagtail_blocks.StructBlock):
         help_text=get_docs_link("card-layout"),
         collapsed=True,
     )
+
+
+class HorizontalImageBlock(AccessibleImageBlockBase):
+    color_theme = ThemedColorBlock(
+        required=True,
+    )
+
+    layout = wagtail_blocks.ChoiceBlock(
+        choices=HorizontalImageBlockOptions.choices,
+        default=HorizontalImageBlockOptions.HORIZONTAL_IMAGE_LAYOUT_DEFAULT,
+    )
+
+    class Meta:
+        template = "microsite/blocks/horizontal_image.html"
+        icon = "image"
+
+    @property
+    def frontend_media(self):
+        "Custom property that lets us selectively include CSS"
+        return forms.Media(
+            css={"all": [static("css/birdbox-horizontal-image.css")]},
+        )
