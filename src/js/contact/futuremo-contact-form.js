@@ -122,8 +122,8 @@ const EmailForm = {
         if (isBuilderPage) {
             const newsletters =
                 interests.length > 0
-                    ? `mozilla-ai-challenge, ${interests}`
-                    : "mozilla-ai-challenge";
+                    ? `mozilla-builder, ${interests}`
+                    : "mozilla-builder";
             const params = { email, newsletters };
             postToEmailServer(
                 url,
