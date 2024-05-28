@@ -134,6 +134,6 @@ CONTACT_FORM_CHOICES = (
     ),
     (
         "microsite.forms.BuildersChallengeForm",
-        "AI Builders Challenge form",
+        "Builders Challenge form",
     ),
 )
