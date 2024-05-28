@@ -3,9 +3,12 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 from django import forms
+from django.utils.functional import cached_property
 
 from wagtail import blocks, blocks as wagtail_blocks
+from wagtail.blocks.field_block import FieldBlockAdapter
 from wagtail.images import blocks as wagtailimages_blocks
+from wagtail.telepath import register
 
 
 class AccessibleImageBlockBase(wagtail_blocks.StructBlock):
@@ -68,3 +71,18 @@ class ThemedColorBlock(blocks.ChoiceBlock):
         ("mzp-t-dark bb-t-dark-color-07", "bb-t-dark-color-07"),
     )
     default = DEFAULT_THEMED_COLOR_CLASSNAME
+
+
+class ThemedColorBlockAdapter(FieldBlockAdapter):
+    js_constructor = "common.blocks.ThemedColorBlock"
+
+    @cached_property
+    def media(self):
+        superclass_media = super().media
+        return forms.Media(
+            js=superclass_media._js + ["js/themed-color-block.js"],
+            css=superclass_media._css,
+        )
+
+
+register(ThemedColorBlockAdapter(), ThemedColorBlock)

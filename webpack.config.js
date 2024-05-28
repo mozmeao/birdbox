@@ -19,7 +19,7 @@ module.exports = {
         "protocol-global": "./src/js/protocol/global.js",
         "newsletter-form": "./src/js/newsletter/newsletter-init.js", // not protocol JS (yet)
         analytics: "./src/js/analytics.js",
-        "color-theme-block-labels": "./src/js/theme-color-labels.js",
+        "themed-color-block": "./src/js/themed-color-block.js",
 
         // CSS
         // base/core
