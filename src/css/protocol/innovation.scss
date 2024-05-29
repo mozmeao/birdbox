@@ -51,93 +51,110 @@
         url('../fonts/Inter-MediumItalic.woff2') format('woff2');
 }
 
-body {
+body.brand-theme-innovation {
     background-color: $inno-color-off-white;
     color: $inno-color-off-black;
     font-feature-settings: "cv11"; // single-storey a
-}
 
-h1, h2, h3, h4, h5, h6,
-.mzp-u-title-2xl,
-.mzp-u-title-xl,
-.mzp-u-title-lg,
-.mzp-u-title-md,
-.mzp-u-title-sm,
-.mzp-u-title-xs,
-.mzp-u-title-2xs,
-.mzp-u-title-3xs {
-    color: $inno-color-off-black;
-    font-family: $font-stack-base;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-}
 
-.mzp-t-dark {
-    background-color: $inno-color-off-black;
-}
-
-.mzp-t-dark.mzp-t-background-secondary,
-.mzp-t-dark .mzp-t-background-secondary,
-.mzp-t-dark.mzp-t-background-tertiary,
-.mzp-t-dark .mzp-t-background-tertiary {
-    background-color: $inno-color-off-black;
-}
-
-.mzp-c-button, /* stylelint-disable-line no-duplicate-selectors */
-a.mzp-c-button {
-    border-radius: 2em;
-    border: 0;
-    font-family: $font-stack-base;
-    font-weight: 500;
-    background-color: $inno-color-off-black;
-    color: $inno-color-off-white;
-
-    &:hover,
-    &:focus,
-    &:active {
-        background-color: $inno-color-highlight-green;
-        color: $inno-color-highlight-black;
+    h1, h2, h3, h4, h5, h6,
+    .mzp-u-title-2xl,
+    .mzp-u-title-xl,
+    .mzp-u-title-lg,
+    .mzp-u-title-md,
+    .mzp-u-title-sm,
+    .mzp-u-title-xs,
+    .mzp-u-title-2xs,
+    .mzp-u-title-3xs {
+        color: $inno-color-off-black;
+        font-family: $font-stack-base;
+        font-weight: 500;
+        letter-spacing: -0.01em;
     }
 
-    &.mzp-t-dark {
-        background-color: $inno-color-highlight-green;
-        color: $inno-color-highlight-black;
+    .mzp-t-dark {
+        background-color: $inno-color-off-black;
+    }
+
+    .mzp-t-dark.mzp-t-background-secondary,
+    .mzp-t-dark .mzp-t-background-secondary,
+    .mzp-t-dark.mzp-t-background-tertiary,
+    .mzp-t-dark .mzp-t-background-tertiary {
+        background-color: $inno-color-off-black;
+    }
+
+    .mzp-c-button, /* stylelint-disable-line no-duplicate-selectors */
+    a.mzp-c-button {
+        border-radius: 2em;
+        border: 0;
+        font-family: $font-stack-base;
+        font-weight: 500;
+        background-color: $inno-color-off-black;
+        color: $inno-color-off-white;
 
         &:hover,
         &:focus,
         &:active {
-            background-color: $inno-color-off-white;
-            color: $inno-color-off-black;
-        }
-    }
-}
-
-.c-navigation {
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1) !important; /* stylelint-disable-line no-important */
-
-    &.mzp-t-light {
-        background-color: $inno-color-off-white;
-
-        .c-menu-panel-container {
-            background-color: $inno-color-off-white;
-        }
-
-        .c-menu-item-link:hover,
-        .c-menu-item-link:focus {
             background-color: $inno-color-highlight-green;
+            color: $inno-color-highlight-black;
+        }
+
+        &.mzp-t-dark {
+            background-color: $inno-color-highlight-green;
+            color: $inno-color-highlight-black;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: $inno-color-off-white;
+                color: $inno-color-off-black;
+            }
         }
     }
 
-    &.mzp-t-dark {
-        background-color: $inno-color-off-black;
+    .c-navigation {
+        box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
 
-        .c-menu-panel-container {
-            background-color: $inno-color-off-black;
+        .c-menu-item-title {
+            color: inherit;
         }
 
-        .c-menu-item-link:hover,
-        .c-menu-item-link:focus {
-            background-color: $inno-color-highlight-black;
+        &.mzp-t-light {
+            background-color: $inno-color-off-white;
+
+            .c-menu-panel-container {
+                background-color: $inno-color-off-white;
+            }
+
+            .c-menu-item-link:link,
+            .c-menu-item-link:visited {
+                color: $color-black;
+
+                &:hover,
+                &:focus {
+                    background-color: $inno-color-highlight-green;
+                    color: $inno-color-highlight-black;
+                }
+            }
+        }
+
+        &.mzp-t-dark {
+            background-color: $inno-color-off-black;
+
+            .c-menu-panel-container {
+                background-color: $inno-color-off-black;
+            }
+
+            .c-menu-item-link:link,
+            .c-menu-item-link:visited {
+                color: $color-white;
+
+                &:hover,
+                &:focus {
+                    background-color: $inno-color-highlight-black;
+                    color: $inno-color-highlight-green;
+                }
+            }
         }
     }
 }
