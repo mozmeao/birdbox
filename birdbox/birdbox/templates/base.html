@@ -54,7 +54,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         {% block analytics %}
         {% endblock analytics %}
     </head>
-    <body class="{% block body_class %}{% endblock %}">
+    <body class="{% block body_class %}{% endblock %} {% site_theme_name prefix='brand-theme-'%}">
         {% wagtailuserbar %}
 
         {% block navigation %}{% endblock %}

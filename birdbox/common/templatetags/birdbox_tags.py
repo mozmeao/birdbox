@@ -84,3 +84,16 @@ def gather_field_errors(form):
 @register.simple_tag
 def should_use_sso_auth():
     return settings.USE_SSO_AUTH
+
+
+@register.simple_tag
+def site_theme_name(prefix=""):
+    from microsite.models import MicrositeSettings
+
+    try:
+        settings = MicrositeSettings.objects.first()
+        theme_name = settings.site_theme
+    except AttributeError:
+        theme_name = "mozilla"
+
+    return prefix + theme_name
