@@ -19,7 +19,7 @@ module.exports = {
         "protocol-global": "./src/js/protocol/global.js",
         "newsletter-form": "./src/js/newsletter/newsletter-init.js", // not protocol JS (yet)
         analytics: "./src/js/analytics.js",
-        "color-theme-block-labels": "./src/js/theme-color-labels.js",
+        "themed-color-block": "./src/js/themed-color-block.js",
 
         // CSS
         // base/core
@@ -59,6 +59,7 @@ module.exports = {
         "birdbox-picto-stack": "./src/css/picto-stack.scss",
         "birdbox-biography-grid": "./src/css/biography-grid.scss",
         "birdbox-article": "./src/css/article.scss",
+        "birdbox-horizontal-image": "./src/css/horizontal-image.scss",
 
         // custom JS
         "futuremo-contact-form-js": "./src/js/contact/futuremo-contact-form.js",

@@ -66,7 +66,7 @@ const colorLabels = {
     },
 }
 
-var fixupHelper = function(themeName){
+var colorLabelFixup = function(themeName){
     const themeColorOptionElements = document.querySelectorAll("[data-contentpath='color_theme'] option");
     const newLabels = colorLabels[themeName];
     Array.from(themeColorOptionElements).forEach(
@@ -79,6 +79,20 @@ var fixupHelper = function(themeName){
 };
 
 
-window.Birdbox = window.Birdbox || {};
+class ThemedColorBlockDefinition extends window.wagtailStreamField.blocks.FieldBlockDefinition {
 
-window.Birdbox.themeColorLabelFixup = fixupHelper
+    // On every render of a ThemedColorBlock, ensure the select's options have human-friendly labels.
+    render(placeholder, prefix, initialState, initialError) {
+        const block = super.render(
+            placeholder,
+            prefix,
+            initialState,
+            initialError,
+        );
+        // This is set by common.wagtail_hooks.patch_in_dynamic_theme_color_name
+        const siteThemeName = document.getElementById('bb-site-theme').dataset.siteTheme;
+        colorLabelFixup(siteThemeName); // a little heavy-handed to do every time, but tolerable
+        return block;
+    }
+}
+window.telepath.register('common.blocks.ThemedColorBlock', ThemedColorBlockDefinition);

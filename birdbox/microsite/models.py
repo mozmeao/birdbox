@@ -58,6 +58,7 @@ from .blocks import (
     FooterSocialLinksGroupBlock,
     HeadedTableBlock,
     HeroBlock,
+    HorizontalImageBlock,
     NewsletterFormBlock,
     SectionHeadingBlock,
     SplitBlock,
@@ -324,6 +325,16 @@ class HomePage(BaseProtocolPage):
                     icon="media",
                 ),
             ),
+            (
+                "horizontal_image",
+                HorizontalImageBlock(
+                    label="Horizontal image / Wordmark",
+                    label_format="Horizontal image: {image}",
+                    required=False,
+                    icon="image",
+                    help_text="Can be positioned above a hero block to add a wordmark before the hero",
+                ),
+            ),
         ],
         block_counts={
             "contact_form": {"max_num": 1},
@@ -477,6 +488,16 @@ class InnovationsContentPage(BaseProtocolPage):
                     required=False,
                     icon="media",
                     help_text="In alpha - minimal/simple embedding at the moment. No in-page transcript support.",
+                ),
+            ),
+            (
+                "horizontal_image",
+                HorizontalImageBlock(
+                    label="Horizontal image / Wordmark",
+                    label_format="Horizontal image: {image}",
+                    required=False,
+                    icon="image",
+                    help_text="Can be positioned above a hero block to add a wordmark before the hero",
                 ),
             ),
         ],
@@ -689,6 +710,16 @@ class ProductPage(BaseProtocolPage):
                     required=False,
                     icon="media",
                     help_text="In alpha - minimal/simple embedding at the moment. No in-page transcript support.",
+                ),
+            ),
+            (
+                "horizontal_image",
+                HorizontalImageBlock(
+                    label="Horizontal image / Wordmark",
+                    label_format="Horizontal image: {image}",
+                    required=False,
+                    icon="image",
+                    help_text="Can be positioned above a hero block to add a wordmark before the hero",
                 ),
             ),
         ],
@@ -1477,6 +1508,16 @@ class ProtocolTestPage(BaseProtocolPage):
                 "captioned_image_layout",
                 CaptionedImageLayoutBlock(
                     required=False,
+                ),
+            ),
+            (
+                "horizontal_image",
+                HorizontalImageBlock(
+                    label="Horizontal image / Wordmark",
+                    label_format="Horizontal image: {image}",
+                    required=False,
+                    icon="image",
+                    help_text="Can be positioned above a hero block to add a wordmark before the hero",
                 ),
             ),
         ],
