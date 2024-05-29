@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Update the Basket newsletter ID that the Builder's Challenge form uses
 * Dependency updates
 * Refactored JS for giving theme color labels human-friendly text (#357)
+* Updates to the Innovation theme (background colors and navbar) (#372)
 
 ## [1.7.1]
 

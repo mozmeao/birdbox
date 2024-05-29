@@ -52,6 +52,7 @@
 }
 
 body {
+    background-color: $inno-color-off-white;
     color: $inno-color-off-black;
     font-feature-settings: "cv11"; // single-storey a
 }
@@ -107,6 +108,36 @@ a.mzp-c-button {
         &:active {
             background-color: $inno-color-off-white;
             color: $inno-color-off-black;
+        }
+    }
+}
+
+.c-navigation {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1) !important; /* stylelint-disable-line no-important */
+
+    &.mzp-t-light {
+        background-color: $inno-color-off-white;
+
+        .c-menu-panel-container {
+            background-color: $inno-color-off-white;
+        }
+
+        .c-menu-item-link:hover,
+        .c-menu-item-link:focus {
+            background-color: $inno-color-highlight-green;
+        }
+    }
+
+    &.mzp-t-dark {
+        background-color: $inno-color-off-black;
+
+        .c-menu-panel-container {
+            background-color: $inno-color-off-black;
+        }
+
+        .c-menu-item-link:hover,
+        .c-menu-item-link:focus {
+            background-color: $inno-color-highlight-black;
         }
     }
 }
