@@ -98,13 +98,8 @@ class MEICOContactForm(ContactFormBase):
 
 class BuildersChallengeForm(ContactFormBase):
     interests = forms.MultipleChoiceField(
-        label=("What are you interested in learning more about?"),
-        choices=(
-            (
-                "mozilla-builders-application-2024",
-                _("Update me about the application process, deadlines, and any changes."),
-            ),
-        ),
+        label=(""),
+        choices=(),
         widget=forms.CheckboxSelectMultiple(),
     )
 
