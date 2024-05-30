@@ -101,8 +101,8 @@ class BuildersChallengeForm(ContactFormBase):
         label=("What are you interested in learning more about?"),
         choices=(
             (
-                "mozilla-technology",
-                _("Topics like AI and machine learning, the metaverse, extended reality (XR) and the future of the web."),
+                "mozilla-builders-application-2024",
+                _("Update me about the application process, deadlines, and any changes."),
             ),
         ),
         widget=forms.CheckboxSelectMultiple(),
