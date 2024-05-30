@@ -15,6 +15,12 @@ Nothing yet
 
 Nothing yet
 
+## [1.8.1]
+
+### Changed
+
+* Remove the interests option entirely from the Builder's Challenge form
+
 ## [1.8.0]
 
 ###  Added
