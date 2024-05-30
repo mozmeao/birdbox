@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+Nothing yet
+
+### Changed
+
+Nothing yet
+
+## [1.8.0]
+
 ###  Added
 
 * Support adding (small/narrow) tables in Blog Posts (#370)
