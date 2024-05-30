@@ -97,24 +97,13 @@ class MEICOContactForm(ContactFormBase):
 
 
 class BuildersChallengeForm(ContactFormBase):
-    interests = forms.MultipleChoiceField(
-        label=("What are you interested in learning more about?"),
-        choices=(
-            (
-                "mozilla-technology",
-                _("Topics like AI and machine learning, the metaverse, extended reality (XR) and the future of the web."),
-            ),
-        ),
-        widget=forms.CheckboxSelectMultiple(),
-    )
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         # no extra fields, just an email field for newsletter signups; no message sending
         del self.fields["description"]
 
-        self.root_css_class = "TODO"
+        self.root_css_class = "c-builders-challenge"
         self.form_type = "builders-form"  # used to set a key class for behaviour
 
 
