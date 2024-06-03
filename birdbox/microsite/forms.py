@@ -98,6 +98,17 @@ class MEICOContactForm(ContactFormBase):
 
 class BuildersChallengeForm(ContactFormBase):
     def __init__(self, *args, **kwargs):
+        interests = forms.MultipleChoiceField(
+            label=(""),
+            choices=(
+                (
+                    "mozilla-builders-application-2024",
+                    _("Keep me updated about the application process, deadlines, and any changes."),
+                ),
+            ),
+            widget=forms.CheckboxSelectMultiple(),
+          )
+
         super().__init__(*args, **kwargs)
 
         # no extra fields, just an email field for newsletter signups; no message sending
