@@ -4,6 +4,7 @@
 
 
 """Custom Wagtail blocks that map to Protocol components, intended for use in a StreamField"""
+
 from django import forms
 from django.conf import settings
 from django.db.models import TextChoices
@@ -123,14 +124,6 @@ class HeroLayoutOptions(TextChoices):
 class TableWidthOptions(TextChoices):
     TABLE_WIDTH_DEFAULT = "bb-table-width-default", "Default width"
     TABLE_WIDTH_FULL = "bb-table-width-full", "Full width"
-
-
-class HorizontalImageBlockOptions(TextChoices):
-    HORIZONTAL_IMAGE_LAYOUT_DEFAULT = "bb-horizontal-image-default-spacing", "Default spacing (none extra)"
-    HORIZONTAL_IMAGE_LAYOUT_SMALL = "bb-horizontal-image-small-spacing", "Small spacing"
-    HORIZONTAL_IMAGE_LAYOUT_MEDIUM = "bb-horizontal-image-medium-spacing", "Medium spacing"
-    HORIZONTAL_IMAGE_LAYOUT_LARGE = "bb-horizontal-image-large-spacing", "Large spacing"
-    HORIZONTAL_IMAGE_LAYOUT_EXTRA_LARGE = "bb-horizontal-image-xl-spacing", "XL spacing"
 
 
 class LinkStructValue(wagtail_blocks.StructValue):
@@ -952,7 +945,6 @@ class ContactFormBlock(wagtail_blocks.StructBlock):
 
 
 class HeadedTableBlock(wagtail_blocks.StructBlock):
-
     """IMPORTANT: if you include this block in a StreamField and the streamfield
     is set to collapsed=True, the table will not be visible to edit unless the
     browser window is resized slightly. This is ticketed at
@@ -1046,9 +1038,9 @@ class HorizontalImageBlock(AccessibleImageBlockBase):
         required=True,
     )
 
-    layout = wagtail_blocks.ChoiceBlock(
-        choices=HorizontalImageBlockOptions.choices,
-        default=HorizontalImageBlockOptions.HORIZONTAL_IMAGE_LAYOUT_DEFAULT,
+    disable_bottom_spacing = wagtail_blocks.BooleanBlock(
+        default=True,
+        required=False,
     )
 
     class Meta:
