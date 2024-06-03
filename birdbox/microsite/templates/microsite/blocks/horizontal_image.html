@@ -1,4 +1,4 @@
-<section class="bb-horizontal-image {{block.value.color_theme}} {{block.value.layout}}">
+<section class="bb-horizontal-image {{block.value.color_theme}}{% if block.value.disable_bottom_spacing %} bb-no-following-spacing{% endif %}">
   {% with block.value as image_block %}
     {% include "common/partials/accessible_image.html" with image_block=image_block image_class="horizontal-image" %}
   {% endwith %}

@@ -15,6 +15,12 @@ Nothing yet
 
 Nothing yet
 
+## [1.8.2]
+
+### Changed
+
+* Padding fixup for Wordmark component
+
 ## [1.8.1]
 
 ### Changed
@@ -25,6 +31,7 @@ Nothing yet
 
 ###  Added
 
+* Support new Wordmark component, designed to show SVG wordmarks
 * Support adding (small/narrow) tables in Blog Posts (#370)
 
 ### Changed

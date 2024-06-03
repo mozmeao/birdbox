@@ -158,3 +158,8 @@ body.brand-theme-innovation {
         }
     }
 }
+
+// override to allow a wordmark to go above without extra spacing on the off-white background
+.hero-section.hero-section-centered .hero-text-wrapper {
+    margin-top: 0px !important;
+}
