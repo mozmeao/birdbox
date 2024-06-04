@@ -98,7 +98,7 @@ class MEICOContactForm(ContactFormBase):
 
 class BuildersChallengeForm(ContactFormBase):
     interests = forms.MultipleChoiceField(
-        label=(""),
+        label=("Do you want additional information beyond the main Challenge updates?"),
         choices=(
             (
                 "mozilla-builders-application-2024",
