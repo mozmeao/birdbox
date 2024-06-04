@@ -131,10 +131,12 @@ module.exports = {
         devMiddleware: {
             index: false, // specify to enable root proxy'ing
         },
-        proxy: {
-            context: () => true,
-            target: "http://0.0.0.0:8080",
-        },
+        proxy: [
+            {
+                context: () => true,
+                target: "http://0.0.0.0:8080",
+            }
+        ],
         watchFiles: ["src/**/*.js", "src/**/*.scss", "birdbox/**/*.html"],
         client: {
             logging: "error",
