@@ -13,6 +13,12 @@ Nothing yet
 
 ### Changed
 
+Nothing yet
+
+## [1.8.3]
+
+### Changed
+
 * Restore interests option in the Builder's Challenge form
 
 ## [1.8.2]
