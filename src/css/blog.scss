@@ -14,6 +14,7 @@
     padding-bottom: $layout-md;
 }
 
+
 .blog-tags-list {
     list-style: none;
 }
@@ -49,4 +50,8 @@
 .bb-c-article ul.blog-tags-list{
     margin-top: $spacing-xl;
     margin-left: 0;
+}
+
+.blogpost .mzp-l-content.page-has-breadcrumbs{
+    padding-top: 0;
 }

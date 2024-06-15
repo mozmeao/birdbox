@@ -12,7 +12,7 @@
 
 {% breadcrumbs page %}
 
-<div class="{% get_layout_class_from_page %}">
+<div class="mzp-l-content {% if page.specific.show_breadcrumbs %}page-has-breadcrumbs {% endif %} {% get_layout_class_from_page %}">
   <article class="bb-c-article">
     <h1 class="bb-c-article-title">{{page.title}}</h1>
 

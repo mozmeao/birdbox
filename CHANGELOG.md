@@ -15,6 +15,13 @@ Nothing yet
 
 Nothing yet
 
+## [1.8.4]
+
+### Changed
+
+* Move .env-example file to root dir to make it easier to find
+* Fix padding for Blog posts, including when no breadcrumbs are present
+
 ## [1.8.3]
 
 ### Changed
