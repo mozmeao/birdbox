@@ -23,4 +23,4 @@ wagtail-markdown==0.12.1
 wagtail-metadata==5.0.0
 Willow[heif]<1.7,>=1.6
 wagtailstreamforms==4.1.0
-whitenoise==6.6.0
+whitenoise==6.7.0
