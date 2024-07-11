@@ -7,14 +7,12 @@
 set -exo pipefail
 
 # We need this installed, but we don't want it to live in the main requirements
-# We will need to periodically review this pinning
 
-pip install -U pip
-pip install pip-tools
+pip install -U uv
 
 # Drop the compiled reqs files, to help us pick up automatic subdep updates, too
 rm -f requirements/*.txt
 
-pip-compile --generate-hashes -r requirements/production.in --resolver=backtracking --rebuild
-pip-compile --generate-hashes -r requirements/dev.in --resolver=backtracking --rebuild
-pip-compile --generate-hashes -r requirements/test.in --resolver=backtracking --rebuild
+uv pip compile --generate-hashes --no-strip-extras requirements/production.in -o requirements/production.txt
+uv pip compile --generate-hashes --no-strip-extras requirements/dev.in -o requirements/dev.txt
+uv pip compile --generate-hashes --no-strip-extras requirements/test.in -o requirements/test.txt

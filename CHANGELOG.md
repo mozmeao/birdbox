@@ -13,7 +13,8 @@ Nothing yet
 
 ### Changed
 
-Nothing yet
+* Dependency updates
+* Move to `uv` for requirements compilation
 
 ## [1.8.4]
 
