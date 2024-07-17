@@ -8,7 +8,7 @@ var dntEnabled = require("@mozmeao/dnt-helper");
 
 (function () {
     "use strict";
-    const googleTagId = document.documentElement.dataset.gtmId;
+    const googleTagId = document.documentElement.dataset.gtagId;
     window.dataLayer = window.dataLayer || [];
 
     // If doNotTrack is not enabled, it is ok to add GTM
@@ -16,15 +16,16 @@ var dntEnabled = require("@mozmeao/dnt-helper");
     // prettier-ignore
     if (typeof dntEnabled === 'function' && !dntEnabled() && googleTagId) {
 
-        (function(w,d,s,l,i,j,f,dl,k,q){
-            w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});f=d.getElementsByTagName(s)[0];
-            k=i.length;q='//www.googletagmanager.com/gtm.js?id=@&l='+(l||'dataLayer');
-            while(k--){j=d.createElement(s);j.async=!0;j.src=q.replace('@',i[k]);f.parentNode.insertBefore(j,f);}
-        }(window,document,'script','dataLayer',[googleTagId]));
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtag/js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',googleTagId);
 
-        // Google tag (gtag.js)
-        function gtag(){dataLayer.push(arguments);}
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', '{{googleTagId}}');
+
+        gtag('config', googleTagId);
     }
 })();
