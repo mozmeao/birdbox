@@ -13,7 +13,11 @@ Nothing yet
 
 ### Changed
 
-* Dependency updates
+## [1.8.5]
+
+### Changed
+
+* Dependency updates, incl security updates
 * Move to `uv` for requirements compilation
 * Change gTag code in analytics.js (#423)
 
