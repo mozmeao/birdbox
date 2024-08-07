@@ -13,6 +13,12 @@ Nothing yet
 
 ### Changed
 
+## [1.8.6]
+
+* Dependency bump for Django to latest secure version (4.2.15)
+
+### Changed
+
 ## [1.8.5]
 
 ### Changed
