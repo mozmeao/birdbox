@@ -13,6 +13,8 @@ Nothing yet
 
 ### Changed
 
+* CSS fix for Innovation theme footer headings (#444)
+
 ## [1.8.6]
 
 * Dependency bump for Django to latest secure version (4.2.15)
