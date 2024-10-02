@@ -13,7 +13,19 @@ Nothing yet
 
 ### Changed
 
+Nothing yet
+
+## [1.8.8]
+
+### Changed
+
 * CSS fix for Innovation theme footer headings (#444)
+
+## [1.8.7]
+
+### Changed
+
+* Dependency updates by @stevejalim in #443
 
 ## [1.8.6]
 
