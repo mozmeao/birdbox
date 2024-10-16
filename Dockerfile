@@ -16,8 +16,7 @@ RUN apt-install.sh \
     libffi-dev \
     libjpeg62-turbo-dev \
     zlib1g-dev \
-    libwebp-dev \
-    libmagickwand-dev
+    libwebp-dev
 
 RUN python -m venv /app/venv
 
@@ -67,7 +66,7 @@ EXPOSE 8000
 CMD ["./bin/run.sh"]
 
 COPY docker/bin/apt-install.sh /usr/local/bin/
-RUN apt-install.sh gettext libxslt1.1 git curl
+RUN apt-install.sh gettext libxslt1.1 git curl libmagickwand-dev
 
 # copy in Python environment
 COPY --from=python-builder /app/venv /app/venv
