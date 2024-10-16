@@ -16,7 +16,8 @@ RUN apt-install.sh \
     libffi-dev \
     libjpeg62-turbo-dev \
     zlib1g-dev \
-    libwebp-dev
+    libwebp-dev \
+    libmagickwand-dev
 
 RUN python -m venv /app/venv
 
