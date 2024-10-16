@@ -17,7 +17,6 @@ RUN apt-install.sh \
     libjpeg62-turbo-dev \
     zlib1g-dev \
     libwebp-dev \
-    imagemagick \
     libmagickwand-dev
 
 RUN python -m venv /app/venv
