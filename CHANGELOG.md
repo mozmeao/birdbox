@@ -15,6 +15,13 @@ Nothing yet
 
 Nothing yet
 
+## [1.9.0]
+
+### Added
+
+* Added Animated GIF support (#457)
+* General python dependency updates
+
 ## [1.8.8]
 
 ### Changed
