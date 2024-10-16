@@ -9,7 +9,7 @@ all: help
 
 build-python-builder:
     # build the lowest-level Docker image in our multi-stage build
-    docker-compose build builder
+    docker compose build builder
 
 clean-local-deps:
 	pip freeze | xargs pip uninstall -y
@@ -18,7 +18,7 @@ compile-requirements:
 	./bin/compile-requirements.sh
 
 docker-compile-requirements: build-python-builder
-    docker-compose run compile-requirements
+    docker compose run compile-requirements
 
 createsuperuser:
     python birdbox/manage.py createsuperuser
@@ -33,10 +33,10 @@ djshell:
 	python birdbox/manage.py shell
 
 docker-shell:
-    docker-compose exec app bash
+    docker compose exec app bash
 
 docker-manage-py *ARGS:
-    docker-compose exec app python birdbox/manage.py {{ARGS}}
+    docker compose exec app python birdbox/manage.py {{ARGS}}
 
 install-local-python-deps:
 	pip install -r requirements/production.txt
@@ -44,8 +44,8 @@ install-local-python-deps:
 	pip install -r requirements/test.txt
 
 docker-preflight:
-	docker-compose exec app python birdbox/manage.py createcachetable
-	docker-compose exec app python birdbox/manage.py migrate
+	docker compose exec app python birdbox/manage.py createcachetable
+	docker compose exec app python birdbox/manage.py migrate
 
 preflight:
 	npm install
