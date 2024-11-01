@@ -24,4 +24,4 @@ wagtail-metadata==5.0.0
 Wand==0.6.13  # For animated GIF support
 Willow[heif]<1.7,>=1.6
 wagtailstreamforms==4.1.0
-whitenoise==6.7.0
+whitenoise==6.8.2
