@@ -1,6 +1,6 @@
 -r production.txt
 
 pytest==8.2.2
-pytest-cov==5.0.0
+pytest-cov==6.0.0
 pytest-django==4.8.0
 wagtail-factories==4.2.1
