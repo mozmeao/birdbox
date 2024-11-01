@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/mozmeao/birdbox#readme",
   "dependencies": {
-    "@babel/core": "^7.24.6",
+    "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.24.6",
     "@mozilla-protocol/core": "^18.0.0",
     "@mozmeao/dnt-helper": "^1.0.0",
