@@ -5,7 +5,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse, HttpResponseForbidden
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.utils.module_loading import import_string
 from django.views.defaults import permission_denied
 
@@ -18,7 +18,7 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from watchman import views as watchman_views
 
-from common.views import csrf_failure, rate_limited
+from common.views import csrf_failure, rate_limited, redirect_view
 from microsite import urls as microsite_urls
 
 handler500 = "common.views.server_error_view"
@@ -39,6 +39,7 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     path("healthz/", watchman_views.ping, name="watchman.ping"),
     path("readiness/", watchman_views.status, name="watchman.status"),
+    re_path("^builders/", redirect_view, {"dest": "https://builders.mozilla.org"}),
     path("", include(microsite_urls)),
     path(
         "robots.txt",

@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+from django.http import HttpResponsePermanentRedirect
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 
@@ -26,3 +27,7 @@ def rate_limited(request, exception):
     response = render(request, "429.html", status=429)
     response["Retry-After"] = "60"
     return response
+
+
+def redirect_view(request, **kwargs):
+    return HttpResponsePermanentRedirect(kwargs["dest"])

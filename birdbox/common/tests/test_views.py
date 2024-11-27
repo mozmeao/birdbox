@@ -47,3 +47,32 @@ def test_robots_txt(client, engage_robots, expected_content):
 @pytest.mark.django_db
 def test_csrf_view_is_custom_one():
     assert settings.CSRF_FAILURE_VIEW == "common.views.csrf_failure"
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "path",
+    (
+        "/builders/",
+        "/builders/some/deeper/path/",
+    ),
+)
+def test_builders_redirect(path, client):
+    resp = client.get(path, follow=False)
+    assert resp.headers["location"] == "https://builders.mozilla.org"
+
+
+@pytest.mark.django_db
+def test_builders_redirect_does_not_affect_anyting_else(client, minimal_site_with_blog):
+    from microsite.models import BlogPage
+
+    bp1, bp2_featured, bp3 = BlogPage.objects.live().all()
+
+    resp = client.get(bp1.url, follow=False)
+    assert resp.status_code == 200
+
+    resp = client.get(bp2_featured.url, follow=False)
+    assert resp.status_code == 200
+
+    resp = client.get(bp3.url, follow=False)
+    assert resp.status_code == 200
