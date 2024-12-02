@@ -15,7 +15,7 @@ gunicorn==23.0.0
 honcho==1.1.0
 mozilla-django-oidc==4.0.1
 Pillow==10.4.0
-psycopg[binary]==3.1.19
+psycopg[binary]==3.2.3
 requests>=2.31.0
 sentry-sdk==2.14.0
 wagtail>=5.2.6,<6  # Wagtail 5.2 is an LTS release
