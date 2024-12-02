@@ -1,6 +1,6 @@
 certifi>=2023.11.17
 cryptography>=42.0.8
-dj-database-url==2.2.0
+dj-database-url==2.3.0
 Django>=4.2.16,<5.0
 django-csp==3.8
 django-mozilla-product-details>=1.0.3
@@ -17,11 +17,11 @@ mozilla-django-oidc==4.0.1
 Pillow==10.4.0
 psycopg[binary]==3.1.19
 requests>=2.31.0
-sentry-sdk==2.14.0
-wagtail>=5.2.6,<6  # Wagtail 5.2 is an LTS release
+sentry-sdk==2.19.0
+wagtail>=5.2.7,<6  # Wagtail 5.2 is an LTS release
 wagtail-markdown==0.12.1
 wagtail-metadata==5.0.0
 Wand==0.6.13  # For animated GIF support
 Willow[heif]<1.7,>=1.6
 wagtailstreamforms==4.1.0
-whitenoise==6.7.0
+whitenoise==6.8.2
