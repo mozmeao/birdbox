@@ -1,7 +1,7 @@
 certifi>=2023.11.17
 cryptography>=42.0.8
 dj-database-url==2.2.0
-Django>=4.2.16,<5.0
+Django>=4.2.17,<5.0
 django-csp==3.8
 django-mozilla-product-details>=1.0.3
 django-storages[google]==1.14.4
