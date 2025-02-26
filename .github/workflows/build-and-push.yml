@@ -16,7 +16,7 @@ on:
         default: refs/heads/main
 env:
   APP: birdbox-mozilla-language-portal
-  APPLICATION_REPOSITORY: moz-l10n/birdbox-mozilla-language-portal
+  APPLICATION_REPOSITORY: mozilla-l10n/birdbox-mozilla-language-portal
   IMAGE: birdbox-mozilla-language-portal
   GAR_LOCATION: us
   GCP_PROJECT_ID: moz-fx-moz-language-porta-3139
