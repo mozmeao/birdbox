@@ -15,12 +15,12 @@ on:
         required: true
         default: refs/heads/main
 env:
-  APP: birdbox
-  APPLICATION_REPOSITORY: mozmeao/birdbox
-  IMAGE: birdbox
+  APP: birdbox-mozilla-language-portal
+  APPLICATION_REPOSITORY: moz-l10n/birdbox-mozilla-language-portal
+  IMAGE: birdbox-mozilla-language-portal
   GAR_LOCATION: us
-  GCP_PROJECT_ID: moz-fx-birdbox-prod
-  GAR_REPOSITORY: birdbox-prod
+  GCP_PROJECT_ID: moz-fx-moz-language-porta-3139
+  GAR_REPOSITORY: mozilla-language-portal-prod-prod-storage
   REF_ID: ${{ github.ref }}
 
 
@@ -47,16 +47,6 @@ jobs:
       - id: long-sha
         run: |-
           echo "LONG_SHA=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-
-      - id: dev_image_tag
-        name: Set Docker dev image tag for updates of the main branch
-        if: github.ref == 'refs/heads/main'
-        run: |
-
-          echo TAG="dev-$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-
-          # Updates to the main branch are deployed to dev.
-          echo DEPLOYMENT_ENV=dev >> "$GITHUB_ENV"
 
       - id: stage_image_tag
         name: Set Docker stage image tag for updates of the stage branch
