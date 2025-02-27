@@ -53,7 +53,7 @@ jobs:
         if: github.ref == 'refs/heads/stage'
         run: |
 
-            echo TAG="stage-$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+            echo TAG="stage-$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
 
             # Updates to the stage branch are deployed to stage.
             echo DEPLOYMENT_ENV=stage >> "$GITHUB_ENV"
@@ -63,7 +63,7 @@ jobs:
         if: github.ref == 'refs/heads/prod'
         run: |
 
-          echo TAG="prod-$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo TAG="prod-$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
           # updates to the prod branch are deployed to prod.
           echo DEPLOYMENT_ENV=prod >> "$GITHUB_ENV"
 
