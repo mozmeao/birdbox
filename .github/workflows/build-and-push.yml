@@ -67,7 +67,7 @@ jobs:
           # updates to the prod branch are deployed to prod.
           echo DEPLOYMENT_ENV=prod >> "$GITHUB_ENV"
           
-          printenv TAG
+          echo "$TAG"
 
       - uses: docker/setup-buildx-action@v3
 
