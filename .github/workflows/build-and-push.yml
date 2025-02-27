@@ -66,8 +66,11 @@ jobs:
           echo TAG="prod-$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
           # updates to the prod branch are deployed to prod.
           echo DEPLOYMENT_ENV=prod >> "$GITHUB_ENV"
-          
-          echo $TAG
+
+      - name: Debug TAG value
+        run: echo "TAG is $TAG"
+        env:
+          TAG: ${{ env.TAG }}
 
       - uses: docker/setup-buildx-action@v3
 
