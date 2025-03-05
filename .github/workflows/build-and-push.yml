@@ -14,6 +14,7 @@ on:
         type: string
         required: true
         default: refs/heads/main
+
 env:
   APP: birdbox
   APPLICATION_REPOSITORY: mozmeao/birdbox
@@ -21,8 +22,7 @@ env:
   GAR_LOCATION: us
   GCP_PROJECT_ID: moz-fx-birdbox-prod
   GAR_REPOSITORY: birdbox-prod
-  REF_ID: ${{ github.ref }}
-
+  REF_ID: ${{ github.event.inputs.ref || github.ref }}
 
 jobs:
   push_image_to_gar:
@@ -33,49 +33,42 @@ jobs:
       id-token: write
 
     outputs:
-        deployment_env: ${{ env.DEPLOYMENT_ENV }}
-        image_tag: ${{ env.TAG }}
+      deployment_env: ${{ steps.set-outputs.outputs.deployment_env }}
+      image_tag: ${{ steps.set-outputs.outputs.image_tag }}
 
     steps:
       - id: checkout-application-repo
         uses: actions/checkout@v4
         with:
-            fetch-depth: 0
-            fetch-tags: true
-            ref: ${{ env.REF_ID }}
+          fetch-depth: 0
+          fetch-tags: true
+          ref: ${{ env.REF_ID }}
 
       - id: long-sha
-        run: |-
-          echo "LONG_SHA=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        run: echo "LONG_SHA=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
-      - id: dev_image_tag
-        name: Set Docker dev image tag for updates of the main branch
-        if: github.ref == 'refs/heads/main'
+      - id: set-image-tag
+        name: Set Docker Image Tag and Deployment Environment
         run: |
+          case "${{ env.REF_ID }}" in
+            "refs/heads/main")
+              echo "TAG=dev-$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+              echo "DEPLOYMENT_ENV=dev" >> "$GITHUB_ENV"
+              ;;
+            "refs/heads/stage")
+              echo "TAG=stage-$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+              echo "DEPLOYMENT_ENV=stage" >> "$GITHUB_ENV"
+              ;;
+            "refs/heads/prod")
+              echo "TAG=prod-$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+              echo "DEPLOYMENT_ENV=prod" >> "$GITHUB_ENV"
+              ;;
+          esac
 
-          echo TAG="dev-$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-
-          # Updates to the main branch are deployed to dev.
-          echo DEPLOYMENT_ENV=dev >> "$GITHUB_ENV"
-
-      - id: stage_image_tag
-        name: Set Docker stage image tag for updates of the stage branch
-        if: github.ref == 'refs/heads/stage'
+      - id: set-outputs
         run: |
-
-            echo TAG="stage-$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-
-            # Updates to the stage branch are deployed to stage.
-            echo DEPLOYMENT_ENV=stage >> "$GITHUB_ENV"
-
-      - id: prod_image_tag
-        name: Set Docker prod image tag for updates of the prod branch
-        if: github.ref == 'refs/heads/prod'
-        run: |
-
-          echo TAG="prod-$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-          # updates to the prod branch are deployed to prod.
-          echo DEPLOYMENT_ENV=prod >> "$GITHUB_ENV"
+          echo "deployment_env=${{ env.DEPLOYMENT_ENV }}" >> "$GITHUB_OUTPUT"
+          echo "image_tag=${{ env.TAG }}" >> "$GITHUB_OUTPUT"
 
       - uses: docker/setup-buildx-action@v3
 
@@ -83,7 +76,7 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           token_format: 'access_token'
-          service_account:  artifact-writer@${{ env.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+          service_account: artifact-writer@${{ env.GCP_PROJECT_ID }}.iam.gserviceaccount.com
           workload_identity_provider: ${{ vars.GCPV2_GITHUB_WORKLOAD_IDENTITY_PROVIDER }}
 
       - uses: docker/login-action@v3
