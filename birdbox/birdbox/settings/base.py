@@ -409,7 +409,7 @@ if SENTRY_DSN:
 
 RATELIMIT_ENABLE = config(
     "RATELIMIT_ENABLE",
-    default="True",
+    default="False",
     parser=bool,
 )
 RATELIMIT_USE_CACHE = config(
