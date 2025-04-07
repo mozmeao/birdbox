@@ -12,3 +12,6 @@ birdbox/media/*
 birdbox/static_collected/*
 node_modules
 python_coverage
+.git
+.github
+gha-creds-*.json
