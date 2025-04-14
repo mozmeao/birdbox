@@ -65,3 +65,11 @@ repos:
     hooks:
       - id: black
         language_version: python3
+  - repo: local
+    hooks:
+      - id: check-migrations
+        name: Check for missing Django migrations
+        entry: python birdbox/manage.py makemigrations --dry-run --check
+        language: system
+        types: [python] # hook only runs if a python file is staged
+        pass_filenames: false
