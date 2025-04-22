@@ -3,8 +3,8 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 @use '~@mozilla-protocol/core/protocol/css/includes/lib' as * with ($image-path: '/static/protocol/img');
-@import '~@mozilla-protocol/core/protocol/css/components/call-out';
+@import '~@mozilla-protocol/core/protocol/css/components/callout';
 
-.mzp-c-call-out-compact {
+.mzp-c-callout .mzp-l-compact {
     margin: $spacing-lg auto;
 }
