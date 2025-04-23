@@ -13,7 +13,7 @@ Nothing yet
 
 ### Changed
 
-Nothing yet
+* Updated to Protocol V20, including new brand font
 
 ## [1.9.0]
 
