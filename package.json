@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
-    "webpack-dev-server": "^5.0.4"
+    "webpack-dev-server": "^5.2.1"
   },
   "browserslist": [
     "defaults",
