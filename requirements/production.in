@@ -4,7 +4,7 @@ dj-database-url==2.3.0
 Django>=4.2.20,<5.0
 django-csp==3.8
 django-mozilla-product-details>=1.0.3
-django-storages[google]==1.14.5
+django-storages[google]==1.14.6
 django-ratelimit==4.1.0
 django-redis==5.4.0
 django-jsonview==2.0.0
