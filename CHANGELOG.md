@@ -15,6 +15,12 @@ Nothing yet
 
 Nothing yet
 
+## [1.9.2]
+
+### Updated
+
+* Dependency updates
+
 ## [1.9.1]
 
 ### Updated
