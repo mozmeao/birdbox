@@ -1,6 +1,6 @@
 certifi>=2025.4.26
 cryptography>=44.0.1
-dj-database-url==2.3.0
+dj-database-url==3.0.0
 Django>=4.2.23,<5.0
 django-csp==3.8
 django-mozilla-product-details>=1.0.3
