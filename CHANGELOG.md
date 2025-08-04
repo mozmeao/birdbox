@@ -9,11 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-Nothing yet
+* Enabled TOC extension for markdown, allowing headers from h1 to h4 to have ids
+  automatically assigned.
 
 ### Changed
 
 * Updated to Protocol V20, including new brand font
+
+## [1.9.2]
+
+### Updated
+
+* Dependency updates
+
+## [1.9.1]
+
+### Updated
+
+* Dependency updates
 
 ## [1.9.0]
 
