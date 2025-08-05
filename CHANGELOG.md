@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-Nothing yet
+* Updated to Protocol V20, including new brand font
 
 ## [1.9.2]
 

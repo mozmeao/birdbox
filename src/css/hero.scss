@@ -37,7 +37,7 @@
         }
 
         & .hero-title-teaser {
-            @include font-mozilla;
+            @include font-mozilla-headline;
             @include text-title-xs;
             display: block;
             font-weight: normal;
